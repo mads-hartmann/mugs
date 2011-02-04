@@ -54,12 +54,28 @@ Some thoughts about which data structures to implement. So far I'm considering t
 # Set
 ## Tree based
 ## Hash based
-# Priority Queue
+# Queue
 ## Tree based
 # Map 
-## ??
+## Tree based
+## Hash Based
 # Stack
 ## List Based
+
+Some references: 
+
+# Scala
+## "List":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/List.scala#L1
+## "TreeMap":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/TreeMap.scala#L1
+## "HashMap":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/HashMap.scala#L1
+## "TreeSet":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/TreeSet.scala#L1
+## "HashSet":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/HashSet.scala#L1
+## "Stack":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/Stack.scala#L1
+## "Queue":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/Queue.scala#L1
+
+
+
+
 
 h2(#users_guide_and_examples). User’s guide and examples
 
