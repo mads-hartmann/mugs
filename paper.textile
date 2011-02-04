@@ -20,6 +20,7 @@ h2(#table_of_contents). Table of Contents
 ## "Problem Definition":#problem_definition
 # "Background and description of the problem":#background_and_description_of_the_problem
 # "Problem analysis":#problem_analysis
+## "Selected Data Structures":#selected_data_structures
 # "User’s guide and examples":#users_guide_and_examples
 # "Technical description of the program":#technical_description_of_the_program
 # "Test":#test
@@ -42,6 +43,23 @@ The project will include a set of performance tests that evaluate the data-struc
 h2(#background_and_description_of_the_problem). Background and description of the problem
 
 h2(#problem_analysis). Problem analysis
+
+h3(#selected_data_structures). Selected Data Structures
+
+Some thoughts about which data structures to implement. So far I'm considering the following
+
+# List
+## Array based
+## Linked List 
+# Set
+## Tree based
+## Hash based
+# Priority Queue
+## Tree based
+# Map 
+## ??
+# Stack
+## List Based
 
 h2(#users_guide_and_examples). User’s guide and examples
 
