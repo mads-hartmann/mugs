@@ -5,6 +5,7 @@ title: Immutable Collections Library for Javascript: The Documentation
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 </head>
+<div id="container">
 
 h1. Immutable Collections Library for Javascript: The Documentation
 
@@ -13,3 +14,5 @@ h1. Immutable Collections Library for Javascript: The Documentation
 # "Paper":http://mads379.github.com/bachelorproject/paper
 
 TODO
+
+</div>
