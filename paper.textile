@@ -1,7 +1,57 @@
 ---
-title: Paper
+title: Immutable Collections Library for Javascript: The Paper
 ---
+
+h1. Immutable Collections Library for Javascript: The Paper
 
 # "About":http://mads379.github.com/bachelorproject/
 # "Documentation":http://mads379.github.com/bachelorproject/documentation
 # Paper
+
+h2(#table_of_contents). Table of Contents 
+
+# "Preface and introduction":#preface_and_introduction
+## "Problem Definition":#problem_definition
+# "Background and description of the problem":#background_and_description_of_the_problem
+# "Problem analysis":#problem_analysis
+# "User’s guide and examples":#users_guide_and_examples
+# "Technical description of the program":#technical_description_of_the_program
+# "Test":#test
+# "Conclusion":#conclusion
+# "References":#references
+
+h2(#preface_and_introduction). Preface and introduction
+
+h3(#problem_definition). Problem Definition
+
+Javascript is a widely used programming language and it is used to implement countless of web applications. Despite of its popularity javascript has a very limited collections library which only contains one data-structure: An array which can function as a regular array, a stack, and a dictionary all at the same time. 
+This has lead to the development of a range of open-source collection libraries such as Google Closure[1] and TSJ-biblioteket[2]. 
+However, the current collection libraries available focus on mutable collections which are implemented using destructive updates. As such the goal of this project is to create a powerful set of immutable collection classes[?1] that will make it more natural[?2] to write javascript programs in a functional manner using features like higher-order functions. 
+The library will be written in Coffeescript[3], a small language that compiles to JavaScript, as it adds a few semantics that will help simplify the code.
+The project will include a set of performance tests that evaluate the data-structures on different implementations of javascript to make sure the performance of the data-structures are not subject to the implementation details of a specific javascript machine.
+
+[?1] Should i say prototypes? You don't have classes in javascript
+[?2] Find a better word
+
+h2(#background_and_description_of_the_problem). Background and description of the problem
+
+h2(#problem_analysis). Problem analysis
+
+h2(#users_guide_and_examples). User’s guide and examples
+
+h2(#technical_description_of_the_program). Technical description of the program
+
+h2(#test). Test
+
+h2(#conclusion). Conclusion
+
+h2(#references). References
+
+
+
+
+fn1. http://code.google.com/closure/
+
+fn2. Speciale af Thomas Stjernegaard Jeppesen
+
+fn3. http://jashkenas.github.com/coffee-script/

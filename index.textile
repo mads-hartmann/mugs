@@ -2,10 +2,19 @@
 title: Immutable Collections Library for Javascript
 ---
 
-# About
-# "Documentation":http://mads379.github.com/bachelorproject/documentation
-# "Paper":http://mads379.github.com/bachelorproject/paper
+h1. Immutable Collections Library for Javascript
 
+# About
+# "The Documentation":http://mads379.github.com/bachelorproject/documentation
+# "The Paper":http://mads379.github.com/bachelorproject/paper
+
+h2. About
+
+"Immutable Collections Library for Javascript" is powerful set of immutable collection classes that will make it more natural to write javascript programs in a functional manner using features like higher-order functions.
+
+The library is written in Coffeescript[1], a small language that compiles to JavaScript, as it adds a few semantics simplifies the code.
+
+This is a product of the bachelor project of Mads Hartmann Jensen under supervision of Peter Sestoft.
 
 h2. Getting the code
 
@@ -14,3 +23,5 @@ You can download this project in either "zip":http://github.com/mads379/bachelor
 You can also clone the project with "Git":http://git-scm.com by running:<pre>$ git clone git://github.com/mads379/bachelorproject</pre>
 
 get the source code on "GitHub":http://github.com/mads379/bachelorproject.
+
+fn1. http://jashkenas.github.com/coffee-script/

@@ -1,7 +1,11 @@
 ---
-title: Documentation
+title: Immutable Collections Library for Javascript: The Documentation
 ---
+
+h1. Immutable Collections Library for Javascript: The Documentation
 
 # "About":http://mads379.github.com/bachelorproject/
 # Documentation
 # "Paper":http://mads379.github.com/bachelorproject/paper
+
+TODO
