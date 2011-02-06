@@ -39,6 +39,18 @@ class Sequence
     __foldLeft(seed, this)
 
   ###
+    DOESN'T WORK. 'this' is no longer bound to the 
+    instance of sequence.
+  ###
+  foldLeftCurried: (seed) -> (f) -> 
+    __foldLeft = (acc, xs) -> 
+      if (xs.isEmpty())
+        acc
+      else 
+        __foldLeft( f(acc, xs.head), xs.tail)
+    __foldLeft(seed,this)
+
+  ###
     Applies a binary operator to a start value and all elements of this list, 
     going right to left
   ###
