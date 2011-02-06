@@ -4,7 +4,7 @@
 	@author Mads Hartmann Jensen
 ###
 
-Sequence = require('./sequence').Sequence()
+Sequence = require('./sequence').Sequence
 Option   = require './option'
 Some     = Option.Some
 None     = Option.None

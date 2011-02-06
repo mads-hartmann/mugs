@@ -83,4 +83,4 @@ class Sequence
     else 
       new Cons(list.head, this.append(list.tail))
 
-exports.Sequence = () -> Sequence
+exports.Sequence = Sequence
