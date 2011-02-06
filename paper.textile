@@ -49,7 +49,6 @@ h3(#selected_data_structures). Selected Data Structures
 Some thoughts about which data structures to implement. So far I'm considering the following
 
 # List
-## Array based
 ## Linked List 
 # Set
 ## Tree based

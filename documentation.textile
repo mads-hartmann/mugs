@@ -14,6 +14,21 @@ h1. Immutable Collections Library for Javascript: The Documentation
 # Documentation
 # "Paper":http://mads379.github.com/bachelorproject/paper
 
-TODO
+# Sequence: (Abstract)
+## head (property)
+## tail (property) 
+## elements
+## foldLeft
+## foldRight
+## append
+## prepend
+
+# List : Sequence
+## constructor( splash of elements ) 
+## isEmpty 
+
+# Cons : List
+## constructor( head, tail)
+# Nil : List 
 
 </div>
