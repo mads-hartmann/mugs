@@ -20,11 +20,13 @@ h1. Immutable Collections Library for Javascript <br /> _The Paper_
 h2(#table_of_contents). Table of Contents 
 
 # "Preface and introduction":#preface_and_introduction
-## "Problem Definition":#problem_definition
 # "Background and description of the problem":#background_and_description_of_the_problem
-# "Problem analysis":#problem_analysis
+## "Problem Definition":#problem_definition
 ## "The case for immutability":#the_case_for_immutability
 ## "Selected Data Structures":#selected_data_structures
+## "Exceptions are not an Option":#exceptions_are_not_an_option
+## "Coffeescript":#coffeescript
+# "Problem analysis":#problem_analysis
 # "User’s guide and examples":#users_guide_and_examples
 # "Technical description of the program":#technical_description_of_the_program
 # "Test":#test
@@ -32,6 +34,12 @@ h2(#table_of_contents). Table of Contents
 # "References":#references
 
 h2(#preface_and_introduction). Preface and introduction
+
+This report has been written by Mads Hartmann Jensen in the months February to June(?) at the IT University of Copenhagen under the supervision of "Peter Sestoft":http://www.itu.dk/people/sestoft/.
+
+During the project I developed an immutable collections library for Javascript written in the programming language Coffeescript.
+
+h2(#background_and_description_of_the_problem). Background and description of the problem
 
 h3(#problem_definition). Problem Definition
 
@@ -44,13 +52,13 @@ The project will include a set of performance tests that evaluate the data-struc
 [?1] Should i say prototypes? You don't have classes in javascript
 [?2] Find a better word
 
-h2(#background_and_description_of_the_problem). Background and description of the problem
-
-h2(#problem_analysis). Problem analysis
-
 h3(#the_case_for_immutability). The case for immutability 
 
 A description of why I've chosen immutability
+
+Some references: 
+# Joe Armstrong on immutability
+# Effective java 
 
 h3(#selected_data_structures). Selected Data Structures
 
@@ -80,15 +88,31 @@ Some references:
 ## "Stack":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/Stack.scala#L1
 ## "Queue":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/Queue.scala#L1
 
+h3(#exceptions_are_not_an_option). Exceptions are not an Option
 
+Explain why I've chosen to use the Option type rather than exceptions when handling operations that might not execute successfully. 
 
+h3(#coffeescript). Coffeescript
 
+What is Coffeescript and why have i chosen to use it over javascript?
+
+h2(#problem_analysis). Problem analysis
+
+Pick some of the data structures that I have implemented. Explain and analyze algorithms for various operations on those data structure. 
 
 h2(#users_guide_and_examples). User’s guide and examples
 
+Explain how to start using the library in the browser and NodeJS. Show some example programs and explain how they work.
+
+If I have the time it would be cool to implement one or two of the problems in "Pearls of Functional algorithm design".
+
 h2(#technical_description_of_the_program). Technical description of the program
 
+Prototype chain of various objects. I.e. List is a prototype of Sequence etc. 
+
 h2(#test). Test
+
+Performance and unit tests. Show results 
 
 h2(#conclusion). Conclusion
 
