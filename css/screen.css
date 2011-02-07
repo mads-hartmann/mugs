@@ -5,13 +5,14 @@ body {
 
 #container {
   text-align: left;
-  width: 90%;
+  width: 75%;
   margin: 0px auto;
   background: #F5F5F5;
   padding: 40px;
   color: #333;
   border-top: 10px solid #666;
   border-bottom: 10px solid #666;
+  margin-top: 60px;
 }
 
 h1 {
