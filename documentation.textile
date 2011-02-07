@@ -8,7 +8,7 @@ title: Immutable Collections Library for Javascript: The Documentation
 </head>
 <div id="container">
 
-h1. Immutable Collections Library for Javascript: The Documentation
+h1. Immutable Collections Library for Javascript <br /> _The Documentation_
 
 # "About":http://mads379.github.com/bachelorproject/
 # Documentation

@@ -1,4 +1,35 @@
+body {
+  text-align: center;
+  font: normal normal normal 13px/1.231 arial, helvetica, clean, sans-serif;
+}
+
 #container {
-  width: 800px;
+  text-align: left;
+  width: 90%;
   margin: 0px auto;
+  background: #F5F5F5;
+  padding: 40px;
+  color: #333;
+  border-top: 10px solid #666;
+  border-bottom: 10px solid #666;
+}
+
+h1 {
+  font-size: 28px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+a {
+  color: #990003;
 }
