@@ -42,14 +42,6 @@ arrEqual = (xs, ys) ->
     Test for foldLeft
   ###
   list = new List(1,2,3,4,5)
-  result = list.foldLeft(0, (acc, elem) -> acc + elem )
+  result = list.foldLeft(0)((acc, elem) -> acc + elem )
   ok (result == 15) is true
-)()
-
-(() -> 
-
-  list = new List(1,2,3,4,5)
-  result = list.foldLeftCurried(0)((acc, elem) -> acc + elem )
-  ok (result == 15) is true
-
 )()
