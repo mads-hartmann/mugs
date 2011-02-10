@@ -57,7 +57,7 @@ h3(#the_case_for_immutability). The case for immutability
 A description of why I've chosen immutability
 
 Some references: 
-# Joe Armstrong on immutability
+# Rich Hickey on immutability
 # Effective java 
 
 h3(#selected_data_structures). Selected Data Structures
