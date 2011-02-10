@@ -106,6 +106,9 @@ Explain how to start using the library in the browser and NodeJS. Show some exam
 
 If I have the time it would be cool to implement one or two of the problems in "Pearls of Functional algorithm design".
 
+or
+# Exercise 12.8 in Algorithms and data structures - the basic toolbox 
+
 h2(#technical_description_of_the_program). Technical description of the program
 
 Prototype chain of various objects. I.e. List is a prototype of Sequence etc. 
