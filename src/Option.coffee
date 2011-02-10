@@ -1,11 +1,16 @@
-###
-  This file contains the implementation for Option and it's two
-  subclasses: Some and None. 
-  
-  Some and None are used to 
+#### Description
 
-  @Author: Mads Hartmann Jensen (mads379@gmail.com)
-###
+# Option
+
+#### Operations 
+# <table>
+#   <tr>
+#     <td>Name</td>
+#     <td>Complexity</td>
+#   </tr>
+# </table>
+
+#### Implementation
 class Option
   
   this.__value
@@ -36,7 +41,3 @@ class None  extends Option
   
 exports.Some = Some 
 exports.None = None 
-
-# console.log new Some("gotit").getOrElse( "alternative" )
-# console.log new Some(undefined).getOrElse("shouldBeAlternative")
-# console.log new None().getOrElse( "shouldBeAlternative" )

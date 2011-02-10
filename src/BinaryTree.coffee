@@ -1,21 +1,16 @@
-###
-    _____             _    ____                       
-   / ____|           | |  |  _ \                      
-  | |      ___   ___ | |  | |_) | ___  __ _ _ __  ___ 
-  | |     / _ \ / _ \| |  |  _ < / _ \/ _` | '_ \/ __|
-  | |____| (_) | (_) | |  | |_) |  __/ (_| | | | \__ \
-   \_____|\___/ \___/|_|  |____/ \___|\__,_|_| |_|___/
-    
-  BinaryTree. 
-    
-  Example: 
-    x < 0 if a < b,
-    x > 0 if a > b,
-    x = 0 otherwise
-  
-  Mads Hartmann Jensen (mads379@gmail.com)
-  
-###
+#### Description
+
+# BinaryTree
+
+#### Operations 
+# <table>
+#   <tr>
+#     <td>Name</td>
+#     <td>Complexity</td>
+#   </tr>
+# </table>
+
+#### Implementation
 
 Option   = require './option'
 Some     = Option.Some

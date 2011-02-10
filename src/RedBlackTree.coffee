@@ -1,32 +1,45 @@
-###
-    _____             _    ____                       
-   / ____|           | |  |  _ \                      
-  | |      ___   ___ | |  | |_) | ___  __ _ _ __  ___ 
-  | |     / _ \ / _ \| |  |  _ < / _ \/ _` | '_ \/ __|
-  | |____| (_) | (_) | |  | |_) |  __/ (_| | | | \__ \
-   \_____|\___/ \___/|_|  |____/ \___|\__,_|_| |_|___/
-    
-  Red-Black Tree. 
-  
-  invariant 1: No red node has a red child
-  invariant 2: Every path from the root to an empty node 
-               contains the same number of black nodes
-  
-  Mads Hartmann Jensen (mads379@gmail.com)
-###
+#### Description
 
+# A Red-black tree is a binary tree with two invariants that ensure
+# that the tree is balanaced to keep the height of the tree low.
+#
+# 1. No red node has a red child
+# 2. Every path from the root to an empty node contains 
+#    the same number of black nodes
+
+#### Operations 
+# <table>
+#   <tr>
+#     <td>Name</td>
+#     <td>Complexity</td>
+#   </tr>
+#   <tr>
+#     <td> contains(element) </td>
+#     <td> O(log n) </td>
+#   </tr>  
+#   <tr>
+#     <td> insert(element) </td>
+#     <td> O(log n) </td>
+#   </tr>
+#   <tr>
+#     <td> remove(element) TODO </td>
+#     <td> O(log n) </td>
+#   </tr>
+# </table>
+
+#### Implementation
+
+# Importing dependencies
 Option   = require './option'
 Some     = Option.Some
 None     = Option.None
 
-RED   = { color: "RED" }    # the color property is only for debuggin
-BLACK = { color: "BLACK" }  # the color property is only for debuggin
+# Constants used to color the trees. The proprty 'color' is only for debugging.
+RED   = { color: "RED" }  
+BLACK = { color: "BLACK" }
 
-STANDARD_COMPARATOR = (elem1, elem2) -> 
-  if      (elem1 < elem2) then -1
-  else if (elem1 > elem2) then  1
-  else                          0
-
+# The empty node (i.e. Leaf) in a Red-Black tree. We only ever need one instance
+# so this isn't implemented as a class.
 Leaf = {
   left: new None(),
   right: new None(),
@@ -35,27 +48,32 @@ Leaf = {
   isEmpty: () -> true
 }
 
+# The RedBlackTree class
 class RedBlackTree 
+  # The standard compare function. It's used if the user doesn't 
+  # supply one when creating the tree
+  STANDARD_COMPARATOR = (elem1, elem2) -> 
+    if      (elem1 < elem2) then -1
+    else if (elem1 > elem2) then  1
+    else                          0
   
+  # The properties of the RedBlackTree
   this.color 
   this.left
   this.element
   this.right
-  this.comparator 
+  this.comparator
   
-  ###
-    @param  comparator  An optional function used to compare the elements in the tree.
-  ###
+  # Constructor to create new instance of RedBlackTree.
+  # The comparator argument is optional. 
   constructor: (color, left, element, right, comparator) -> 
     this.color      = color
     this.left       = left
     this.element    = element
     this.right      = right 
-    this.comparator = if (comparator) then comparator else STANDARD_COMPARATOR
+    this.comparator = if (comparator) then  else STANDARD_COMPARATOR
 
-  ###
-    Checks if the given element exists in the tree
-  ###
+  # Checks if the given element exists in the tree
   contains: (element) -> 
     __contains = (tree) => 
       {left: l, element: e, right: r} = tree
@@ -67,9 +85,7 @@ class RedBlackTree
       else                           true
     __contains(this)
   
-  ###
-    Returns a new tree with the inserted element.
-  ###
+  # Returns a new tree with the inserted element.
   insert: (element) -> 
     __insert = (tree) => 
       {color: c, left: l, element: e, right: r} = tree
@@ -87,19 +103,18 @@ class RedBlackTree
     t = __insert(this)
     new RedBlackTree(BLACK, t.left, t.element, t.right)
   
-  ###
-    This function balances the tree by eliminating any black-red-red path in the tree.  
-    This situation can occur in any of four configurations:                            
-                                                                                     
-    Reading the nodes from top to bottom:                                              
-      red left node followed by a red left node                                        
-      red left node followed by a red right node                                       
-      red right node followed by a red right node                                      
-      red right node followed by a red left node                                       
-                                                                                     
-    The solution is always the same: Rewrite the black-red-red path as a red node with  
-    two black children.                                                                
-  ###
+  # This function balances the tree by eliminating any black-red-red path in the tree.
+  # This situation can occur in any of four configurations:
+  #                                                                                   
+  # Reading the nodes from top to bottom:                                              
+  # 
+  # 1. red left node followed by a red left node                                        
+  # 2. red left node followed by a red right node                                       
+  # 3. red right node followed by a red right node                                      
+  # 4. red right node followed by a red left node                                       
+  #                                                                                   
+  # The solution is always the same: Rewrite the black-red-red path as a red node with
+  # two black children.                                                                
   balance = (color, left, element, right) ->
   
     leftFollowedByLeft = () -> 
@@ -143,6 +158,7 @@ class RedBlackTree
   
   isEmpty: () -> false
 
+# Exporing objects if people are using this as a node module
 exports.Leaf = Leaf
 exports.RedBlackTree = RedBlackTree
 exports.RED = RED

@@ -1,15 +1,16 @@
-###
-    _____             _    ____                       
-   / ____|           | |  |  _ \                      
-  | |      ___   ___ | |  | |_) | ___  __ _ _ __  ___ 
-  | |     / _ \ / _ \| |  |  _ < / _ \/ _` | '_ \/ __|
-  | |____| (_) | (_) | |  | |_) |  __/ (_| | | | \__ \
-   \_____|\___/ \___/|_|  |____/ \___|\__,_|_| |_|___/
-    
-  List. 
-  
-  Mads Hartmann Jensen (mads379@gmail.com)
-###
+#### Description
+
+# LinkedList
+
+#### Operations 
+# <table>
+#   <tr>
+#     <td>Name</td>
+#     <td>Complexity</td>
+#   </tr>
+# </table>
+
+#### Implementation
 
 Sequence = require('./sequence').Sequence
 Option   = require './option'
