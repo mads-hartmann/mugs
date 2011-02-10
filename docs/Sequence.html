@@ -1,0 +1,59 @@
+<!DOCTYPE html>  <html> <head>   <title>Sequence.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="BinaryTree.html">                 BinaryTree.coffee               </a>                                           <a class="source" href="List.html">                 List.coffee               </a>                                           <a class="source" href="Option.html">                 Option.coffee               </a>                                           <a class="source" href="RedBlackTree.html">                 RedBlackTree.coffee               </a>                                           <a class="source" href="Sequence.html">                 Sequence.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Sequence.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3>Description</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>This class represents a basic sequence. This should be considered an abstract
+class and has only been created for code re-use</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h3>Operations</h3>
+
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Complexity</td>
+  </tr>
+</table>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h3>Implementation</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">class</span> <span class="nx">Sequence</span> 
+  </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>TODO. This seems like a horrible solution to the circular 
+require problem.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">Cons = </span><span class="kc">undefined</span>
+  <span class="nv">Nil  = </span><span class="kc">undefined</span> 
+  
+  <span class="nv">requires = </span><span class="nf">() -&gt;</span> 
+    <span class="nv">ListWrapper = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./list&#39;</span><span class="p">)</span>
+    <span class="nv">Cons        = </span><span class="nx">ListWrapper</span><span class="p">.</span><span class="nx">Cons</span>
+    <span class="nv">Nil         = </span><span class="nx">ListWrapper</span><span class="p">.</span><span class="nx">Nil</span>
+    
+  <span class="k">this</span><span class="p">.</span><span class="nx">head</span> 
+  <span class="k">this</span><span class="p">.</span><span class="nx">tail</span>
+  
+  <span class="nv">elements: </span><span class="nf">() -&gt;</span> 
+    <span class="nv">__elements = </span><span class="nf">(xs) -&gt;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">xs</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span>
+        <span class="p">[]</span>
+      <span class="k">else</span> 
+        <span class="p">[</span><span class="nx">xs</span><span class="p">.</span><span class="nx">head</span><span class="p">].</span><span class="nx">concat</span><span class="p">(</span><span class="nx">__elements</span><span class="p">(</span><span class="nx">xs</span><span class="p">.</span><span class="nx">tail</span><span class="p">))</span>
+    <span class="nx">__elements</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+  </pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Applies a binary operator to a start value and all elements of this list, 
+going left to right</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">foldLeft: </span><span class="nf">(seed) -&gt;</span> <span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="nv">__foldLeft = </span><span class="nf">(acc, xs) -&gt;</span> 
+      <span class="k">if</span> <span class="p">(</span><span class="nx">xs</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span>
+        <span class="nx">acc</span>
+      <span class="k">else</span> 
+        <span class="nx">__foldLeft</span><span class="p">(</span> <span class="nx">f</span><span class="p">(</span><span class="nx">acc</span><span class="p">,</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">head</span><span class="p">),</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">tail</span><span class="p">)</span>
+    <span class="nx">__foldLeft</span><span class="p">(</span><span class="nx">seed</span><span class="p">,</span><span class="k">this</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Applies a binary operator to a start value and all elements of this list, 
+going right to left</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">foldRight: </span><span class="nf">(seed) -&gt;</span> <span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="nv">__foldRight = </span><span class="nf">(xs) -&gt;</span> 
+      <span class="k">if</span> <span class="p">(</span><span class="nx">xs</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span>
+        <span class="nx">seed</span>
+      <span class="k">else</span>
+        <span class="nx">f</span><span class="p">(</span> <span class="nx">xs</span><span class="p">.</span><span class="nx">head</span><span class="p">,</span> <span class="nx">__foldRight</span><span class="p">(</span><span class="nx">xs</span><span class="p">.</span><span class="nx">tail</span><span class="p">))</span>
+    <span class="nx">__foldRight</span><span class="p">(</span><span class="k">this</span><span class="p">)</span> 
+  </pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Creates a new list with all of the elements of 'this' list 
+followed by all of the elements of argument list.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">append: </span><span class="nf">(list) -&gt;</span> 
+    <span class="nx">requires</span><span class="p">()</span>
+    <span class="nv">__append = </span><span class="nf">(xs) -&gt;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">xs</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span> <span class="k">then</span> <span class="nx">list</span> <span class="k">else</span> <span class="k">new</span> <span class="nx">Cons</span><span class="p">(</span><span class="nx">xs</span><span class="p">.</span><span class="nx">head</span><span class="p">,</span> <span class="nx">__append</span><span class="p">(</span><span class="nx">xs</span><span class="p">.</span><span class="nx">tail</span><span class="p">,</span> <span class="nx">list</span><span class="p">))</span>
+    <span class="nx">__append</span><span class="p">(</span><span class="k">this</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Creates a new list with all of the argument list followed by all 
+of the elements of 'this' list.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">prepend: </span><span class="nf">(list) -&gt;</span> 
+    <span class="nx">requires</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">list</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span>
+      <span class="k">this</span>
+    <span class="k">else</span> 
+      <span class="k">new</span> <span class="nx">Cons</span><span class="p">(</span><span class="nx">list</span><span class="p">.</span><span class="nx">head</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">list</span><span class="p">.</span><span class="nx">tail</span><span class="p">))</span>
+
+<span class="nv">exports.Sequence = </span><span class="nx">Sequence</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

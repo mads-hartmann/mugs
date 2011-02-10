@@ -1,0 +1,52 @@
+<!DOCTYPE html>  <html> <head>   <title>List.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="BinaryTree.html">                 BinaryTree.coffee               </a>                                           <a class="source" href="List.html">                 List.coffee               </a>                                           <a class="source" href="Option.html">                 Option.coffee               </a>                                           <a class="source" href="RedBlackTree.html">                 RedBlackTree.coffee               </a>                                           <a class="source" href="Sequence.html">                 Sequence.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               List.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h3>Description</h3>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>LinkedList</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h3>Operations</h3>
+
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Complexity</td>
+  </tr>
+</table>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <h3>Implementation</h3>             </td>             <td class="code">               <div class="highlight"><pre><span class="nv">Sequence = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./sequence&#39;</span><span class="p">).</span><span class="nx">Sequence</span>
+<span class="nv">Option   = </span><span class="nx">require</span> <span class="s1">&#39;./option&#39;</span>
+<span class="nv">Some     = </span><span class="nx">Option</span><span class="p">.</span><span class="nx">Some</span>
+<span class="nv">None     = </span><span class="nx">Option</span><span class="p">.</span><span class="nx">None</span>
+
+<span class="k">class</span> <span class="nx">List</span> <span class="k">extends</span> <span class="nx">Sequence</span>
+  
+  <span class="nv">constructor: </span><span class="nf">(elements...) -&gt;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">elements</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="nx">Nil</span><span class="p">()</span>
+    <span class="k">else</span>
+      <span class="p">[</span><span class="nx">x</span><span class="p">,</span><span class="nx">xs</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">elements</span> 
+      <span class="k">return</span> <span class="k">new</span> <span class="nx">Cons</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">xs</span><span class="p">)</span>
+      
+  <span class="nv">isEmpty: </span><span class="nf">() -&gt;</span> 
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Not implemented in List&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nx">Cons</span> <span class="k">extends</span> <span class="nx">List</span>
+      
+  <span class="nv">constructor: </span><span class="nf">(hd, tl) -&gt;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nv">head = </span><span class="nx">hd</span>      
+    <span class="k">if</span> <span class="p">(</span><span class="nx">tl</span> <span class="o">==</span> <span class="kc">undefined</span> <span class="o">or</span> <span class="p">(</span><span class="nx">tl</span> <span class="k">instanceof</span> <span class="nb">Array</span> <span class="o">and</span> <span class="nx">tl</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+      <span class="k">this</span><span class="p">.</span><span class="nv">tail = </span><span class="k">new</span> <span class="nx">Nil</span><span class="p">()</span>
+    <span class="k">else</span> 
+      <span class="k">if</span> <span class="p">(</span><span class="nx">tl</span> <span class="k">instanceof</span> <span class="nb">Array</span><span class="p">)</span>
+        <span class="p">[</span><span class="nx">x</span><span class="p">,</span><span class="nx">xs</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">tl</span>
+        <span class="k">this</span><span class="p">.</span><span class="nv">tail = </span><span class="k">new</span> <span class="nx">Cons</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">xs</span><span class="p">)</span>
+      <span class="k">else</span> 
+        <span class="k">this</span><span class="p">.</span><span class="nv">tail = </span><span class="nx">tl</span>
+      
+  <span class="nv">isEmpty: </span><span class="nf">() -&gt;</span> <span class="kc">false</span>
+  
+<span class="k">class</span> <span class="nx">Nil</span> <span class="k">extends</span> <span class="nx">List</span>
+
+  <span class="nv">constructor: </span><span class="nf">() -&gt;</span> 
+    <span class="k">this</span><span class="p">.</span><span class="nv">head = </span><span class="k">new</span> <span class="nx">None</span><span class="p">()</span>
+    <span class="k">this</span><span class="p">.</span><span class="nv">tail = </span><span class="k">new</span> <span class="nx">None</span><span class="p">()</span>
+
+  <span class="nv">isEmpty: </span>    <span class="nf">() -&gt;</span> <span class="kc">true</span>
+
+<span class="nv">exports.List = </span><span class="nx">List</span>
+<span class="nv">exports.Cons = </span><span class="nx">Cons</span>
+<span class="nv">exports.Nil  = </span><span class="nx">Nil</span> 
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

@@ -14,21 +14,12 @@ h1. Immutable Collections Library for Javascript <br /> _The Documentation_
 # Documentation
 # "Paper":http://mads379.github.com/bachelorproject/paper
 
-# Sequence: (Abstract)
-## head (property)
-## tail (property) 
-## elements
-## foldLeft
-## foldRight
-## append
-## prepend
+Annotated source. 
 
-# List : Sequence
-## constructor( splash of elements ) 
-## isEmpty 
-
-# Cons : List
-## constructor( head, tail)
-# Nil : List 
+# "Sequence":http://mads379.github.com/bachelorproject/docs/Sequence.html
+# "List":http://mads379.github.com/bachelorproject/docs/List.html
+# "RedBlackTree":http://mads379.github.com/bachelorproject/docs/RedBlackTree.html
+# "Option":http://mads379.github.com/bachelorproject/docs/Option.html
+# "BinaryTree":http://mads379.github.com/bachelorproject/docs/BinaryTree.html
 
 </div>
