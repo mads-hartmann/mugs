@@ -23,7 +23,7 @@ reset = '\033[0m'
 # ===============================================================
 
 task 'build', 'build source', () -> 
-	exec("coffee -o bin -c src")
+	exec("coffee --bare -o bin -c src")
 
 task 'test', 'run the CoffeeScript language test suite', ->
   runTests CoffeeScript

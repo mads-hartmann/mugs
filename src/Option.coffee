@@ -38,6 +38,7 @@ class None  extends Option
   
   constructor: () -> 
   isEmpty:     () -> true
-  
-exports.Some = Some 
-exports.None = None 
+
+if exports?
+  exports.Some = Some 
+  exports.None = None 
