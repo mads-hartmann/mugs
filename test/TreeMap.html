@@ -9,10 +9,12 @@
 	<meta name="author" content="Mads Hartmann Jensen">
 	<!-- Date: 2011-02-12 -->
 	<script src="../bin/Option.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../bin/List.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../bin/RedBlackTree.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../bin/TreeMap.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
-		var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 5, 5, new RedBlackLeaf(BLACK)).insert(4).insert(3)
-		console.log(tree);
+		var map = new TreeMap(1, "one").insert(4,"four").insert(2,"two").insert(3,"three").remove(2)
+		console.log(map.keys().elements() );
 		
 	</script>
 </head>

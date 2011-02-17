@@ -12,10 +12,11 @@
 
 #### Implementation
 
-Sequence = require('./sequence').Sequence
-Option   = require './option'
-Some     = Option.Some
-None     = Option.None
+if require?
+  Sequence = require('./sequence').Sequence
+  Option   = require './option'
+  Some     = Option.Some
+  None     = Option.None
 
 class List extends Sequence
   
@@ -52,6 +53,7 @@ class Nil extends List
 
   isEmpty:     () -> true
 
-exports.List = List
-exports.Cons = Cons
-exports.Nil  = Nil 
+if exports?
+  exports.List = List
+  exports.Cons = Cons
+  exports.Nil  = Nil 

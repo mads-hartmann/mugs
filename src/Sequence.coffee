@@ -59,10 +59,7 @@ class Sequence
   # followed by all of the elements of argument list.
   append: (list) -> 
     requires()
-    __append = (xs) ->
-      if (xs.isEmpty()) then list else new Cons(xs.head, __append(xs.tail, list))
-    __append(this)
-
+    if this.isEmpty() then list else new Cons(this.head, this.tail.append(list))
 
   # Creates a new list with all of the argument list followed by all 
   # of the elements of 'this' list.
@@ -73,4 +70,5 @@ class Sequence
     else 
       new Cons(list.head, this.append(list.tail))
 
-exports.Sequence = Sequence
+if exports?
+  exports.Sequence = Sequence
