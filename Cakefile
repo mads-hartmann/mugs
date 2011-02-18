@@ -13,3 +13,6 @@ CoffeeScript  = require './lib/coffee-script'
 
 task 'build', 'build source', () -> 
 	exec("coffee --bare -o bin -c src")
+	
+task 'docco', 'Create annotated source', () ->
+  exec('docco src/* ')
