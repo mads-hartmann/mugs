@@ -76,9 +76,9 @@ class List
   # Consider two lists. A is the argument passed to the method append
   # of list T. R is the resulting list. x2 is a copy of x1 etc.
   # 
-  # A: a -> b -> c -> Nil
-  # T: x -> y -> z -> Nil 
-  # R: x2 -> y2 -> z2 -> A
+  # A: a -> b -> c -> Nil  
+  # T: x -> y -> z -> Nil   
+  # R: x2 -> y2 -> z2 -> A  
   #
   # Thus all of the elements of A are reused.
   appendList: (list) -> 
@@ -90,9 +90,9 @@ class List
   # Consider two lists. A is the argument passed to the method prepend
   # of list T. R is the resulting list. a2 is a copy of a1 etc.
   #
-  # A: a -> b -> c -> Nil     
-  # T: x -> y -> z -> Nil 
-  # R: a2 -> b2 -> c3 -> T 
+  # A: a -> b -> c -> Nil       
+  # T: x -> y -> z -> Nil   
+  # R: a2 -> b2 -> c3 -> T   
   #
   # Thus all of the elements of T are reused
   prependList: (list) -> 
