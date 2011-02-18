@@ -13,8 +13,8 @@ title: Immutable Collections Library for Javascript: The Paper
 h1. Immutable Collections Library for Javascript <br /> _The Paper_
 
 # "About":http://mads379.github.com/bachelorproject/
-# "Documentation":http://mads379.github.com/bachelorproject/documentation
-# Paper
+# "The API":http://mads379.github.com/bachelorproject/api
+# The Paper
 
 
 h2(#table_of_contents). Table of Contents 

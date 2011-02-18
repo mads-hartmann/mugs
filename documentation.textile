@@ -11,15 +11,7 @@ title: Immutable Collections Library for Javascript: The Documentation
 h1. Immutable Collections Library for Javascript <br /> _The Documentation_
 
 # "About":http://mads379.github.com/bachelorproject/
-# Documentation
 # "Paper":http://mads379.github.com/bachelorproject/paper
 
-Annotated source. 
-
-# "Sequence":http://mads379.github.com/bachelorproject/docs/Sequence.html
-# "List":http://mads379.github.com/bachelorproject/docs/List.html
-# "RedBlackTree":http://mads379.github.com/bachelorproject/docs/RedBlackTree.html
-# "Option":http://mads379.github.com/bachelorproject/docs/Option.html
-# "BinaryTree":http://mads379.github.com/bachelorproject/docs/BinaryTree.html
 
 </div>
