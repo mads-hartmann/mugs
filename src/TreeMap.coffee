@@ -1,3 +1,8 @@
+###*
+@fileoverview Contains the implementation of the Map data structure based on a Red-Black Tree
+@author Mads Hartmann Jensen (mads379@gmail.com)
+###
+
 if require?
   RedBlackNodeWrapper = require('../src/RedBlackTree')
   RedBlackNode        = RedBlackNodeWrapper.RedBlackNode

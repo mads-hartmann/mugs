@@ -13,11 +13,11 @@
 	</head>
 
 	<body>
+		{+include("static/header.html")+}
+		{+include("static/menu.html")+}
 		<div id="container">
 <!-- ============================== header ================================= -->	
-		<!-- begin static/header.html -->
-		{+include("static/header.html")+}
-		<!-- end static/header.html -->
+
 
 <!-- ============================== classes index ============================ -->
 		<div id="index">
@@ -28,7 +28,7 @@
 		
 		<div id="content">
 <!-- ============================== class title ============================ -->
-			<h1 class="classTitle">
+			<h2 class="classTitle">
 				{!
 					var classType = "";
 					
@@ -47,7 +47,7 @@
 					}
 				!}
 				{+classType+}{+data.alias+}
-			</h1>
+			</h2>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">

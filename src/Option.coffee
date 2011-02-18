@@ -1,4 +1,9 @@
 ###*
+@fileoverview Contains the implementation of the Option data structure.
+@author Mads Hartmann Jensen (mads379@gmail.com)
+###
+
+###*
   @class Some
 ###
 class Some 

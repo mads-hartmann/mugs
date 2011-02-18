@@ -24,7 +24,7 @@ function publish(symbolSet) {
 	// create the required templates
 	try {
 		var classTemplate = new JSDOC.JsPlate(publish.conf.templatesDir+"class.tmpl");
-		var classesTemplate = new JSDOC.JsPlate(publish.conf.templatesDir+"allclasses.tmpl");
+		var classesTemplate = new JSDOC.JsPlate(publish.conf.templatesDir+"sidebar.tmpl");
 	}
 	catch(e) {
 		print("Couldn't create the required templates: "+e);

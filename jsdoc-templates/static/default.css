@@ -9,11 +9,35 @@ body {
   width: 75%;
   margin: 0px auto;
   background: #F5F5F5;
-  padding: 40px;
   color: #333;
+  padding: 20px 40px 20px 40px;
+  border-bottom: 10px solid #666;
+}
+
+#menu {
+  text-align: left;
+  width: 75%;
+  margin: 0px auto;
   border-top: 10px solid #666;
   border-bottom: 10px solid #666;
-  margin-top: 60px;
+  list-style: none;
+  padding: 20px 40px 20px 40px;
+  background: #dee1e1;
+  overflow: hidden;
+  display: inline-block;
+  display: block;
+  font-size: 14px;
+  background: #F5F5F5;
+}
+
+#menu li {
+  float: left;
+  padding-right: 10px;
+}
+
+#content ul {
+  list-style: none;
+  padding-left: 0px;
 }
 
 h1 {
@@ -24,6 +48,7 @@ h1 {
 
 h2 {
   font-size: 22px;
+  margin-top: 0px;
   text-transform: uppercase;
 }
 
@@ -39,16 +64,7 @@ a {
 .header
 {
 	clear: both;
-	background-color: #ccc;
-	padding: 8px;
-}
-
-h1
-{
-	font-size: 150%;
-	font-weight: bold;
-	padding: 0;
-	margin: 1em 0 0 .3em;
+	margin: 50px 0px;
 }
 
 hr
@@ -67,17 +83,29 @@ pre.code
 
 #index
 {
-	margin-top: 24px;
 	float: left;
 	width: 160px;
 	left: 8px;
-	padding: 8px;
+	padding: 0px 8px 8px 0px;
+}
+
+#index h2 {
+  margin-top: 0px;
 }
 
 #content
 {
 	margin-left: 190px;
 	width: 600px;
+}
+
+#sidebar h3 {
+  margin-top: 0px;
+  font-size: 12px;
+}
+
+#sidebar h2 {
+  
 }
 
 .classList
@@ -98,13 +126,6 @@ pre.code
 
 .summaryTable { width: 100%; }
 
-h1.classTitle
-{
-	font-size:170%;
-	line-height:130%;
-}
-
-h2 { font-size: 110%; }
 caption, div.sectionTitle
 {
 	background-color: #666;

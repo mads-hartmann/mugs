@@ -1,3 +1,8 @@
+###*
+@fileoverview Contains the implementation of the Red-Black tree data structure.
+@author Mads Hartmann Jensen (mads379@gmail.com)
+###
+
 # Importing dependencies
 if require?
   Option   = require './option'

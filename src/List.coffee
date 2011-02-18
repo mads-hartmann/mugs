@@ -1,3 +1,7 @@
+###*
+@fileoverview Contains the implementation of the List data structure.
+@author Mads Hartmann Jensen (mads379@gmail.com)
+### 
 if require?
   Option   = require './option'
   Some     = Option.Some
