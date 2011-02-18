@@ -8,7 +8,7 @@ if require?
   None     = Option.None
 
 ###*
-  @class List
+  @class List based on a Singly-Linked list
 ###
 class List 
   
@@ -119,9 +119,6 @@ class List
         f( xs.head, __foldRight(xs.tail))
     __foldRight(this) 
 
-###*
-  @class Represents an empty list
-###      
 class Nil 
 
   constructor: () -> 

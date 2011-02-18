@@ -1,6 +1,18 @@
 ###*
-@fileoverview Contains the implementation of the Red-Black tree data structure.
-@author Mads Hartmann Jensen (mads379@gmail.com)
+  @fileoverview 
+  
+  A Red-black tree is a binary tree with two invariants that ensure
+  that the tree is balanced to keep the height of the tree low.
+  
+  1. No red node has a red child
+  2. Every path from the root to an empty node contains 
+     the same number of black nodes
+  
+  The insert and contains methods have been implemented following Chris Okasaki's
+  book 'purely functional data structures' and the remove operations has been
+  implemented following this blog: http://matt.might.net/articles/red-black-delete/
+  
+  @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
 
 # Importing dependencies
@@ -34,9 +46,6 @@ NEGATIVE_BLACK = {
   subtract:   () -> NEGATIVE_BLACK
 }
 
-###*
-  @class An empty tree ( a leaf )
-###
 class RedBlackLeaf 
   
   constructor: (color) -> 
@@ -53,20 +62,6 @@ class RedBlackLeaf
   values:       ()      -> new Nil() 
   inorderMap:   (func)  -> new Nil()
 
-
-###*
-  @class 
-  A Red-black tree is a binary tree with two invariants that ensure
-  that the tree is balanced to keep the height of the tree low.
-  
-  1. No red node has a red child
-  2. Every path from the root to an empty node contains 
-     the same number of black nodes
-  
-  The insert and contains methods have been implemented following Chris ...
-  book 'purely functional data structures' and the remove operations has been
-  implemented following this blog: http://matt.might.net/articles/red-black-delete/
-###
 class RedBlackNode 
   # The standard compare function. It's used if the user doesn't 
   # supply one when creating the tree

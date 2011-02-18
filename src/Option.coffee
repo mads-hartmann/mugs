@@ -3,9 +3,6 @@
 @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
 
-###*
-  @class Some
-###
 class Some 
 
   this.__value
@@ -20,9 +17,6 @@ class Some
   get:         ()       -> this.__value
   getOrElse:   (f)      -> this.get()
 
-###*
-  @class None
-###  
 class None 
   
   constructor: ()  -> 
