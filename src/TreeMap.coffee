@@ -5,6 +5,10 @@ if require?
   RED                 = RedBlackNodeWrapper.RED
   BLACK               = RedBlackNodeWrapper.BLACK
 
+
+###*
+  @class Map based on a Red-Black Tree
+###
 class TreeMap
   
   # Delegate tree 

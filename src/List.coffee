@@ -1,14 +1,11 @@
-#### Description
-
-# This is a implemtation of a Singly-Linked List 
-
-#### Implementation
-
 if require?
   Option   = require './option'
   Some     = Option.Some
   None     = Option.None
 
+###*
+  @class List
+###
 class List 
   
   this.head
@@ -117,7 +114,10 @@ class List
       else
         f( xs.head, __foldRight(xs.tail))
     __foldRight(this) 
-      
+
+###*
+  @class Represents an empty list
+###      
 class Nil 
 
   constructor: () -> 

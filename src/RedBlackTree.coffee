@@ -1,39 +1,3 @@
-#### Description
-
-# A Red-black tree is a binary tree with two invariants that ensure
-# that the tree is balanaced to keep the height of the tree low.
-#
-# 1. No red node has a red child
-# 2. Every path from the root to an empty node contains 
-#    the same number of black nodes
-#
-# The insert and contains methods have been implemented following Chris ...
-# book 'purely functional data structures' and the remove operations has been
-# implemented following this blog: http://matt.might.net/articles/red-black-delete/
-
-
-#### Operations 
-# <table>
-#   <tr>
-#     <td>Name</td>
-#     <td>Complexity</td>
-#   </tr>
-#   <tr>
-#     <td> contains(element) </td>
-#     <td> O(log n) </td>
-#   </tr>  
-#   <tr>
-#     <td> insert(element) </td>
-#     <td> O(log n) </td>
-#   </tr>
-#   <tr>
-#     <td> remove(element) </td>
-#     <td> O(log n) </td>
-#   </tr>
-# </table>
-
-#### Implementation
-
 # Importing dependencies
 if require?
   Option   = require './option'
@@ -65,7 +29,9 @@ NEGATIVE_BLACK = {
   subtract:   () -> NEGATIVE_BLACK
 }
 
-
+###*
+  @class An empty tree ( a leaf )
+###
 class RedBlackLeaf 
   
   constructor: (color) -> 
@@ -83,6 +49,19 @@ class RedBlackLeaf
   inorderMap:   (func)  -> new Nil()
 
 
+###*
+  @class 
+  A Red-black tree is a binary tree with two invariants that ensure
+  that the tree is balanced to keep the height of the tree low.
+  
+  1. No red node has a red child
+  2. Every path from the root to an empty node contains 
+     the same number of black nodes
+  
+  The insert and contains methods have been implemented following Chris ...
+  book 'purely functional data structures' and the remove operations has been
+  implemented following this blog: http://matt.might.net/articles/red-black-delete/
+###
 class RedBlackNode 
   # The standard compare function. It's used if the user doesn't 
   # supply one when creating the tree
