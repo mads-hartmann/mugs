@@ -249,14 +249,6 @@ ul.inheritsList
 				
 				<li><a href="../symbols/List.html">List</a></li>
 				
-				<li><a href="../symbols/Nil.html">Nil</a></li>
-				
-				<li><a href="../symbols/None.html">None</a></li>
-				
-				<li><a href="../symbols/RedBlackLeaf.html">RedBlackLeaf</a></li>
-				
-				<li><a href="../symbols/RedBlackNode.html">RedBlackNode</a></li>
-				
 				<li><a href="../symbols/TreeMap.html">TreeMap</a></li>
 				
 			</ul>
@@ -285,7 +277,7 @@ ul.inheritsList
 				
 				
 			
-				List
+				List provides the implementation of the abstract data type 'List' based on a Singly-Linked list <br />
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/bin_List.js.html">List.js</a>.
@@ -309,7 +301,7 @@ ul.inheritsList
 							<div class="fixedFont">
 								<b><a href="../symbols/List.html#constructor">List</a></b>()
 							</div>
-							<div class="description"></div>
+							<div class="description"><p>List provides the implementation of the abstract data type 'List' based on a Singly-Linked list</p></div>
 						</td>
 					</tr>
 				</tbody>
@@ -338,7 +330,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#append">append</a></b>(element)
 								</div>
-								<div class="description"></div>
+								<div class="description">Create a new list by appending this value</div>
 							</td>
 						</tr>
 					
@@ -347,7 +339,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#appendList">appendList</a></b>(list)
 								</div>
-								<div class="description"></div>
+								<div class="description">Creates a list by appending the argument list to 'this' list.</div>
 							</td>
 						</tr>
 					
@@ -356,7 +348,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#first">first</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Returns an Option containing the first element in the list</div>
 							</td>
 						</tr>
 					
@@ -365,7 +357,8 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#foldLeft">foldLeft</a></b>(seed)
 								</div>
-								<div class="description"></div>
+								<div class="description">Applies a binary operator to a start value and all elements of this list,
+    going left to right</div>
 							</td>
 						</tr>
 					
@@ -374,7 +367,8 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#foldRight">foldRight</a></b>(seed)
 								</div>
-								<div class="description"></div>
+								<div class="description">Applies a binary operator to a start value and all elements of this list,
+    going right to left</div>
 							</td>
 						</tr>
 					
@@ -383,7 +377,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#get">get</a></b>(index)
 								</div>
-								<div class="description"></div>
+								<div class="description">Return an Option containt the nth element in the list.</div>
 							</td>
 						</tr>
 					
@@ -401,16 +395,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#last">last</a></b>()
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/List.html#-List">List</a></b>()
-								</div>
-								<div class="description"></div>
+								<div class="description">Returns an Option containing the last element in the list</div>
 							</td>
 						</tr>
 					
@@ -419,7 +404,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#prepend">prepend</a></b>(element)
 								</div>
-								<div class="description"></div>
+								<div class="description">Create a new list by prepending this value</div>
 							</td>
 						</tr>
 					
@@ -428,7 +413,10 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#prependList">prependList</a></b>(list)
 								</div>
-								<div class="description"></div>
+								<div class="description">Creates a new list by copying all of the items in the argument 'list'
+    before of 'this' list
+
+    Consider two lists.</div>
 							</td>
 						</tr>
 					
@@ -437,7 +425,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#update">update</a></b>(index, element)
 								</div>
-								<div class="description"></div>
+								<div class="description">Update the value with index 'index'.</div>
 							</td>
 						</tr>
 					
@@ -462,7 +450,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="description">
-					
+					<p>List provides the implementation of the abstract data type 'List' based on a Singly-Linked list</p>
 					
 				</div>
 				
@@ -497,7 +485,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Create a new list by appending this value
 						
 						
 					</div>
@@ -533,7 +521,16 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Creates a list by appending the argument list to 'this' list.
+
+    Consider two lists. A is the argument passed to the method append
+    of list T. R is the resulting list. x2 is a copy of x1 etc.
+
+    A: a -> b -> c -> Nil
+    T: x -> y -> z -> Nil
+    R: x2 -> y2 -> z2 -> A
+
+    Thus all of the elements of A are reused.
 						
 						
 					</div>
@@ -569,7 +566,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Returns an Option containing the first element in the list
 						
 						
 					</div>
@@ -594,7 +591,8 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Applies a binary operator to a start value and all elements of this list,
+    going left to right
 						
 						
 					</div>
@@ -630,7 +628,8 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Applies a binary operator to a start value and all elements of this list,
+    going right to left
 						
 						
 					</div>
@@ -666,7 +665,8 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Return an Option containt the nth element in the list. Some(element) if it
+    exists. Otherwise None
 						
 						
 					</div>
@@ -727,32 +727,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="-List"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
-					
-					
-					<b>List</b>()
-					
-					</div>
-					<div class="description">
-						
+						Returns an Option containing the last element in the list
 						
 						
 					</div>
@@ -777,7 +752,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Create a new list by prepending this value
 						
 						
 					</div>
@@ -813,7 +788,17 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Creates a new list by copying all of the items in the argument 'list'
+    before of 'this' list
+
+    Consider two lists. A is the argument passed to the method prepend
+    of list T. R is the resulting list. a2 is a copy of a1 etc.
+
+    A: a -> b -> c -> Nil
+    T: x -> y -> z -> Nil
+    R: a2 -> b2 -> c3 -> T
+
+    Thus all of the elements of T are reused
 						
 						
 					</div>
@@ -849,7 +834,8 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Update the value with index 'index'. This will copy all values up to the
+    given index.
 						
 						
 					</div>
@@ -891,7 +877,7 @@ ul.inheritsList
 			<hr />
 			<div class="fineprint" style="clear:both">
 				
-				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Fri Feb 18 2011 16:20:46 GMT+0100 (CET)
+				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Fri Feb 18 2011 17:48:53 GMT+0100 (CET)
 			</div>
 		</div>
 
