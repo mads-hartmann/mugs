@@ -19,11 +19,35 @@ body {
   width: 75%;
   margin: 0px auto;
   background: #F5F5F5;
-  padding: 40px;
   color: #333;
+  padding: 20px 40px 20px 40px;
+  border-bottom: 10px solid #666;
+}
+
+#menu {
+  text-align: left;
+  width: 75%;
+  margin: 0px auto;
   border-top: 10px solid #666;
   border-bottom: 10px solid #666;
-  margin-top: 60px;
+  list-style: none;
+  padding: 20px 40px 20px 40px;
+  background: #dee1e1;
+  overflow: hidden;
+  display: inline-block;
+  display: block;
+  font-size: 14px;
+  background: #F5F5F5;
+}
+
+#menu li {
+  float: left;
+  padding-right: 10px;
+}
+
+#content ul {
+  list-style: none;
+  padding-left: 0px;
 }
 
 h1 {
@@ -34,6 +58,7 @@ h1 {
 
 h2 {
   font-size: 22px;
+  margin-top: 0px;
   text-transform: uppercase;
 }
 
@@ -49,16 +74,7 @@ a {
 .header
 {
 	clear: both;
-	background-color: #ccc;
-	padding: 8px;
-}
-
-h1
-{
-	font-size: 150%;
-	font-weight: bold;
-	padding: 0;
-	margin: 1em 0 0 .3em;
+	margin: 50px 0px;
 }
 
 hr
@@ -77,17 +93,29 @@ pre.code
 
 #index
 {
-	margin-top: 24px;
 	float: left;
 	width: 160px;
 	left: 8px;
-	padding: 8px;
+	padding: 0px 8px 8px 0px;
+}
+
+#index h2 {
+  margin-top: 0px;
 }
 
 #content
 {
 	margin-left: 190px;
 	width: 600px;
+}
+
+#sidebar h3 {
+  margin-top: 0px;
+  font-size: 12px;
+}
+
+#sidebar h2 {
+  
 }
 
 .classList
@@ -108,13 +136,6 @@ pre.code
 
 .summaryTable { width: 100%; }
 
-h1.classTitle
-{
-	font-size:170%;
-	line-height:130%;
-}
-
-h2 { font-size: 110%; }
 caption, div.sectionTitle
 {
 	background-color: #666;
@@ -203,85 +224,94 @@ ul.inheritsList
 	</head>
 	
 	<body>
+		<h1 class="header">Immutable Collections Library for Javascript <br /> <em>The Documentation</em></h1>
+		<ol id="menu">
+	<li><a href="http://mads379.github.com/bachelorproject/">About</a></li>
+	<li>The Documentation</li>
+	<li><a href="http://mads379.github.com/bachelorproject/paper">Paper</a></li>
+</ol>
+
 		<div id="container">
-		<div id="header">
-</div>
-		
 		<div id="index">
-			<div align="center"><a href="index.html">Class Index</a>
-| <a href="files.html">File Index</a></div>
-<hr />
-<h2>Classes</h2>
-<ul class="classList">
-	
-	<li><i><a href="symbols/_global_.html">_global_</a></i></li>
-	
-	<li><a href="symbols/List.html">List</a></li>
-	
-	<li><a href="symbols/Nil.html">Nil</a></li>
-	
-	<li><a href="symbols/None.html">None</a></li>
-	
-	<li><a href="symbols/RedBlackLeaf.html">RedBlackLeaf</a></li>
-	
-	<li><a href="symbols/RedBlackNode.html">RedBlackNode</a></li>
-	
-	<li><a href="symbols/TreeMap.html">TreeMap</a></li>
-	
-</ul>
-<hr />
+			<div id="sidebar">
+	<h2>Nagivation</h2>
+	<ul class="classList">
+		<li>
+			<h3>Classes</h3>
+			<ul>
+				
+				<li><i><a href="symbols/_global_.html">_global_</a></i></li>
+				
+				<li><a href="symbols/List.html">List</a></li>
+				
+				<li><a href="symbols/Nil.html">Nil</a></li>
+				
+				<li><a href="symbols/None.html">None</a></li>
+				
+				<li><a href="symbols/RedBlackLeaf.html">RedBlackLeaf</a></li>
+				
+				<li><a href="symbols/RedBlackNode.html">RedBlackNode</a></li>
+				
+				<li><a href="symbols/TreeMap.html">TreeMap</a></li>
+				
+			</ul>
+		</li>
+		<li>
+			<h3>Pages</h3>
+			<ul>
+				<li><a href="index.html">Class Index</a></li>
+				<li><a href="files.html">File Index</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
 		</div>
 		
 		<div id="content">
-			<h1 class="classTitle">Class Index</h1>
+			<h2 class="classTitle">Class Index</h2>
 			
-			
-			<div>
-				<h2><a href="symbols/_global_.html">_global_</a></h2>
+			<ul>
 				
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/List.html">List</a></h2>
-				List
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/Nil.html">Nil</a></h2>
-				Represents an empty list
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/None.html">None</a></h2>
-				None
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/RedBlackLeaf.html">RedBlackLeaf</a></h2>
-				An empty tree ( a leaf )
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/RedBlackNode.html">RedBlackNode</a></h2>
-				A Red-black tree is a binary tree with two invariants that ensure
-  that the tree is balanced to keep the height of the tree low.
-			</div>
-			<hr />
-			
-			<div>
-				<h2><a href="symbols/TreeMap.html">TreeMap</a></h2>
-				Map based on a Red-Black Tree
-			</div>
-			<hr />
-			
+					<li>
+					<a href="symbols/_global_.html">_global_</a>
+					<p></p>
+					</li>
+				
+					<li>
+					<a href="symbols/List.html">List</a>
+					<p>List</p>
+					</li>
+				
+					<li>
+					<a href="symbols/Nil.html">Nil</a>
+					<p>Represents an empty list</p>
+					</li>
+				
+					<li>
+					<a href="symbols/None.html">None</a>
+					<p>None</p>
+					</li>
+				
+					<li>
+					<a href="symbols/RedBlackLeaf.html">RedBlackLeaf</a>
+					<p>An empty tree ( a leaf )</p>
+					</li>
+				
+					<li>
+					<a href="symbols/RedBlackNode.html">RedBlackNode</a>
+					<p>A Red-black tree is a binary tree with two invariants that ensure
+  that the tree is balanced to keep the height of the tree low.</p>
+					</li>
+				
+					<li>
+					<a href="symbols/TreeMap.html">TreeMap</a>
+					<p>Map based on a Red-Black Tree</p>
+					</li>
+				
+			</ul>
 			<div class="fineprint" style="clear:both">
 				
-				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a> 2.3.2 on Fri Feb 18 2011 12:26:17 GMT+0100 (CET)
+				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a> 2.3.2 on Fri Feb 18 2011 16:20:47 GMT+0100 (CET)
 			</div>
 		</div>
 		</div>

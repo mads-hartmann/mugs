@@ -8,11 +8,35 @@ body {
   width: 75%;
   margin: 0px auto;
   background: #F5F5F5;
-  padding: 40px;
   color: #333;
+  padding: 20px 40px 20px 40px;
+  border-bottom: 10px solid #666;
+}
+
+#menu {
+  text-align: left;
+  width: 75%;
+  margin: 0px auto;
   border-top: 10px solid #666;
   border-bottom: 10px solid #666;
-  margin-top: 60px;
+  list-style: none;
+  padding: 20px 40px 20px 40px;
+  background: #dee1e1;
+  overflow: hidden;
+  display: inline-block;
+  display: block;
+  font-size: 14px;
+  background: #F5F5F5;
+}
+
+#menu li {
+  float: left;
+  padding-right: 10px;
+}
+
+#content ul {
+  list-style: none;
+  padding-left: 0px;
 }
 
 h1 {
@@ -23,6 +47,7 @@ h1 {
 
 h2 {
   font-size: 22px;
+  margin-top: 0px;
   text-transform: uppercase;
 }
 
@@ -33,4 +58,10 @@ h3 {
 
 a {
   color: #990003;
+}
+
+.header
+{
+	clear: both;
+	margin: 50px 0px;
 }

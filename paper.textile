@@ -8,14 +8,15 @@ title: Immutable Collections Library for Javascript: The Paper
 	<!-- <link rel="stylesheet" href="file:///Users/Mads/dev/projects/bachelorproject/css/screen.css" type="text/css" media="screen" title="no title" charset="utf-8"> -->
 	
 </head>
+
+
+<h1 class="header">Immutable Collections Library for Javascript <br /> <em>The Paper</em></h1>
+<ol id="menu">
+	<li>"About":http://mads379.github.com/bachelorproject</li>
+	<li>"The API":http://mads379.github.com/bachelorproject/api</li>
+	<li>The Paper</li>
+</ol>
 <div id="container">
-
-h1. Immutable Collections Library for Javascript <br /> _The Paper_
-
-# "About":http://mads379.github.com/bachelorproject/
-# "The API":http://mads379.github.com/bachelorproject/api
-# The Paper
-
 
 h2(#table_of_contents). Table of Contents 
 
