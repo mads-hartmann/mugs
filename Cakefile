@@ -16,3 +16,10 @@ task 'build', 'build source', () ->
 	
 task 'docco', 'Create annotated source', () ->
   exec('docco src/* ')
+  
+task 'jscoverage', 'instruments the source code for JSCoverage and start the JSCoverage server', () ->
+  console.log """Started JSCoverage server at: http://127.0.0.1:8080/jscoverage.html?test/index.html
+                 Hit CTRL+C to stop"""
+  exec('jscoverage-server --verbose --ip-address=0.0.0.0 --port=8080')
+  
+  
