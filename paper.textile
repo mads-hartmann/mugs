@@ -21,11 +21,15 @@ h2(#table_of_contents). Table of Contents
 # "Preface and introduction":#preface_and_introduction
 # "Background and description of the problem":#background_and_description_of_the_problem
 ## "Problem Definition":#problem_definition
-## "The case for immutability":#the_case_for_immutability
-## "Selected Data Structures":#selected_data_structures
-## "Exceptions are not an Option":#exceptions_are_not_an_option
+## "Design goals":#design_goals
+## "Overview of collections":#overview_of_collections
+## "Comparison with other collection libraries":#comparison_with_other_collections
 ## "Coffeescript":#coffeescript
 # "Problem analysis":#problem_analysis
+## "The case for immutability":#the_case_for_immutability
+## "Selected Data Structures":#selected_data_structures
+## "Operations":#operations
+## "How to handle exceptional states":#how_to_handle_exceptional_states
 # "User’s guide and examples":#users_guide_and_examples
 # "Technical description of the program":#technical_description_of_the_program
 # "Test":#test
@@ -51,6 +55,18 @@ The project will include a set of performance tests that evaluate the data-struc
 [?1] Should i say prototypes? You don't have classes in javascript
 [?2] Find a better word
 
+h3(#design_goals). Design goals
+
+h3(#overview_of_collections). Overview of collections
+
+h3(##comparison_with_other_collections). Comparison with other collection libraries
+
+h3(#coffeescript). Coffeescript
+
+What is Coffeescript and why have i chosen to use it over javascript?
+
+h2(#problem_analysis). Problem analysis
+
 h3(#the_case_for_immutability). The case for immutability 
 
 A description of why I've chosen immutability
@@ -73,31 +89,64 @@ Some thoughts about which data structures to implement. So far I'm considering t
 # Map 
 ## Tree based
 ## Hash Based
+# MultiMap
+## Tree based
 # Stack
 ## List Based
 
-Some references: 
+h3(#operations). Operations 
 
-# Scala
-## "List":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/List.scala#L1
-## "TreeMap":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/TreeMap.scala#L1
-## "HashMap":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/HashMap.scala#L1
-## "TreeSet":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/TreeSet.scala#L1
-## "HashSet":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/HashSet.scala#L1
-## "Stack":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/Stack.scala#L1
-## "Queue":https://lampsvn.epfl.ch/trac/scala/browser/scala/tags/R_2_8_1_final/src//library/scala/collection/immutable/Queue.scala#L1
+This section will give an overview of the different operations implemented on the data structures. 
 
-h3(#exceptions_are_not_an_option). Exceptions are not an Option
+The names of the operations are heavily inspired by the standard Scala Collections Library with the exception that *all* names are camel-cased. 
+
+The following is the base set of operations that are implemented by all of the data structures. 
+
+# *foldLeft*(seed)(f(acc, val) => value)
+Allies the binary function 'f' on each element in the list starting from left. The function 'f' takes two arguments: The first is the accumulation of applying the function f on the elements of the collection so far. The second is the current value. 
+<pre>new List(1,2,3,4,5).foldLeft(0)( (acc,elem) -> acc+elem) = 15</pre>
+# *foldRight*(seed)(f(acc, val) => value)
+Allies the binary function 'f' on each element in the list starting from right. The function 'f' takes two arguments: The first is the accumulation of applying the function f on the elements of the collection so far. The second is the current value. 
+<pre>new List(1,2,3,4,5).foldRight(0)( (acc,elem) -> acc+elem) = 15</pre>
+# *map*( f(element) => other type )
+Applies the function 'f' on each element in the collection and returns a new collection with the values returned from applying the function 'f'. 
+<pre>new List(1,2,3,4,5).map( elem => elem.toString() ) = List("1","2","3","4","5")</pre>
+# *filter*( f(element) => boolean )
+Applies the function 'f' on each element and returns a collection of the same type with the elements where the function returned true <pre>new List(1,2,3,4,5,6,7,8,9,10).filter( elem => elem > 5) = List(6,7,8,9,10)</pre>
+# *forEach*( f(element) -> ...)
+Apply the function f on each element in the collection returning nothing. This is all about side effects. <pre>new List(1,2,3,4,5).foreach( elem -> console.log(elem)) = undefined </pre>
+# *flatMap*( f(element) => other type )
+Applies the function 'f' on each element in the collection and returns a new collection with the values returned from applying the function 'f'. This will flatten the values returned form function 'f'. <pre>new List(1,2,3).map( elem => new List(elem,elem,elem) ) = List(1,1,1,2,2,2,3,3,3)</pre>
+# *contains*( element )
+Checks if the collection contains the element <pre>new List(1,2,3,4,5).contains(2) = true</pre>
+# *isEmpty*
+return true if the collection is empty. Otherwise false. <pre>new List().isEmpty() = true</pre>
+# *forAll*( p: (elem) => boolean )
+Returns true if the result of applying 'p' on every element returns true. Otherwise false. <pre> new List(1,2,3,4,5).forall( elem -> elem &lt; 10) = true</pre>
+# *take*(n) 
+Returns a collection containing the 'n' first elements of the original collection. <pre>new List(1,2,3,4,5).take(2) = List(1,2)</pre>
+# *takeWhile*(p: (elem) -> boolean )
+Return a list containing all of the elements of original collection where applying the function 'p' return true. I will stop once the function returns false or it hit the end of the collection. <pre>new List(1,2,3,4,5,6,7,8,9,10).takeWhile( elem -> elem &lt; 6)</pre>
+# *size*() 
+Returns the number of elements in the collection. <pre>new List(1,2,3,4,5).size = 5</pre>
+
+Further, the collections can be grouped into three categories: Set, Map and Sequence which each have specialized operations. 
+
+# *Set*
+## union( set )
+## intersect( set )
+## difference( set )
+# *Map*
+## keys()
+## values() 
+## get( key )
+# *Seq*
+## reverse()
+## get( position )
+
+h3(#how_to_handle_exceptional_states). How to handle exceptional states
 
 Explain why I've chosen to use the Option type rather than exceptions when handling operations that might not execute successfully. 
-
-h3(#coffeescript). Coffeescript
-
-What is Coffeescript and why have i chosen to use it over javascript?
-
-h2(#problem_analysis). Problem analysis
-
-Pick some of the data structures that I have implemented. Explain and analyze algorithms for various operations on those data structure. 
 
 h2(#users_guide_and_examples). User’s guide and examples
 
