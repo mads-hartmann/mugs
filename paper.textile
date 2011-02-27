@@ -107,7 +107,7 @@ The two main reasons I've chosen to write this library in Coffeescript is that i
 
 Here's a couple of Coffeescript examples and the resulting Javascript outputted by the compiler. The goal of these examples is to show the simplicity of Coffeescript and the readability of output. For a extensive description of the entire language, please go to the "Coffeescript homepage":http://jashkenas.github.com/coffee-script/ for more information
 
-<table border="1px">
+<table>
 	<thead>
 	<tr>
 		<td width="40%">*Coffeescript*</td>
