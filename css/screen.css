@@ -7,7 +7,14 @@ thead td {
   font-size: 13px;
 }
 
-tr { border-bottom: 1px;}
+table {
+  border-collapse:collapse;
+  width: 100%;
+}
+table,th, td {
+  border: 1px solid black;
+}
+td { padding: 5px ;}
 
 #container {
   text-align: left;
