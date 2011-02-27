@@ -115,20 +115,20 @@ Here's a couple of Coffeescript examples and the resulting Javascript outputted 
 	</tr>
 	</thead>
 	<tr>
-		<td><code>(x,y) -> x+y</code></td>
-		<td><code>(function(x, y) {    
+		<td><pre><code>(x,y) -> x+y</code></pre></td>
+		<td><pre><code>(function(x, y) {    
   return x + y;    
-});</code></td>
+});</code></pre></td>
 	</tr>
 	<tr>
 		<td>
-			<code>Nil = () ->    
+			<pre><code>Nil = () ->    
   this.head    = new None()    
   this.tail    = new None()    
   this.isEmpty = () -> true    
-  this</code>
+  this</code></pre>
 		</td>
-		<td><code>var Nil;    
+		<td><pre><code>var Nil;    
 Nil = function() {    
   this.head = new None();    
   this.tail = new None();    
@@ -136,7 +136,7 @@ Nil = function() {
     return true;    
   };    
   return this;    
-};</code></td>
+};</code></pre></td>
 	</tr>
 </table>
 
