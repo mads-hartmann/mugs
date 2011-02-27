@@ -16,6 +16,13 @@ title: Immutable Collections Library for Javascript: The Paper
 </ol>
 <div id="container">
 
+The following has been changed since last meeting: 
+# The general structure of the report 
+# "Design goals":#design_goals
+# "Overview of collections":#overview_of_collections
+# "Comparison with other collection libraries":#comparison_with_other_collections
+# "Coffeescript":#coffeescript
+
 h2(#table_of_contents). Table of Contents 
 
 # "Preface and introduction":#preface_and_introduction
@@ -26,10 +33,9 @@ h2(#table_of_contents). Table of Contents
 ## "Comparison with other collection libraries":#comparison_with_other_collections
 ## "Coffeescript":#coffeescript
 # "Problem analysis":#problem_analysis
-## "The case for immutability":#the_case_for_immutability
+## "Equality and Comparison":#equality_and_comparison
+## "Handling Exceptional States":#Handling_exceptional_states
 ## "Selected Data Structures":#selected_data_structures
-## "Operations":#operations
-## "How to handle exceptional states":#how_to_handle_exceptional_states
 # "User’s guide and examples":#users_guide_and_examples
 # "Technical description of the program":#technical_description_of_the_program
 # "Test":#test
@@ -38,7 +44,7 @@ h2(#table_of_contents). Table of Contents
 
 h2(#preface_and_introduction). Preface and introduction
 
-This report has been written by Mads Hartmann Jensen in the months February to June(?) at the IT University of Copenhagen under the supervision of "Peter Sestoft":http://www.itu.dk/people/sestoft/.
+This report has been written by Mads Hartmann Jensen in the months February to May at the IT University of Copenhagen under the supervision of "Peter Sestoft":http://www.itu.dk/people/sestoft/.
 
 During the project I developed an immutable collections library for Javascript written in the programming language Coffeescript.
 
@@ -47,37 +53,102 @@ h2(#background_and_description_of_the_problem). Background and description of th
 h3(#problem_definition). Problem Definition
 
 Javascript is a widely used programming language and it is used to implement countless of web applications. Despite of its popularity javascript has a very limited collections library which only contains one data-structure: An array which can function as a regular array, a stack, and a dictionary all at the same time. 
-This has lead to the development of a range of open-source collection libraries such as Google Closure[1] and TSJ-biblioteket[2]. 
-However, the current collection libraries available focus on mutable collections which are implemented using destructive updates. As such the goal of this project is to create a powerful set of immutable collection classes[?1] that will make it more natural[?2] to write javascript programs in a functional manner using features like higher-order functions. 
-The library will be written in Coffeescript[3], a small language that compiles to JavaScript, as it adds a few semantics that will help simplify the code.
-The project will include a set of performance tests that evaluate the data-structures on different implementations of javascript to make sure the performance of the data-structures are not subject to the implementation details of a specific javascript machine.
+This has lead to the development of a range of open-source collection libraries such as Google Closure[1] and js_cols[2].
 
-[?1] Should i say prototypes? You don't have classes in javascript
-[?2] Find a better word
+However, the current collection libraries available focus on mutable collections which are implemented using destructive updates. As such the goal of this project is to create a powerful set of immutable collection prototypes that will make it more natural to write javascript programs in a functional manner using features like higher-order functions. 
+
+The library will be written in Coffeescript[3], a small language that compiles to JavaScript, as it adds a few semantics that will help simplify the code.
+
+The project will include a set of performance tests that evaluate the data-structures on different implementations of javascript to make sure the performance of the data-structures are not subject to the implementation details of a specific javascript machine.
 
 h3(#design_goals). Design goals
 
+The overall goal is to create a powerful set of immutable collection prototypes for Javascript that promotes the use of functional javascript. The collection prototypes should feel natural for a developer coming from a functional programming language such as Scala.
+
+The concrete goals of the project are:
+# All the collection prototypes should be immutable.
+# Provide a collection prototype library for Javascript that will feel natural to programmers coming from other functional programming languages.
+# Provide an implementation of the most basic abstract data types (List, Set, Map, Queue).
+# The code should be tested enough that potential users feel comfortable using the library.
+# The collection library should be usable in the browser and server-side by, for example, NodeJS.
+# To document the asymptotic run-time complexity of all implementations.
+
 h3(#overview_of_collections). Overview of collections
+
+Even though Javascript, being the dynamic language that it is, doesn't have interfaces I've made sure that there is a set of methods that are supported by all collection prototypes. Each collection must implement these methods and is free to add any additional methods specific to that abstract data types. 
+
+The library contains an implementation of the following abstract data types:
+# List 
+# Set (TODO)
+# Map (TODO)
+# MultiMap (TODO)
+# Stack (TODO)
+# Queue (TODO)
+# Random Access List (TODO)
+# Priority Queue (TODO)
 
 h3(##comparison_with_other_collections). Comparison with other collection libraries
 
+This section will compare this library with the Google Closure Library and attempt to justify the creation of a new library.
+
+The *Google Closure Library* is a comprehensive library that contains the implementation of of several data structures (AVL trees, Heaps, Maps, QuadTrees, Queues, Sets, TrieTrees and more). The library serves as the base Javascript library for many Google products, including: Gmail, Maps, Docs, Books and more. The library is open source and is actively being developed on by Google. Being used in production by Google also means that the library is well tested and well supported. 
+
+However, all of the data structures in the Google Closure Library are mutable and their operations rely on destructive updates. There are currently no immutable collection libraries available for javascript that I'm aware of, hence the creation of this library. 
+
+Ideally functional programs are side effect free, that means that functions can have no other effect than to compute their result. Programming with pure functions makes it a lot easier to reason about the state of your program. Having an immutable collections library makes it possible to keep your functions pure. 
+
+The importance of immutability has also been established by Joshua Bloch in his book Effective Java as the 15th item "Minimize Mutability".
+
 h3(#coffeescript). Coffeescript
 
-What is Coffeescript and why have i chosen to use it over javascript?
+Coffeescript is a small language that compiles to javascript. The output of the compiler is readable, pretty printed, javascript that passes the "Javascript Lint tool":http://www.javascriptlint.com/index.htm without warnings. Coffeescript is a dialect of Javascript with a simpler, more lightweight syntax. That is to say that it doesn't introduce any new concepts and it sticks to original Javascript object model and prototypal inheritance. 
+
+The two main reasons I've chosen to write this library in Coffeescript is that it has a nice syntax for function literals, which is important when you're writing your programs in a functional style, and is uses the convention that the last expression is used as the return value of a function. 
+
+Here's a couple of Coffeescript examples and the resulting Javascript outputted by the compiler. The goal of these examples is to show the simplicity of Coffeescript and the readability of output. For a extensive description of the entire language, please go to the "Coffeescript homepage":http://jashkenas.github.com/coffee-script/ for more information
+
+<table border="1px">
+	<tr>
+		<td width="40%">*Coffeescript*</td>
+		<td width="40%">*Javascript*</td>
+	</tr>
+	<tr>
+		<td><code>(x,y) -> x+y</code></td>
+		<td><code>(function(x, y) {
+  return x + y;    
+});</code></td>
+	</tr>
+	<tr>
+		<td>
+			<code>Nil = () -> 
+  this.head    = new None()
+  this.tail    = new None()
+  this.isEmpty = () -> true
+  this</code>
+		</td>
+		<td><code>var Nil;
+Nil = function() {
+  this.head = new None();
+  this.tail = new None();
+  this.isEmpty = function() {
+    return true;
+  };
+  return this;
+};</code></td>
+	</tr>
+</table>
+
+At the time of writing version the version of Coffeescript is 1.0.1 and it's the version that's used in this report.
 
 h2(#problem_analysis). Problem analysis
 
-h3(#the_case_for_immutability). The case for immutability 
+h3(#equality_and_comparison). Equality and comparison
 
-A description of why I've chosen immutability
+h3(#handling_exceptional_states). Handling Exceptional States
 
-Some references: 
-# Rich Hickey on immutability
-# Effective java 
+Explain why I've chosen to use the Option type rather than exceptions when handling operations that might not execute successfully.
 
-h3(#selected_data_structures). Selected Data Structures
-
-Some thoughts about which data structures to implement. So far I'm considering the following
+h3(#implemented_data_structures). Implemented Data Structures
 
 # List
 ## Linked List 
@@ -93,10 +164,6 @@ Some thoughts about which data structures to implement. So far I'm considering t
 ## Tree based
 # Stack
 ## List Based
-
-h3(#operations). Operations 
-
-This section will give an overview of the different operations implemented on the data structures. 
 
 The names of the operations are heavily inspired by the standard Scala Collections Library with the exception that *all* names are camel-cased. 
 
@@ -143,10 +210,6 @@ Further, the collections can be grouped into three categories: Set, Map and Sequ
 # *Seq*
 ## reverse()
 ## get( position )
-
-h3(#how_to_handle_exceptional_states). How to handle exceptional states
-
-Explain why I've chosen to use the Option type rather than exceptions when handling operations that might not execute successfully. 
 
 h2(#users_guide_and_examples). User’s guide and examples
 
