@@ -3,6 +3,10 @@ body {
   font: normal normal normal 13px/1.231 arial, helvetica, clean, sans-serif;
 }
 
+thead td {
+  font-size: 13px;
+}
+
 #container {
   text-align: left;
   width: 75%;
