@@ -277,7 +277,7 @@ ul.inheritsList
 				
 				
 			
-				List provides the implementation of the abstract data type 'List' based on a Singly-Linked list <br />
+				List provides the implementation of the abstract data type List based on a Singly-Linked list
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/bin_List.js.html">List.js</a>.
@@ -301,7 +301,7 @@ ul.inheritsList
 							<div class="fixedFont">
 								<b><a href="../symbols/List.html#constructor">List</a></b>()
 							</div>
-							<div class="description"><p>List provides the implementation of the abstract data type 'List' based on a Singly-Linked list</p></div>
+							<div class="description">List provides the implementation of the abstract data type List based on a Singly-Linked list.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -348,7 +348,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#first">first</a></b>()
 								</div>
-								<div class="description">Returns an Option containing the first element in the list</div>
+								<div class="description">The first element in the list</div>
 							</td>
 						</tr>
 					
@@ -357,8 +357,8 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#foldLeft">foldLeft</a></b>(seed)
 								</div>
-								<div class="description">Applies a binary operator to a start value and all elements of this list,
-    going left to right</div>
+								<div class="description">Applies a binary operator on all elements of this list going left to right and ending with the
+    seed value.</div>
 							</td>
 						</tr>
 					
@@ -367,8 +367,8 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#foldRight">foldRight</a></b>(seed)
 								</div>
-								<div class="description">Applies a binary operator to a start value and all elements of this list,
-    going right to left</div>
+								<div class="description">Applies a binary operator on all elements of this list going right to left and ending with the
+    seed value.</div>
 							</td>
 						</tr>
 					
@@ -377,7 +377,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#get">get</a></b>(index)
 								</div>
-								<div class="description">Return an Option containt the nth element in the list.</div>
+								<div class="description">Return an Option containing the nth element in the list.</div>
 							</td>
 						</tr>
 					
@@ -386,7 +386,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#isEmpty">isEmpty</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Checks if the list is empty</div>
 							</td>
 						</tr>
 					
@@ -395,7 +395,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#last">last</a></b>()
 								</div>
-								<div class="description">Returns an Option containing the last element in the list</div>
+								<div class="description">The last element in the list</div>
 							</td>
 						</tr>
 					
@@ -414,9 +414,16 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/List.html#prependList">prependList</a></b>(list)
 								</div>
 								<div class="description">Creates a new list by copying all of the items in the argument 'list'
-    before of 'this' list
-
-    Consider two lists.</div>
+    before of 'this' list</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/List.html#remove">remove</a></b>(index)
+								</div>
+								<div class="description">Removes the element at the given index.</div>
 							</td>
 						</tr>
 					
@@ -425,7 +432,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#update">update</a></b>(index, element)
 								</div>
-								<div class="description">Update the value with index 'index'.</div>
+								<div class="description">Update the value with the given index.</div>
 							</td>
 						</tr>
 					
@@ -450,7 +457,34 @@ ul.inheritsList
 				</div>
 				
 				<div class="description">
-					<p>List provides the implementation of the abstract data type 'List' based on a Singly-Linked list</p>
+					List provides the implementation of the abstract data type List based on a Singly-Linked list. The
+  list contains the following operations:
+
+  <pre>
+  --------------------------------------------------------
+  Core operations of the List ADT
+  --------------------------------------------------------
+  append( element )                                   O(n)
+  prepend( element )                                  O(1)
+  update( index, element )                            O(n)
+  get( index )                                        O(n)
+  remove( index )                                     O(n)
+  --------------------------------------------------------
+  Methods that all containers have to implement
+  --------------------------------------------------------
+  map( f )                                            O(n)    TODO
+  flatMap( f )                                        O(n)    TODO
+  filter( f )                                         O(n)    TODO
+  forEach( f )                                        O(n)    TODO
+  foldLeft(s)(f)                                      O(n)
+  isEmpty()                                           O(1)    TODO
+  contains( element )                                 O(n)    TODO
+  forAll( f )                                         O(n)    TODO
+  take( x )                                           O(n)    TODO
+  takeWhile( f )                                      O(n)    TODO
+  size()                                              O(n)    TODO
+  --------------------------------------------------------
+  </pre>
 					
 				</div>
 				
@@ -480,7 +514,7 @@ ul.inheritsList
 					<a name="append"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
 					<b>append</b>(element)
 					
 					</div>
@@ -497,16 +531,23 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>element</b>
+									<span class="light fixedFont">{*}</span> <b>element</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The element to append to the List</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A new list containing all the elements of the old with followed by the element</dd>
+							
+							</dl>
 						
 						
 						
@@ -516,24 +557,20 @@ ul.inheritsList
 					<a name="appendList"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
 					<b>appendList</b>(list)
 					
 					</div>
 					<div class="description">
 						Creates a list by appending the argument list to 'this' list.
-
-    Consider two lists. A is the argument passed to the method append
-    of list T. R is the resulting list. x2 is a copy of x1 etc.
-
-    A: a -> b -> c -> Nil
-    T: x -> y -> z -> Nil
-    R: x2 -> y2 -> z2 -> A
-
-    Thus all of the elements of A are reused.
 						
 						
 					</div>
+					
+					
+					
+					<pre class="code">    new List(1,2,3).appendList(new List(4,5,6));
+    // returns a list with the element 1,2,3,4,5,6</pre>
 					
 					
 					
@@ -542,16 +579,23 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>list</b>
+									<span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> <b>list</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The list to append to this list.</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A new list containing the elements of the appended List and the elements of the original List.</dd>
+							
+							</dl>
 						
 						
 						
@@ -561,12 +605,12 @@ ul.inheritsList
 					<a name="first"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span>
 					<b>first</b>()
 					
 					</div>
 					<div class="description">
-						Returns an Option containing the first element in the list
+						The first element in the list
 						
 						
 					</div>
@@ -577,6 +621,13 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span> Some(first) if it exists, otherwise None</dd>
+							
+							</dl>
 						
 						
 						
@@ -586,16 +637,22 @@ ul.inheritsList
 					<a name="foldLeft"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{function(function(*|*):*):*}</span>
 					<b>foldLeft</b>(seed)
 					
 					</div>
 					<div class="description">
-						Applies a binary operator to a start value and all elements of this list,
-    going left to right
+						Applies a binary operator on all elements of this list going left to right and ending with the
+    seed value. This is a curried function that takes a seed value which returns a function that
+    takes a function which will then be applied to the elements
 						
 						
 					</div>
+					
+					
+					
+					<pre class="code">    new List(1,2,3,4,5).foldLeft(0)(function(acc,current){ acc+current })
+    // returns 15 (the sum of the elements in the list)</pre>
 					
 					
 					
@@ -604,16 +661,23 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>seed</b>
+									<span class="light fixedFont">{*}</span> <b>seed</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The value to use when the list is empty</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{function(function(*|*):*):*}</span> A function which takes a binary function</dd>
+							
+							</dl>
 						
 						
 						
@@ -623,16 +687,22 @@ ul.inheritsList
 					<a name="foldRight"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{function(function(*|*):*):*}</span>
 					<b>foldRight</b>(seed)
 					
 					</div>
 					<div class="description">
-						Applies a binary operator to a start value and all elements of this list,
-    going right to left
+						Applies a binary operator on all elements of this list going right to left and ending with the
+    seed value. This is a curried function that takes a seed value which returns a function that
+    takes a function which will then be applied to the elements.
 						
 						
 					</div>
+					
+					
+					
+					<pre class="code">    new List(1,2,3,4,5).foldRight(0)(function(acc,current){ acc+current })
+    // returns 15 (the sum of the elements in the list)</pre>
 					
 					
 					
@@ -641,16 +711,23 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>seed</b>
+									<span class="light fixedFont">{*}</span> <b>seed</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The value to use when the list is empty</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{function(function(*|*):*):*}</span> A function which takes a binary function</dd>
+							
+							</dl>
 						
 						
 						
@@ -660,13 +737,12 @@ ul.inheritsList
 					<a name="get"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span>
 					<b>get</b>(index)
 					
 					</div>
 					<div class="description">
-						Return an Option containt the nth element in the list. Some(element) if it
-    exists. Otherwise None
+						Return an Option containing the nth element in the list.
 						
 						
 					</div>
@@ -678,16 +754,23 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>index</b>
+									<span class="light fixedFont">{number}</span> <b>index</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The index of the element to get</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span> Some(element) is it exists, otherwise None</dd>
+							
+							</dl>
 						
 						
 						
@@ -697,12 +780,12 @@ ul.inheritsList
 					<a name="isEmpty"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{boolean}</span>
 					<b>isEmpty</b>()
 					
 					</div>
 					<div class="description">
-						
+						Checks if the list is empty
 						
 						
 					</div>
@@ -713,6 +796,13 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> true if container is empty, otherwise false.</dd>
+							
+							</dl>
 						
 						
 						
@@ -722,12 +812,12 @@ ul.inheritsList
 					<a name="last"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span>
 					<b>last</b>()
 					
 					</div>
 					<div class="description">
-						Returns an Option containing the last element in the list
+						The last element in the list
 						
 						
 					</div>
@@ -738,6 +828,13 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span> Some(last) if it exists, otherwise None</dd>
+							
+							</dl>
 						
 						
 						
@@ -747,7 +844,7 @@ ul.inheritsList
 					<a name="prepend"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
 					<b>prepend</b>(element)
 					
 					</div>
@@ -764,16 +861,23 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>element</b>
+									<span class="light fixedFont">{*}</span> <b>element</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The element to prepend to the List</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A new list containing all the elements of the old list prepended with the element</dd>
+							
+							</dl>
 						
 						
 						
@@ -783,22 +887,61 @@ ul.inheritsList
 					<a name="prependList"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
 					<b>prependList</b>(list)
 					
 					</div>
 					<div class="description">
 						Creates a new list by copying all of the items in the argument 'list'
     before of 'this' list
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">    new List(4,5,6).prependList(new List(1,2,3));
+    // returns a list with the element 1,2,3,4,5,6</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> <b>list</b>
+									
+								</dt>
+								<dd>The list to prepend to this list.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A new list containing the elements of the prepended List and the elements of the original List.</dd>
+							
+							</dl>
+						
+						
+						
 
-    Consider two lists. A is the argument passed to the method prepend
-    of list T. R is the resulting list. a2 is a copy of a1 etc.
-
-    A: a -> b -> c -> Nil
-    T: x -> y -> z -> Nil
-    R: a2 -> b2 -> c3 -> T
-
-    Thus all of the elements of T are reused
+					<hr />
+				
+					<a name="remove"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
+					<b>remove</b>(index)
+					
+					</div>
+					<div class="description">
+						Removes the element at the given index. Runs in O(n) time.
 						
 						
 					</div>
@@ -810,16 +953,23 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>list</b>
+									<span class="light fixedFont">{number}</span> <b>index</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The index of the element to remove</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A new list without the element at the given index</dd>
+							
+							</dl>
 						
 						
 						
@@ -829,13 +979,12 @@ ul.inheritsList
 					<a name="update"> </a>
 					<div class="fixedFont">
 					
-					
+					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
 					<b>update</b>(index, element)
 					
 					</div>
 					<div class="description">
-						Update the value with index 'index'. This will copy all values up to the
-    given index.
+						Update the value with the given index.
 						
 						
 					</div>
@@ -847,22 +996,29 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>index</b>
+									<span class="light fixedFont">{number}</span> <b>index</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The index of the element to update</dd>
 							
 								<dt>
-									<b>element</b>
+									<span class="light fixedFont">{*}</span> <b>element</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The element to replace with the current element</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A new list with the updated value.</dd>
+							
+							</dl>
 						
 						
 						
@@ -877,7 +1033,7 @@ ul.inheritsList
 			<hr />
 			<div class="fineprint" style="clear:both">
 				
-				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Fri Feb 18 2011 17:48:53 GMT+0100 (CET)
+				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Feb 28 2011 19:02:28 GMT+0100 (CET)
 			</div>
 		</div>
 
