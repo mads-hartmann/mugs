@@ -5,6 +5,7 @@ title: Immutable Collections Library for Javascript: The Paper
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="http://mads379.github.com/bachelorproject/css/screen.css" type="text/css" media="screen" title="no title" charset="utf-8">	
+	<!-- <link rel="stylesheet" href="file:///Users/Mads/dev/projects/bachelorproject/css/screen.css" type="text/css" media="screen" title="no title" charset="utf-8"> -->
 </head>
 
 
@@ -15,13 +16,6 @@ title: Immutable Collections Library for Javascript: The Paper
 	<li>The Paper</li>
 </ol>
 <div id="container">
-
-The following has been changed since last meeting: 
-# The general structure of the report 
-# "Design goals":#design_goals
-# "Overview of collections":#overview_of_collections
-# "Comparison with other collection libraries":#comparison_with_other_collections
-# "Coffeescript":#coffeescript
 
 h2(#table_of_contents). Table of Contents 
 
@@ -35,7 +29,7 @@ h2(#table_of_contents). Table of Contents
 # "Problem analysis":#problem_analysis
 ## "Equality and Comparison":#equality_and_comparison
 ## "Handling Exceptional States":#handling_exceptional_states
-## "Selected Data Structures":#selected_data_structures
+## "Implemented Data Structures":#implemented_data_structures
 # "User’s guide and examples":#users_guide_and_examples
 # "Technical description of the program":#technical_description_of_the_program
 # "Test":#test
@@ -144,22 +138,23 @@ At the time of writing version the version of Coffeescript is 1.0.1 and it's the
 
 h2(#problem_analysis). Problem analysis
 
+*TODO* Write intro
+
 h3(#equality_and_comparison). Equality and comparison
+
+*TODO* 
 
 h3(#handling_exceptional_states). Handling Exceptional States
 
+*Spørgsmål: Skal jeg være mere beskrivende og forklare hvordan map, flatMap etc. er implementeret i Some og None så læseren kan se hvorfor man kan skrive vale.map( (a) -> b ).map( (b) -> c ).getOrElse(q) uden er beskymre sig om den første map er Some eller None?*
+
 This section explains how the library deals with exceptional states. 
 
-If the invocation of a method is not always guaranteed to be successful, for example a map lookup, it returns an instance of Option 
-instead of throwing an exception. Instances of Option are either an instance of Some or None. Some is a single element container which 
-contains the result of successfully executing the method. The use of the Option type is adopted from the Scala standard library.
+If the invocation of a method is not always guaranteed to be successful, for example a map lookup, it returns an instance of Option instead of throwing an exception. Instances of Option are either an instance of Some or None. Some is a single element container which contains the result of successfully executing the method. The use of the Option type is adopted from the Scala standard library.
 
-The Option type returned from a method forces the developer to deal with the possibility of an error before it's possible to access the 
-properties of the object. If exceptions were used the the developer would be free to ignore the possibility of an exception being thrown.
+The Option type returned from a method forces the developer to deal with the possibility of an error before it's possible to access the properties of the object. If exceptions were used the the developer would be free to ignore the possibility of an exception being thrown.
 
-The most idiomatic way to deal with Option is to treat it as a collection and use the <code>map</code>, <code>flatMap</code>, <code>filter</code>
-and <code>foreach</code> methods. This allows the develop to chain operations on Option without having to check for the existence of a value before
-the very last expression where the developer can supply a fallback value using the <code>getOrElse()</code> method. See the example below:
+The most idiomatic way to deal with Option is to treat it as a collection and use the <code>map</code>, <code>flatMap</code>, <code>filter</code> and <code>foreach</code> methods. This allows the develop to chain operations on Option without having to check for the existence of a value before the very last expression where the developer can supply a fallback value using the <code>getOrElse()</code> method. See the example below:
 
 <pre><code>persons = new Map({ 'key' : 'Mads', 'value' : 1234 })
 details = new Map({ 'key' : 1234, 'value' : { 'address' : 'Grundtvigs Sidevej 1 st th' } })
@@ -172,66 +167,234 @@ console.log(address.getOrElse("No address for user"))</code></pre>
 
 h3(#implemented_data_structures). Implemented Data Structures
 
-# List
-## Linked List 
-# Set
-## Tree based
-## Hash based
-# Queue
-## Tree based
-# Map 
-## Tree based
-## Hash Based
-# MultiMap
-## Tree based
-# Stack
-## List Based
+The following abstract data types have have been implemented: List, Set, Queue, Map, MultiMap, Stack. Some abstract data types have more than one implementation based on different data structures that offer different running time complexities of their operations. This allows the developer to pick the implementation that fits his/her needs. This section will describe each abstract data types and their implementations. 
 
-The names of the operations are heavily inspired by the standard Scala Collections Library with the exception that *all* names are camel-cased. 
+Though the abstract data types are different in many ways they all support the same subset of operations. The most important operations are described below. For a full list of operations on each data type see the API documentation. Each of the operations run in <code>O(n)</code> as they all iterate through the entire collection and apply a function on each element. 
 
-The following is the base set of operations that are implemented by all of the data structures. 
+<table>
+	<thead>
+	<tr>
+		<td width="140px">*Name*</td>
+		<td>*Description*</td>
+		<td width="50px">*Complexity*</td>
+	</tr>
+	</thead>
+	<tr>
+		<td>map( f )</td>
+		<td>Applies the function 'f' on each element in the collection and returns a new collection with the values returned from applying the function 'f'.</td>
+		<td>@O(n)@</td>
+	</tr>
+	<tr>
+		<td>flatMap( f )</td>
+		<td>Applies the function 'f' to all elements of the collection and concatenates the results.</td>
+		<td>@O(n)@</td>
+	</tr>
+	<tr>
+		<td>filter( f )</td>
+		<td>Applies the function 'f' on each element and returns a collection of the same type with the elements where the function returned true.</td>
+		<td>@O(n)@</td>
+	</tr>
+	<tr>
+		<td>forEach( f )</td>
+		<td>Apply the function f on each element in the collection returning nothing. This is all about side effects.</td>
+		<td>@O(n)@</td>
+	</tr>
+	<tr>
+		<td>foldLeft( seed )( f )</td>
+		<td>Allies the binary function 'f' on each element in the list starting from left. The function 'f' takes two arguments: The first is the accumulation of applying the function f on the elements of the collection so far. The second is the current value. </td>
+		<td>@O(n)@</td>
+	</tr>
+</table>
 
-# *foldLeft*(seed)(f(acc, val) => value)
-Allies the binary function 'f' on each element in the list starting from left. The function 'f' takes two arguments: The first is the accumulation of applying the function f on the elements of the collection so far. The second is the current value. 
-<pre>new List(1,2,3,4,5).foldLeft(0)( (acc,elem) -> acc+elem) = 15</pre>
-# *foldRight*(seed)(f(acc, val) => value)
-Allies the binary function 'f' on each element in the list starting from right. The function 'f' takes two arguments: The first is the accumulation of applying the function f on the elements of the collection so far. The second is the current value. 
-<pre>new List(1,2,3,4,5).foldRight(0)( (acc,elem) -> acc+elem) = 15</pre>
-# *map*( f(element) => other type )
-Applies the function 'f' on each element in the collection and returns a new collection with the values returned from applying the function 'f'. 
-<pre>new List(1,2,3,4,5).map( elem => elem.toString() ) = List("1","2","3","4","5")</pre>
-# *filter*( f(element) => boolean )
-Applies the function 'f' on each element and returns a collection of the same type with the elements where the function returned true <pre>new List(1,2,3,4,5,6,7,8,9,10).filter( elem => elem > 5) = List(6,7,8,9,10)</pre>
-# *forEach*( f(element) -> ...)
-Apply the function f on each element in the collection returning nothing. This is all about side effects. <pre>new List(1,2,3,4,5).foreach( elem -> console.log(elem)) = undefined </pre>
-# *flatMap*( f(element) => other type )
-Applies the function 'f' on each element in the collection and returns a new collection with the values returned from applying the function 'f'. This will flatten the values returned form function 'f'. <pre>new List(1,2,3).map( elem => new List(elem,elem,elem) ) = List(1,1,1,2,2,2,3,3,3)</pre>
-# *contains*( element )
-Checks if the collection contains the element <pre>new List(1,2,3,4,5).contains(2) = true</pre>
-# *isEmpty*
-return true if the collection is empty. Otherwise false. <pre>new List().isEmpty() = true</pre>
-# *forAll*( p: (elem) => boolean )
-Returns true if the result of applying 'p' on every element returns true. Otherwise false. <pre> new List(1,2,3,4,5).forall( elem -> elem &lt; 10) = true</pre>
-# *take*(n) 
-Returns a collection containing the 'n' first elements of the original collection. <pre>new List(1,2,3,4,5).take(2) = List(1,2)</pre>
-# *takeWhile*(p: (elem) -> boolean )
-Return a list containing all of the elements of original collection where applying the function 'p' return true. I will stop once the function returns false or it hit the end of the collection. <pre>new List(1,2,3,4,5,6,7,8,9,10).takeWhile( elem -> elem &lt; 6)</pre>
-# *size*() 
-Returns the number of elements in the collection. <pre>new List(1,2,3,4,5).size = 5</pre>
+h4(#list). List
 
-Further, the collections can be grouped into three categories: Set, Map and Sequence which each have specialized operations. 
+Lists are ubiquitous in functional programming languages. A List contains a sequence of elements in the order they were inserted. A list consists of either Cons or Nil. Cons contains an element and a reference to the rest of the list. Nil represents the empty list. This is also sometimes known as a Singly-Linked-list.
 
-# *Set*
-## union( set )
-## intersect( set )
-## difference( set )
-# *Map*
-## keys()
-## values() 
-## get( key )
-# *Seq*
-## reverse()
-## get( position )
+<table>
+	<thead>
+	<tr>
+		<td width="140px">*Name*</td>
+		<td>*Description*</td>
+		<td width="50px">*Complexity*</td>
+	</tr>
+	</thead>
+	<tr>
+		<td>append( element )</td>
+		<td>Create a new list by appending the element</td>
+		<td>@O(n)@</td>
+	</tr>
+	<tr>
+		<td>prepend( element )</td>
+		<td>Create a new list by prepending the element</td>
+		<td>@O(1)@</td>
+	</tr>
+	<tr>
+		<td>update( index, element)</td>
+		<td>Update the value with index 'index'. This will copy all values up to the given index.</td>
+		<td>@O(n)@</td>
+	</tr>
+	<tr>
+		<td>get( index )</td>
+		<td>Get the element stored with the given index</td>
+		<td>@O(n)@</td>
+	</tr>
+	<tr>
+		<td>remove( index )</td>
+		<td>Removes the element stored at the given index</td>
+		<td>@O(n)@</td>
+	</tr>
+</table>
+	
+
+h4(#set). Set
+
+Set contains a sequence of elements. The Set has the property that no element may appear twice. 
+
+h5(#tree_based_set). Tree Based Set
+
+The TreeSet is implemented using a Red Black Tree which is a balanced tree with invariants to keep the height of the tree as low as possible. Here's the table of operations and their complexities supported by the tree-based set. 
+
+<table>
+	<thead>
+	<tr>
+		<td width="140px">*Name*</td>
+		<td>*Description*</td>
+		<td width="50px">*Complexity*</td>
+	</tr>
+	</thead>
+	<tr>
+		<td>insert( element )</td>
+		<td>Adds the element to the set</td>
+		<td>@O(log n)@</td>
+	</tr>
+	<tr>
+		<td>update( index, element)</td>
+		<td>Update the value with index 'index'. This will copy all values up to the given index.</td>
+		<td>@O(log n)@</td>
+	</tr>
+	<tr>
+		<td>get( index )</td>
+		<td>Get the element stored with the given index</td>
+		<td>@O(log n)@</td>
+	</tr>
+	<tr>
+		<td>remove( index )</td>
+		<td>Removes the element stored at the given index</td>
+		<td>@O(log n)@</td>
+	</tr>
+</table>
+
+h5(#hash_based_set). Hash Based Set
+
+*TODO*
+
+h4(#stack). Stack
+
+A stack inserts and retrieves elements according to the first-in-last-out (FILO) principle. The Stack Abstract Data Type has been implemented using a List because of it's quick access, insertion and removal of the first element. 
+
+<table>
+	<thead>
+	<tr>
+		<td width="140px">*Name*</td>
+		<td>*Description*</td>
+		<td width="50px">*Complexity*</td>
+	</tr>
+	</thead>
+	<tr>
+		<td>pop()</td>
+		<td>Removes the top element form the stack</td>
+		<td>@O(1)@</td>
+	</tr>
+	<tr>
+		<td>push( element )</td>
+		<td>Adds the 'element' to the top of the stack</td>
+		<td>@O(1)@</td>
+	</tr>
+	<tr>
+		<td>top()</td>
+		<td>Returns the top element of the stack</td>
+		<td>@O(1)@</td>
+	</tr>
+</table>
+
+h4(#queue). Queue
+
+A queue inserts and retrieves elements according to the first-in-first-out (FIFO) principle. The Queue Abstract Data Type has been implemented using a .... not sure yet ....
+
+<table>
+	<thead>
+	<tr>
+		<td width="140px">*Name*</td>
+		<td>*Description*</td>
+		<td width="50px">*Complexity*</td>
+	</tr>
+	</thead>
+	<tr>
+		<td>enqueue()</td>
+		<td>Adds a new element to the queue</td>
+		<td>@?@</td>
+	</tr>
+	<tr>
+		<td>dequeue( element )</td>
+		<td>Removes the next element in the queue</td>
+		<td>@?@</td>
+	</tr>
+	<tr>
+		<td>front()</td>
+		<td>Returns the front-most element of the stack</td>
+		<td>@?@</td>
+	</tr>
+</table>
+
+h4(#map). Map 
+
+A map stores elements according to a given key. 
+
+h5(#tree_based_map). Tree Based Map
+
+The TreeMap is implemented using a Red Black Tree which is a balanced tree with invariants to keep the height of the tree as low as possible. Here's the table of operations and their complexities supported by the tree-based set. 
+
+<table>
+	<thead>
+	<tr>
+		<td width="140px">*Name*</td>
+		<td>*Description*</td>
+		<td width="50px">*Complexity*</td>
+	</tr>
+	</thead>
+	<tr>
+		<td>insert( key, value)</td>
+		<td>Adds a new key/value pair to the map</td>
+		<td>@O(log n)</td>
+	</tr>
+	<tr>
+		<td>get( key )</td>
+		<td>Returns the element associated with the given key</td>
+		<td>@O(log n)@</td>
+	</tr>
+	<tr>
+		<td>remove( key )</td>
+		<td>Removes the key/value pair from the map</td>
+		<td>@O(log n)@</td>
+	</tr>
+	<tr>
+		<td>contains( key )</td>
+		<td>Checks if the map contains the given key</td>
+		<td>@O(log n)@</td>
+	</tr>
+</table>
+
+h5(#hash_based_map). Hash Based Map
+
+todo 
+
+h4(#multi_map). Multi Map
+
+todo
+
+h5(#tree_based_multimap). Tree Based Multi Map
+
+todo 
 
 h2(#users_guide_and_examples). User’s guide and examples
 
@@ -244,7 +407,7 @@ or
 
 h2(#technical_description_of_the_program). Technical description of the program
 
-Prototype chain of various objects. I.e. List is a prototype of Sequence etc. 
+
 
 h2(#test). Test
 
@@ -254,14 +417,10 @@ h2(#conclusion). Conclusion
 
 h2(#references). References
 
-
-
-
 fn1. http://code.google.com/closure/
 
 fn2. Speciale af Thomas Stjernegaard Jeppesen
 
 fn3. http://jashkenas.github.com/coffee-script/
-
 
 </div>

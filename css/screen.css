@@ -4,7 +4,12 @@ body {
 }
 
 thead td {
-  font-size: 13px;
+  font-size: 13px;  
+}
+
+thead tr {
+  color: white;
+  background-color: #666;
 }
 
 table {
@@ -55,22 +60,24 @@ td {
   padding-left: 0px;
 }
 
-h1 {
-  font-size: 28px;
-  letter-spacing: 1px;
+h1, h2, h3, h4, h5, h6 {
+  text-transform: uppercase;
+  margin-bottom: 0px;
+}
+
+h4, h5 {
+  padding-top: 10px;
+  font-style: normal;
   text-transform: uppercase;
 }
 
-h2 {
-  font-size: 22px;
-  margin-top: 0px;
-  text-transform: uppercase;
-}
-
-h3 {
-  font-size: 18px;
-  text-transform: uppercase;
-}
+h1 {  font-size: 28px;
+      letter-spacing: 1px;}
+h2 {  font-size: 22px;
+      margin-top: 0px; }
+h3 {  font-size: 18px; }
+h4 {  font-size: 16px; }
+h5 {  font-size: 12px; }
 
 a {
   color: #990003;
