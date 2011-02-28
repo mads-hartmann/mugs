@@ -1,5 +1,5 @@
 ###*
-  @fileoverview Contains the implementation of the List data structure.
+  @fileoverview Contains the implementation of the List abstract data type.
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ### 
 if require?
@@ -8,17 +8,29 @@ if require?
   None     = Option.None
 
 ###*
-  <p>List provides the implementation of the abstract data type 'List' based on a Singly-Linked list</p>
+  List provides the implementation of the abstract data type List based on a Singly-Linked list. The 
+  list contains the following operations:
   
-  The operations specific to the List abstract data type 
-
-  append( element )             O(n)
-  prepend( element )            O(1)
-  update( index, element )      O(n)
-  get( index )                  O(n)
-  remove( index )               O(n)
+  --------------------------------------------------------
+  Core operations of the List ADT 
+  --------------------------------------------------------
+  append( element )                                   O(n)
+  prepend( element )                                  O(1)
+  update( index, element )                            O(n)
+  get( index )                                        O(n)
+  remove( index )                                     O(n)
+  --------------------------------------------------------
+  Methods that all containers have to implement 
+  --------------------------------------------------------
+  map( f )                                            O(n)    TODO
+  flatMap( f )                                        O(n)    TODO
+  filter( f )                                         O(n)    TODO
+  forEach( f )                                        O(n)    TODO
+  foldLeft( f )                                       O(n)    
+  isEmpty()                                           O(1)
+  --------------------------------------------------------
   
-  @class List provides the implementation of the abstract data type 'List' based on a Singly-Linked list <br />
+  @class List provides the implementation of the abstract data type List based on a Singly-Linked list
   @public
 ###
 List = (elements...) ->
