@@ -13,12 +13,14 @@ Some = (value)  ->
   this.isEmpty =     ()       -> false 
   this.get =         ()       -> this.__value
   this.getOrElse =   (f)      -> this.get()
+  this
 
 None = () -> 
       
   this.isEmpty =     ()  -> true
   this.get =         ()  -> throw new Error("Can't get a value from None")
   this.getOrElse =   (f) -> f()
+  this
 
 if exports?
   exports.Some = Some 
