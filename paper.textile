@@ -34,7 +34,7 @@ h2(#table_of_contents). Table of Contents
 ## "Coffeescript":#coffeescript
 # "Problem analysis":#problem_analysis
 ## "Equality and Comparison":#equality_and_comparison
-## "Handling Exceptional States":#Handling_exceptional_states
+## "Handling Exceptional States":#handling_exceptional_states
 ## "Selected Data Structures":#selected_data_structures
 # "User’s guide and examples":#users_guide_and_examples
 # "Technical description of the program":#technical_description_of_the_program
@@ -148,7 +148,27 @@ h3(#equality_and_comparison). Equality and comparison
 
 h3(#handling_exceptional_states). Handling Exceptional States
 
-Explain why I've chosen to use the Option type rather than exceptions when handling operations that might not execute successfully.
+This section explains how the library deals with exceptional states. 
+
+If the invocation of a method is not always guaranteed to be successful, for example a map lookup, it returns an instance of Option 
+instead of throwing an exception. Instances of Option are either an instance of Some or None. Some is a single element container which 
+contains the result of successfully executing the method. The use of the Option type is adopted from the Scala standard library.
+
+The Option type returned from a method forces the developer to deal with the possibility of an error before it's possible to access the 
+properties of the object. If exceptions were used the the developer would be free to ignore the possibility of an exception being thrown.
+
+The most idiomatic way to deal with Option is to treat it as a collection and use the <code>map</code>, <code>flatMap</code>, <code>filter</code>
+and <code>foreach</code> methods. This allows the develop to chain operations on Option without having to check for the existence of a value before
+the very last expression where the developer can supply a fallback value using the <code>getOrElse()</code> method. See the example below:
+
+<pre><code>persons = new Map({ 'key' : 'Mads', 'value' : 1234 })
+details = new Map({ 'key' : 1234, 'value' : { 'address' : 'Grundtvigs Sidevej 1 st th' } })
+
+address = persons.get("Mads")
+                 .map( (id) -> details.get(id) )
+                 .map( (obj) -> obj.address )
+console.log(address.getOrElse("No address for user"))</code></pre>
+
 
 h3(#implemented_data_structures). Implemented Data Structures
 
