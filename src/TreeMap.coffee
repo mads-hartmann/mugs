@@ -10,28 +10,35 @@ if require?
   BLACK               = RedBlackNodeWrapper.BLACK
 
 ###*
-  <p>TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.</p>
+  TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. The
+  map contains the following operations
   
-  <p>The insert and contains methods have been implemented following Chris Okasaki's book 'purely functional 
-  data structures' and the remove operations has been implemented following this blog: 
-  http://matt.might.net/articles/red-black-delete/</p>
-  
-  <p>The asymptotic running time for important operations are below:</p>
   <pre>
-     Method                 big-O
-   --------------------------------------------------------------------
-   - contains               O(logn)
-   - filter                 TODO
-   - values                 O(n)
-   - insert                 O(logn)
-   - insertAll              TODO
-   - map                    TODO
-   - remove                 O(logn)
-   - removeAll              TODO
-   - get                    O(logn)
-   </pre>
+  --------------------------------------------------------
+  Core operations of the Map ADT 
+  --------------------------------------------------------
+  insert( key,value )                               O(logn)
+  get( index )                                      O(logn)
+  remove( index )                                   O(logn)
+  contains( key )                                   O(logn)
+  --------------------------------------------------------
+  Methods that all containers have to implement 
+  --------------------------------------------------------
+  map( f )                                            O(n)    TODO
+  flatMap( f )                                        O(n)    TODO
+  filter( f )                                         O(n)    TODO
+  forEach( f )                                        O(n)    TODO
+  foldLeft(s)(f)                                      O(n)    TODO
+  isEmpty()                                           O(1)    TODO
+  contains( element )                                 O(n)    TODO
+  forAll( f )                                         O(n)    TODO
+  take( x )                                           O(n)    TODO
+  takeWhile( f )                                      O(n)    TODO
+  size()                                              O(n)    TODO
+  --------------------------------------------------------
+  </pre>
    
-   @class TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. <br />
+   @class TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.
    @public
 ###    
 TreeMap = (key,value, comparator) ->

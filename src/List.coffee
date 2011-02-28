@@ -8,36 +8,36 @@ if require?
   None     = Option.None
 
 ###*
-*  List provides the implementation of the abstract data type List based on a Singly-Linked list. The 
-*  list contains the following operations:
-*  
-*  <pre>
-*  --------------------------------------------------------
-*  Core operations of the List ADT 
-*  --------------------------------------------------------
-*  append( element )                                   O(n)
-*  prepend( element )                                  O(1)
-*  update( index, element )                            O(n)
-*  get( index )                                        O(n)
-*  remove( index )                                     O(n)
-*  --------------------------------------------------------
-*  Methods that all containers have to implement 
-*  --------------------------------------------------------
-*  map( f )                                            O(n)    TODO
-*  flatMap( f )                                        O(n)    TODO
-*  filter( f )                                         O(n)    TODO
-*  forEach( f )                                        O(n)    TODO
-*  foldLeft(s)(f)                                      O(n)    
-*  isEmpty()                                           O(1)    TODO
-*  contains( element )                                 O(n)    TODO
-*  forAll( f )                                         O(n)    TODO
-*  take( x )                                           O(n)    TODO
-*  takeWhile( f )                                      O(n)    TODO
-*  size()                                              O(n)    TODO
-*  --------------------------------------------------------
-*  </pre>
-*  @class List provides the implementation of the abstract data type List based on a Singly-Linked list
-*  @public
+  List provides the implementation of the abstract data type List based on a Singly-Linked list. The 
+  list contains the following operations:
+  
+  <pre>
+  --------------------------------------------------------
+  Core operations of the List ADT 
+  --------------------------------------------------------
+  append( element )                                   O(n)
+  prepend( element )                                  O(1)
+  update( index, element )                            O(n)
+  get( index )                                        O(n)
+  remove( index )                                     O(n)
+  --------------------------------------------------------
+  Methods that all containers have to implement 
+  --------------------------------------------------------
+  map( f )                                            O(n)    TODO
+  flatMap( f )                                        O(n)    TODO
+  filter( f )                                         O(n)    TODO
+  forEach( f )                                        O(n)    TODO
+  foldLeft(s)(f)                                      O(n)    
+  isEmpty()                                           O(1)    TODO
+  contains( element )                                 O(n)    TODO
+  forAll( f )                                         O(n)    TODO
+  take( x )                                           O(n)    TODO
+  takeWhile( f )                                      O(n)    TODO
+  size()                                              O(n)    TODO
+  --------------------------------------------------------
+  </pre>
+  @class List provides the implementation of the abstract data type List based on a Singly-Linked list
+  @public
 ###
 List = (elements...) ->
   
