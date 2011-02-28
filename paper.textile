@@ -365,7 +365,7 @@ The TreeMap is implemented using a Red Black Tree which is a balanced tree with 
 	<tr>
 		<td>insert( key, value)</td>
 		<td>Adds a new key/value pair to the map</td>
-		<td>@O(log n)</td>
+		<td>@O(log n)@</td>
 	</tr>
 	<tr>
 		<td>get( key )</td>
