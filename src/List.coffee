@@ -10,6 +10,14 @@ if require?
 ###*
   <p>List provides the implementation of the abstract data type 'List' based on a Singly-Linked list</p>
   
+  The operations specific to the List abstract data type 
+
+  append( element )             O(n)
+  prepend( element )            O(1)
+  update( index, element )      O(n)
+  get( index )                  O(n)
+  remove( index )               O(n)
+  
   @class List provides the implementation of the abstract data type 'List' based on a Singly-Linked list <br />
   @public
 ###
@@ -38,6 +46,18 @@ List = (elements...) ->
   
   this.isEmpty = () -> false 
 
+  ###*
+    Create a new list by appending this value
+  ###
+  this.append = (element) -> 
+    cons(this.head, this.tail.append(element))
+    
+  ###*
+    Create a new list by prepending this value
+  ###
+  this.prepend = (element) -> 
+    cons(element,this)
+
   ###* 
     Update the value with index 'index'. This will copy all values up to the
     given index. 
@@ -51,7 +71,7 @@ List = (elements...) ->
       cons(this.head, this.tail.update(index-1,element))
   
   ###*
-    Return an Option containt the nth element in the list. Some(element) if it
+    Return an Option containing the nth element in the list. Some(element) if it
     exists. Otherwise None
   ###
   this.get = (index) -> 
@@ -63,6 +83,21 @@ List = (elements...) ->
       this.tail.get(index-1)
   
   ###* 
+    Returns a new list without the element at the given index. Runs in O(n) time.
+  ###  
+  this.remove = (index) -> 
+    if index == 0  
+      # can remove the following if/else with this.tail().getOrElse(new Nil) once 
+      # tail and head are functions that return an option instead. 
+      if !this.tail.isEmpty() 
+        cons(this.tail.first().get(), this.tail.tail)
+      else
+        new Nil
+    else 
+      cons(this.head, this.tail.remove(index-1))
+      
+  
+  ###* 
     Returns an Option containing the last element in the list  
   ###
   this.last = () -> if this.tail.isEmpty() then new Some(this.head) else this.tail.last()
@@ -71,18 +106,6 @@ List = (elements...) ->
     Returns an Option containing the first element in the list
   ###  
   this.first = () -> new Some(this.head)
-
-  ###*
-    Create a new list by appending this value
-  ###
-  this.append = (element) -> 
-    cons(this.head, this.tail.append(element))
-    
-  ###*
-    Create a new list by prepending this value
-  ###
-  this.prepend = (element) -> 
-    cons(element,this)
 
   ###*
     Creates a list by appending the argument list to 'this' list.
@@ -154,6 +177,7 @@ Nil = () ->
   this.last =        ()              -> new None()
   this.first =       ()              -> new None()
   this.get =         (index)         -> new None()
+  this.remove =      (index)         -> new Nil()
   this.update =      (index,element) -> throw new Error("Index out of bounds by #{index}")
   
   this

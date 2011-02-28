@@ -66,6 +66,11 @@ $(document).ready(function(){
     ok(list.get(5).get() == 6);
   });
   
+  test("You can remove elements with a given index from the list", function() {
+    var list = new List(1,2,3,4,5).remove(2);
+    ok(list.get(2).get() == 4);
+  });
+  
   test("You can fold the list either left or right", function() {
     var list = new List(1,2,3,4,5,6,7,8,9,10);
     var sum = list.foldLeft(0)(function(acc, value) {
