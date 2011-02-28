@@ -57,7 +57,7 @@ The project will include a set of performance tests that evaluate the data-struc
 
 h3(#design_goals). Design goals
 
-The overall goal is to create a powerful set of immutable collection prototypes for Javascript that promotes the use of functional javascript. The collection prototypes should feel natural for a developer coming from a functional programming language such as Scala.
+The overall goal is to create a powerful set of immutable collection prototypes for Javascript that promotes the use of functional javascript. The collection prototypes should feel natural to a developer coming from a functional programming language such as Scala.
 
 The concrete goals of the project are:
 # All the collection prototypes should be immutable.
@@ -95,7 +95,7 @@ The importance of immutability has also been established by Joshua Bloch in his 
 
 h3(#coffeescript). Coffeescript
 
-Coffeescript is a small language that compiles to javascript. The output of the compiler is readable, pretty printed, javascript that passes the "Javascript Lint tool":http://www.javascriptlint.com/index.htm without warnings. Coffeescript is a dialect of Javascript with a simpler, more lightweight syntax. That is to say that it doesn't introduce any new concepts and it sticks to original Javascript object model and prototypal inheritance. 
+Coffeescript is a small language that compiles to javascript. The output of the compiler is readable, pretty printed, javascript that passes the "Javascript Lint tool":http://www.javascriptlint.com/index.htm without warnings. Coffeescript is a dialect of Javascript with a simpler, more lightweight syntax. That is to say that it doesn't introduce any new concepts and it sticks to the original Javascript object model which uses prototypal inheritance. 
 
 The two main reasons I've chosen to write this library in Coffeescript is that it has a nice syntax for function literals, which is important when you're writing your programs in a functional style, and is uses the convention that the last expression is used as the return value of a function. 
 
@@ -134,15 +134,15 @@ Nil = function() {
 	</tr>
 </table>
 
-At the time of writing version the version of Coffeescript is 1.0.1 and it's the version that's used in this report.
+At the time of writing the version of Coffeescript is 1.0.1 and it is the version that's used in this report.
 
 h2(#problem_analysis). Problem analysis
 
-*TODO* Write intro
+TODO
 
 h3(#equality_and_comparison). Equality and comparison
 
-*TODO* 
+TODO
 
 h3(#handling_exceptional_states). Handling Exceptional States
 
@@ -210,6 +210,8 @@ h4(#list). List
 
 Lists are ubiquitous in functional programming languages. A List contains a sequence of elements in the order they were inserted. A list consists of either Cons or Nil. Cons contains an element and a reference to the rest of the list. Nil represents the empty list. This is also sometimes known as a Singly-Linked-list.
 
+The following operations are specific to the List abstract data type.
+
 <table>
 	<thead>
 	<tr>
@@ -248,7 +250,7 @@ Lists are ubiquitous in functional programming languages. A List contains a sequ
 
 h4(#set). Set
 
-Set contains a sequence of elements. The Set has the property that no element may appear twice. 
+Set contains a sequence of elements. The Set has the property that no element may appear twice. The library contains two implementations of Set: One based on a tree and one based on hashing.
 
 h5(#tree_based_set). Tree Based Set
 
@@ -286,7 +288,7 @@ The TreeSet is implemented using a Red Black Tree which is a balanced tree with 
 
 h5(#hash_based_set). Hash Based Set
 
-*TODO*
+TODO
 
 h4(#stack). Stack
 
@@ -348,11 +350,11 @@ A queue inserts and retrieves elements according to the first-in-first-out (FIFO
 
 h4(#map). Map 
 
-A map stores elements according to a given key. 
+A map stores elements according to a given key. The library contains two implementations of Map: One based on a tree and one based on hashing.
 
 h5(#tree_based_map). Tree Based Map
 
-The TreeMap is implemented using a Red Black Tree which is a balanced tree with invariants to keep the height of the tree as low as possible. Here's the table of operations and their complexities supported by the tree-based set. 
+The TreeMap is implemented using a Red Black Tree which is a balanced tree with invariants to keep the height of the tree as low as possible. Here's the table of operations and their complexities supported by the tree-based map. 
 
 <table>
 	<thead>
@@ -386,34 +388,33 @@ The TreeMap is implemented using a Red Black Tree which is a balanced tree with 
 
 h5(#hash_based_map). Hash Based Map
 
-todo 
+TODO 
 
 h4(#multi_map). Multi Map
 
-todo
+TODO
 
 h5(#tree_based_multimap). Tree Based Multi Map
 
-todo 
+TODO 
 
 h2(#users_guide_and_examples). User’s guide and examples
 
 Explain how to start using the library in the browser and NodeJS. Show some example programs and explain how they work.
 
-If I have the time it would be cool to implement one or two of the problems in "Pearls of Functional algorithm design".
-
-or
-# Exercise 12.8 in Algorithms and data structures - the basic toolbox 
+If I have the time it would be cool to implement one or two of the problems in "Pearls of Functional algorithm design" or Exercise 12.8 in Algorithms and data structures - the basic toolbox 
 
 h2(#technical_description_of_the_program). Technical description of the program
 
-
+TODO
 
 h2(#test). Test
 
 Performance and unit tests. Show results 
 
 h2(#conclusion). Conclusion
+
+TODO
 
 h2(#references). References
 
