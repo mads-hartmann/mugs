@@ -25,51 +25,57 @@ Option = () ->
 Option.prototype.isEmpty = () -> throw new Error("Not implemented in Option")
 
 ###*
-  Gets the value stored in the option. This will throw an exception if invoked 
-  on an instance of None.
+  Returns the option's value if the option is nonempty. This will throw an exception if 
+  invoked on an instance of None.
   @return {*} The value stored in the Option. 
 ###
 Option.prototype.get = () -> throw new Error("Not implemented in Option")
 
 ###*
+  Returns the option's value if the option is nonempty, otherwise return the value
+  'otherwise'.
   @param {*} otherwise The value to return if the Option is None.
-  @return The value if Some otherwise the value passed to the function
+  @return The option's value if Some otherwise the value passed to the function
 ### 
 Option.prototype.getOrElse = (otherwise) ->  
   if this.isEmpty() then otherwise else this.get() 
 
 ###*
-  Applies the function ‘f’ on each element in the collection and returns a
-  new collection with the values returned from applying the function ‘f’.
+  Returns a Some containing the result of applying f to this Option's
+  value if this Option is nonempty. Otherwise return None.
 
-  @param {function(*):*} f A function that maps the value to another value
+  @param {function(*):*} f The unary function to apply 
+  @return {Option} Some containing the result of applying the function f on the 
+                   element inside the Option if nonempty. Otherwise None.
 ###
 Option.prototype.map = ( f ) ->   
   if this.isEmpty() then new None else new Some(f(this.get()))
 
 ###*
-  Applies the function ‘f’ to all elements of the collection and concatenates 
-  the results.
+  Returns the result of applying f to this option's value if this Option is 
+  nonempty, otherwise None. This is Slightly different from `map` in that f is
+  expected to return an Option (which could be None).
 
-  @param {function(*):*} f A function that maps the value to another value
-  @return {Option} An Option with the result of applying the function f on the 
-                   element inside the Option.
+  @param {function(*): Option} f The unary function to apply 
+  @return {Option} The result of applying the function f on the 
+                   element inside the Option if nonempty. Otherwise None.
 ###
 Option.prototype.flatMap = ( f ) ->   
   if this.isEmpty() then new None else f(this.get())
 
 ###*
-  Applies the function ‘f’ on each element and returns a collection of the same 
-  type with the elements where the function returned true.
+  Returns this Option if it is nonempty '''and''' applying the 'predicate' to
+  this Option's value returns true. Otherwise, return None
   
   @param {function(*): boolean} predicate A function that decides if the value 
                                 should be included in the resulting collection
 ### 
 Option.prototype.filter = ( predicate ) ->   
   if (this.isEmpty() || predicate(this.get())) then this else new None()
+  
 ###*
-  Apply the function f on each element in the collection returning nothing. This 
-  is all about side effects.
+  Apply the given procedure f to the option's value, if it is nonempty. Otherwise, 
+  do nothing.
   
   @param {function(*): *} f A unary function. 
   @return Nothing. This is all about side effects
