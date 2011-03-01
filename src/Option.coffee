@@ -102,7 +102,15 @@ Some = (value)  ->
 
 Some.prototype = new Option()
 Some.prototype.constructor = Some
+
+###* 
+  See documentation in {@link Option}
+###
 Some.prototype.isEmpty = () -> false
+
+###* 
+  See documentation in {@link Option}
+###
 Some.prototype.get = () -> this.__value
   
 ###*
@@ -117,7 +125,15 @@ None = () -> this
 
 None.prototype = new Option()
 None.prototype.constructor = None
+
+###* 
+  See documentation in {@link Option}
+###
 None.prototype.isEmpty = () -> true
+
+###* 
+  See documentation in {@link Option}
+###
 None.prototype.get = () -> throw new Error("Get get a value in an instance of None")
 
 if exports?
