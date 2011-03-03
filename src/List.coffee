@@ -22,7 +22,7 @@ if require?
   get( index )                                        O(n)
   remove( index )                                     O(n)
   --------------------------------------------------------
-  Methods that all containers have to implement 
+  Methods inherited from mahj.Traversable
   --------------------------------------------------------
   map( f )                                            O(n)    
   flatMap( f )                                        O(n)    TODO
@@ -37,6 +37,7 @@ if require?
   size()                                              O(n)    TODO
   --------------------------------------------------------
   </pre>
+  @augments mahj.Traversable
   @class List provides the implementation of the abstract data type List based on a Singly-Linked list
   @public
 ###
