@@ -10,7 +10,7 @@ title: Immutable Collections Library for Javascript
 	<script src="http://mads379.github.com/bachelorproject/bin/Option.js" type="text/javascript" charset="utf-8"></script>
 	<script src="http://mads379.github.com/bachelorproject/bin/Traversable.js" type="text/javascript" charset="utf-8"></script>
 	<script src="http://mads379.github.com/bachelorproject/bin/List.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
+notextile.	<script type="text/javascript">
 		
 		function wrapInFunction(code) {
 			return "(function(){"+code+"})()";
