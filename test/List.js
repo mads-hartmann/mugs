@@ -4,47 +4,47 @@ $(document).ready(function(){
   
   test("It's possible to create a list passing multiple arguments", function() {
     var list = new List(1,2,3);
-    ok(list.head == 1, "First element is 1");
-    ok(list.tail.head == 2, "Second element is 2");
-    ok(list.tail.tail.head == 3, "Third element is 3");
+    ok(list.head() == 1, "First element is 1");
+    ok(list.tail().head() == 2, "Second element is 2");
+    ok(list.tail().tail().head() == 3, "Third element is 3");
   });
   
   test("It's possible to create a new list by appending a value to an existing list", function() {
     var list = new List(1,2).append(3);
-    ok(list.head == 1, "First element is 1");
-    ok(list.tail.head == 2, "Second element is 2");
-    ok(list.tail.tail.head == 3, "Third element is 3");
+    ok(list.head() == 1, "First element is 1");
+    ok(list.tail().head() == 2, "Second element is 2");
+    ok(list.tail().tail().head() == 3, "Third element is 3");
   });
   
   test("You can chain append method calls if you want", function() {
     var list = new List(1,2).append(3).append(4);
-    ok(list.head == 1, "First element is 1");
-    ok(list.tail.head == 2, "Second element is 2");
-    ok(list.tail.tail.head == 3, "Third element is 3");
-    ok(list.tail.tail.tail.head == 4, "Forth element is 4");
+    ok(list.head() == 1, "First element is 1");
+    ok(list.tail().head() == 2, "Second element is 2");
+    ok(list.tail().tail().head() == 3, "Third element is 3");
+    ok(list.tail().tail().tail().head() == 4, "Forth element is 4");
   });
   
   test("It's possible to create a new list by appending a list to an existing list", function() {
     var list = new List(1,2).appendList(new List(3,4));
-    ok(list.head == 1, "First element is 1");
-    ok(list.tail.head == 2, "Second element is 2");
-    ok(list.tail.tail.head == 3, "Third element is 3");
-    ok(list.tail.tail.tail.head == 4, "Forth element is 4");
+    ok(list.head() == 1, "First element is 1");
+    ok(list.tail().head() == 2, "Second element is 2");
+    ok(list.tail().tail().head() == 3, "Third element is 3");
+    ok(list.tail().tail().tail().head() == 4, "Forth element is 4");
   });
 
   test("You can create a new list by prepending a value to an existing list", function() {
     var list = new List(1,2).prepend(3);
-    ok(list.head == 3, "First element is 3");
-    ok(list.tail.head == 1, "Second element is 1");
-    ok(list.tail.tail.head == 2, "Third element is 2");
+    ok(list.head() == 3, "First element is 3");
+    ok(list.tail().head() == 1, "Second element is 1");
+    ok(list.tail().tail().head() == 2, "Third element is 2");
   });
 
   test("You can create a new list by prepending a list to an existing list", function() {
     var list = new List(1,2).prependList(new List(3,4));
-    ok(list.head == 3, "First element is 3");
-    ok(list.tail.head == 4, "Second element is 4");
-    ok(list.tail.tail.head == 1, "Third element is 1");
-    ok(list.tail.tail.tail.head == 2, "Forth element is 2");
+    ok(list.head() == 3, "First element is 3");
+    ok(list.tail().head() == 4, "Second element is 4");
+    ok(list.tail().tail().head() == 1, "Third element is 1");
+    ok(list.tail().tail().tail().head() == 2, "Forth element is 2");
   });
   
   test("You can access the first and last elements", function() {

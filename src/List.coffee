@@ -22,14 +22,14 @@ if require?
   get( index )                                        O(n)
   remove( index )                                     O(n)
   --------------------------------------------------------
-  Methods inherited from Traversable  
+  Methods that all containers have to implement 
   --------------------------------------------------------
   map( f )                                            O(n)    
-  flatMap( f )                                        O(n)    
-  filter( f )                                         O(n)    
-  forEach( f )                                        O(n)    
+  flatMap( f )                                        O(n)    TODO
+  filter( f )                                         O(n)    TODO
+  forEach( f )                                        O(n)    TODO
   foldLeft(s)(f)                                      O(n)    
-  isEmpty()                                           O(1)    
+  isEmpty()                                           O(1)    TODO
   contains( element )                                 O(n)    TODO
   forAll( f )                                         O(n)    TODO
   take( x )                                           O(n)    TODO
@@ -46,11 +46,11 @@ List = (elements...) ->
     return new Nil()
   if (x instanceof Array) 
     [hd, tl...] = x
-    this.head = hd
-    this.tail = new List(tl)
+    this.head = () -> hd
+    this.tail = () -> new List(tl)
   else 
-    this.head = x
-    this.tail = new List(xs) 
+    this.head = () -> x
+    this.tail = () -> new List(xs) 
   this
 
 List.prototype = new mahj.Traversable() 
@@ -69,7 +69,7 @@ Methods related to the List ADT
   @return {List} A new list containing all the elements of the old with followed by the element 
 ###
 List.prototype.append = (element) -> 
-  this.cons(this.head, this.tail.append(element))
+  this.cons(this.head(), this.tail().append(element))
     
 ###*
   Create a new list by prepending this value
@@ -89,9 +89,9 @@ List.prototype.update = (index, element) ->
   if index < 0 
     throw new Error("Index out of bounds by #{index}")
   else if (index == 0)
-    this.cons(element, this.tail)
+    this.cons(element, this.tail())
   else 
-    this.cons(this.head, this.tail.update(index-1,element))
+    this.cons(this.head(), this.tail().update(index-1,element))
   
 ###*
   Return an Option containing the nth element in the list.
@@ -102,9 +102,9 @@ List.prototype.get = (index) ->
   if index < 0
     new None()
   else if (index == 0)
-    new Some(this.head)
+    new Some(this.head())
   else 
-    this.tail.get(index-1)
+    this.tail().get(index-1)
   
 ###* 
   Removes the element at the given index. Runs in O(n) time.
@@ -115,24 +115,24 @@ List.prototype.remove = (index) ->
   if index == 0  
     # can remove the following if/else with this.tail().getOrElse(new Nil) once 
     # tail and head are functions that return an option instead. 
-    if !this.tail.isEmpty() 
-      this.cons(this.tail.first().get(), this.tail.tail)
+    if !this.tail().isEmpty() 
+      this.cons(this.tail().first().get(), this.tail().tail)
     else
       new Nil
   else 
-    this.cons(this.head, this.tail.remove(index-1))
+    this.cons(this.head(), this.tail().remove(index-1))
       
 ###* 
   The last element in the list  
   @return {Some|None} Some(last) if it exists, otherwise None
 ###
-List.prototype.last = () -> if this.tail.isEmpty() then new Some(this.head) else this.tail.last()
+List.prototype.last = () -> if this.tail().isEmpty() then new Some(this.head()) else this.tail().last()
 
 ###*
   The first element in the list
   @return {Some|None} Some(first) if it exists, otherwise None
 ###  
-List.prototype.first = () -> new Some(this.head)
+List.prototype.first = () -> new Some(this.head())
 
 ###*
   Creates a list by appending the argument list to 'this' list.
@@ -144,7 +144,7 @@ List.prototype.first = () -> new Some(this.head)
   @return {List} A new list containing the elements of the appended List and the elements of the original List.
 ###
 List.prototype.appendList = (list) -> 
-  this.cons(this.head, this.tail.appendList(list))
+  this.cons(this.head(), this.tail().appendList(list))
     
 ###*
   Creates a new list by copying all of the items in the argument 'list'
@@ -157,7 +157,7 @@ List.prototype.appendList = (list) ->
   @return {List} A new list containing the elements of the prepended List and the elements of the original List.
 ###
 List.prototype.prependList = (list) -> 
-  if list.isEmpty() then this else this.cons(list.head, this.prependList(list.tail))
+  if list.isEmpty() then this else this.cons(list.head(), this.prependList(list.tail()))
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -170,8 +170,8 @@ List.prototype.buildFromArray = (arr) ->
 
 List.prototype.forEach = ( f ) -> 
   if !this.isEmpty()
-    f(this.head) 
-    this.tail.forEach(f)
+    f(this.head()) 
+    this.tail().forEach(f)
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ Miscellaneous Methods
 ###
 List.prototype.cons = (head, tail) ->
   l = new List(head)
-  l.tail = tail
+  l.tail = () -> tail
   return l
   
 ###*
@@ -211,7 +211,7 @@ List.prototype.foldLeft = (seed) -> (f) =>
     if (xs.isEmpty())
       acc
     else 
-      __foldLeft( f(acc, xs.head), xs.tail)
+      __foldLeft( f(acc, xs.head()), xs.tail())
   __foldLeft(seed,this)
 
 ###
@@ -242,14 +242,13 @@ List.prototype.foldRight = (seed) -> (f) =>
     if (xs.isEmpty())
       seed
     else
-      f(__foldRight(xs.tail), xs.head)
+      f(__foldRight(xs.tail()), xs.head())
   __foldRight(this) 
 
 Nil = () -> 
-  this.head = throw new Error("Can't access head of an empty list")
-  this.tail = throw new Error("Can't access tail of an empty list")
+  this.head = () -> throw new Error("Can't get head of empty List")
+  this.tail = () -> throw new Error("Can't get tail of empty List")
   this
-
 
 Nil.prototype.constructor = Nil
 Nil.prototype.isEmpty =     ()              -> true
