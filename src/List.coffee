@@ -42,9 +42,12 @@ if require?
 ###
 List = (elements...) ->
   [x,xs...] = elements    
+  this.isEmpty = () -> false
   if (x == undefined or (x instanceof Array and x.length == 0))
-    return new Nil()
-  if (x instanceof Array) 
+    this.head = () -> throw new Error("Can't get head of empty List")
+    this.tail = () -> throw new Error("Can't get tail of empty List")
+    this.isEmpty = () -> true
+  else if (x instanceof Array) 
     [hd, tl...] = x
     this.head = () -> hd
     this.tail = () -> new List(tl)
@@ -69,7 +72,10 @@ Methods related to the List ADT
   @return {List} A new list containing all the elements of the old with followed by the element 
 ###
 List.prototype.append = (element) -> 
-  this.cons(this.head(), this.tail().append(element))
+  if (this.isEmpty())
+    new List(element)
+  else
+    this.cons(this.head(), this.tail().append(element))
     
 ###*
   Create a new list by prepending this value
@@ -99,7 +105,8 @@ List.prototype.update = (index, element) ->
   @return {Some|None} Some(element) is it exists, otherwise None
 ###
 List.prototype.get = (index) -> 
-  if index < 0
+  if index < 0 || this.isEmpty() 
+    new None() 
     new None()
   else if (index == 0)
     new Some(this.head())
@@ -118,7 +125,7 @@ List.prototype.remove = (index) ->
     if !this.tail().isEmpty() 
       this.cons(this.tail().first().get(), this.tail().tail)
     else
-      new Nil
+      new List()
   else 
     this.cons(this.head(), this.tail().remove(index-1))
       
@@ -144,7 +151,10 @@ List.prototype.first = () -> new Some(this.head())
   @return {List} A new list containing the elements of the appended List and the elements of the original List.
 ###
 List.prototype.appendList = (list) -> 
-  this.cons(this.head(), this.tail().appendList(list))
+  if (this.isEmpty())
+    list
+  else
+    this.cons(this.head(), this.tail().appendList(list))
     
 ###*
   Creates a new list by copying all of the items in the argument 'list'
@@ -157,7 +167,10 @@ List.prototype.appendList = (list) ->
   @return {List} A new list containing the elements of the prepended List and the elements of the original List.
 ###
 List.prototype.prependList = (list) -> 
-  if list.isEmpty() then this else this.cons(list.head(), this.prependList(list.tail()))
+  if this.isEmpty() 
+    list
+  else
+    if list.isEmpty() then this else this.cons(list.head(), this.prependList(list.tail()))
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -187,13 +200,7 @@ List.prototype.cons = (head, tail) ->
   l = new List(head)
   l.tail = () -> tail
   return l
-  
-###*
-  Checks if the list is empty
-  @return {boolean} true if container is empty, otherwise false. 
-###
-List.prototype.isEmpty = () -> false 
-  
+    
 ###* 
   Applies a binary operator on all elements of this list going left to right and ending with the
   seed value. This is a curried function that takes a seed value which returns a function that 
@@ -245,25 +252,5 @@ List.prototype.foldRight = (seed) -> (f) =>
       f(__foldRight(xs.tail()), xs.head())
   __foldRight(this) 
 
-Nil = () -> 
-  this.head = () -> throw new Error("Can't get head of empty List")
-  this.tail = () -> throw new Error("Can't get tail of empty List")
-  this
-
-Nil.prototype.constructor = Nil
-Nil.prototype.isEmpty =     ()              -> true
-Nil.prototype.append =      (element)       -> new List(element)
-Nil.prototype.prepend =     (element)       -> new List(element)
-Nil.prototype.appendList =  (list)          -> list
-Nil.prototype.prependList = (list)          -> list
-Nil.prototype.last =        ()              -> new None()
-Nil.prototype.first =       ()              -> new None()
-Nil.prototype.forEach =     (f)             -> # nothing
-Nil.prototype.get =         (index)         -> new None()
-Nil.prototype.remove =      (index)         -> new Nil()
-Nil.prototype.map =         (f)             -> new Nil()
-Nil.prototype.update =      (index,element) -> throw new Error("Index out of bounds by #{index}")
-
 if exports?
   exports.List = List
-  exports.Nil  = Nil
