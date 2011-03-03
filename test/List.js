@@ -83,4 +83,9 @@ $(document).ready(function(){
     ok(product == 3628800, "The product of all integers from 1 to 10 is 3628800" );
   });
   
+  test("You can map a list to another list", function() {
+    var list = new List(1,2,3,4,5,6,7,8,9,10);
+    
+  });
+  
 });

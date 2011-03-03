@@ -9,14 +9,14 @@
 if true then true 
  
 ###*
-  Don't use the Option prototype directly. Use the Some or None. An option represents
+  Don't use the Option prototype directly, use the {@link Some} or {@link None}. An option represents
   an optional value. It consists of either Some or None. 
   
   @see Some
   @see None
   @constructor 
 ###
-Option = () -> 
+Option = () -> this
 
 ###*
   Checks if the Option is empty. 
@@ -85,9 +85,9 @@ Option.prototype.foreach = ( f ) ->
     f(this.get())
 
 ###*
-  An option represents an optional value. It consists of either Some or None. Some(e)
-  represents the existence of value e. 
+  Some(x) represents an existing value x. It's part of the {@link Option} monad. 
   
+  @class Some(x) represents an existing value x. It's part of the {@link Option} monad. 
   @param {*} value The value to wrap inside an Option
   @see Option
   @constructor
@@ -114,12 +114,12 @@ Some.prototype.isEmpty = () -> false
 Some.prototype.get = () -> this.__value
   
 ###*
-  An Option represents an optional value. It consists of either Some or None. None
-  represents the non-existence of a value.
+  None represents the non-existing of a value. It's part of the {@link Option} monad. 
   
   @see Option
   @constructor
   @augments Option
+  @class None represents the non-existing of a value. It's part of the {@link Option} monad. 
 ###
 None = () -> this
 
