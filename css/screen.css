@@ -5,6 +5,12 @@ body {
 
 table { font: normal normal normal 13px/1.231 arial, helvetica, clean, sans-serif; }
 
+textarea {
+  margin: 20px 0px;
+}
+
+textarea#result { outline: none;}
+
 thead td {
   font-size: 13px;  
 }
