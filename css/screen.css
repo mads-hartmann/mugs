@@ -7,7 +7,7 @@ table { font: normal normal normal 13px/1.231 arial, helvetica, clean, sans-seri
 
 .editor_container {
   height: 200px;
-  width: 810px;
+  width: 815px;
   border: 5px solid #666;
 }
 
@@ -16,7 +16,7 @@ table { font: normal normal normal 13px/1.231 arial, helvetica, clean, sans-seri
 }
 
 #editor {
-  width: 810px;
+  width: 815px;
   height: 200px;
 }
 
