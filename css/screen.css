@@ -10,7 +10,8 @@ textarea {
 }
 
 textarea { 
-  width: 100%;
+  width: 815px;
+  max-width: 815px;
   height: 200px;
   outline: none;
   background: #232323;
