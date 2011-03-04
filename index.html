@@ -1,10 +1,10 @@
 ---
 title: Immutable Collections Library for Javascript
 ---
-
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" href="http://mads379.github.com/bachelorproject/css/screen.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<!-- <link rel="stylesheet" href="http://mads379.github.com/bachelorproject/css/screen.css" type="text/css" media="screen" title="no title" charset="utf-8"> -->
+	<link rel="stylesheet" href="file:///Users/Mads/dev/projects/bachelorproject/css/screen.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	<script src="http://mads379.github.com/bachelorproject/js/jquery-1.5.1.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="http://mads379.github.com/bachelorproject/bin/Mahj.js" type="text/javascript" charset="utf-8"></script>
 	<script src="http://mads379.github.com/bachelorproject/bin/Option.js" type="text/javascript" charset="utf-8"></script>
@@ -43,11 +43,16 @@ title: Immutable Collections Library for Javascript
 <p>This is a product of the bachelor project of Mads Hartmann Jensen under supervision of Peter Sestoft.</p>
 
 <h2>Try it out</h2>
+<p>You can try out the different collections classes by typing javascript in the textarea below and hitting 'Evaluate' button.</p>
+<textarea name="code" id="code">var list = new List(1,2,3,4,5,6,7,8,9,10);
 
-<textarea name="code" rows="20" cols="80" id="code">return new List(1,2,3,4,5,6,7,8,9,10).foldLeft(0)( function(acc,elem){     
-  return acc + elem;
-});    
-</textarea>
+var add = function(x,y) { 
+  return x + y ;
+}
+
+var sum = list.foldLeft(0)( add );
+
+return sum;</textarea>
 <button type="submit" id="evaluate">Evaluate</button>
 
 <h2>Getting the code</h2>

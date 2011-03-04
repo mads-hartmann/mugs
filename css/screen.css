@@ -9,7 +9,20 @@ textarea {
   margin: 20px 0px;
 }
 
-textarea#result { outline: none;}
+textarea { 
+  width: 100%;
+  height: 200px;
+  outline: none;
+  background: #232323;
+  color: #f9f9f9;
+  font-family: monospace;
+  font-size: 12px;
+  padding: 20px;
+  border: 5px solid #666;
+}
+button#evaluate {
+  float: right;
+}
 
 thead td {
   font-size: 13px;  
@@ -71,6 +84,7 @@ td {
 h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   margin-bottom: 0px;
+  clear: both;
 }
 
 h4, h5 {
