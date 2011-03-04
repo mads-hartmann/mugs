@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>List Performance</title>
+	<meta name="author" content="Mads Hartmann Jensen">
+	
+	<!-- JSLitmus -->
+<script src="../../lib/jslitmus/JSLitmus.js" type="text/javascript" charset="utf-8"></script> 
+	
+
+	<!-- Library classes -->
+	<script src="../../bin/Mahj.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../bin/Option.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../bin/Traversable.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../bin/List.js" type="text/javascript" charset="utf-8"></script>
+	
+
+	<script type="text/javascript">
+	// The empty form of a non-looping test.  This should result in "Infinity"
+	// operations per second, or very close to it.
+	JSLitmus.test('Creating a list with 5 elements', function() {
+		new List(1,2,3,4,5)
+	});
+
+	</script>
+	
+</head>
+	<body></body>
+</html>
+
+
