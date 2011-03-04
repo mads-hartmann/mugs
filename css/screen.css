@@ -5,24 +5,35 @@ body {
 
 table { font: normal normal normal 13px/1.231 arial, helvetica, clean, sans-serif; }
 
+.editor_container {
+  height: 200px;
+  width: 810px;
+  border: 5px solid #666;
+}
+
+.ace_scroller {
+  overflow-x: hidden;
+}
+
+#editor {
+  width: 810px;
+  height: 200px;
+}
+
+pre { margin: 0px;}
+
 textarea {
   margin: 20px 0px;
 }
 
-textarea { 
-  width: 815px;
-  max-width: 815px;
-  height: 200px;
-  outline: none;
-  background: #232323;
-  color: #f9f9f9;
-  font-family: monospace;
-  font-size: 12px;
-  padding: 20px;
-  border: 5px solid #666;
-}
 button#evaluate {
   float: right;
+  padding: 10px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+button#evaluate:hover {
+  cursor: pointer;
 }
 
 thead td {

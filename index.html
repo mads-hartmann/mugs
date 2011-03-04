@@ -1,6 +1,7 @@
 ---
 title: Immutable Collections Library for Javascript
 ---
+<html>
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" href="http://mads379.github.com/bachelorproject/css/screen.css" type="text/css" media="screen" title="no title" charset="utf-8">
@@ -10,17 +11,30 @@ title: Immutable Collections Library for Javascript
 	<script src="http://mads379.github.com/bachelorproject/bin/Option.js" type="text/javascript" charset="utf-8"></script>
 	<script src="http://mads379.github.com/bachelorproject/bin/Traversable.js" type="text/javascript" charset="utf-8"></script>
 	<script src="http://mads379.github.com/bachelorproject/bin/List.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
+	
+	
+	<script src="js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/ace/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/ace/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+	window.onload = function() {
+	    var editor = ace.edit("editor");
+	    editor.setTheme("ace/theme/twilight");
+
+	    var JavaScriptMode = require("ace/mode/javascript").Mode;
+	    editor.getSession().setMode(new JavaScriptMode());
+	 	editor.renderer.setShowGutter(false);
+		editor.renderer.setShowPrintMargin(false);
 		
 		function wrapInFunction(code) {
 			return "(function(){"+code+"})()";
 		}
-	
-		$(document).ready(function() {
-			$('#evaluate').bind('click',function() {
-				alert("Result: " + eval(wrapInFunction($('#code').val().replace(/\\n/g,""))));
-			});
+		
+		$('#evaluate').bind('click',function() {
+			alert("Result: " + eval(wrapInFunction(editor.renderer.content.innerText.replace(/\\n/g,""))));
 		});
+	
+	};
 	</script>
 </head>
 
@@ -44,7 +58,9 @@ title: Immutable Collections Library for Javascript
 
 <h2>Try it out</h2>
 <p>You can try out the different collections classes by typing javascript in the textarea below and hitting 'Evaluate' button.</p>
-<textarea name="code" id="code">var list = new List(1,2,3,4,5,6,7,8,9,10);
+
+<div class="editor_container">
+<pre id="editor">var list = new List(1,2,3,4,5,6,7,8,9,10);
 
 var add = function(x,y) { 
   return x + y ;
@@ -52,15 +68,17 @@ var add = function(x,y) {
 
 var sum = list.foldLeft(0)( add );
 
-return sum;</textarea>
+return sum;</pre>
+</div>
 <button type="submit" id="evaluate">Evaluate</button>
 
 <h2>Getting the code</h2>
 
 <p>You can download this project in either <a href="http://github.com/mads379/bachelorproject/zipball/master">zip</a> or <a href="http://github.com/mads379/bachelorproject/tarball/master">tar</a></p>
 
-<p>You can also clone the project with "Git":http://git-scm.com by running:<pre>$ git clone git://github.com/mads379/bachelorproject</pre></p>
+<p>You can also clone the project with <a href="http://git-scm.com">Git</a> by running:<pre>$ git clone git://github.com/mads379/bachelorproject</pre></p>
 
 <p>get the source code on <a href="http://github.com/mads379/bachelorproject">GitHub</a>.</p>
 
 </div>
+</html>
