@@ -65,6 +65,10 @@ td {
   color: #333;
   padding: 20px 40px 20px 40px;
   border-bottom: 10px solid #666;
+  
+  /*clearfix*/
+  overflow: hidden;
+  *zoom: 1;
 }
 
 #menu {
