@@ -57,8 +57,10 @@ List = (elements...) ->
     this.tail = () -> new List(xs) 
   this
 
-List.prototype = new mahj.Traversable() 
 
+List.prototype = new mahj.Traversable()
+
+# The constructor of the List prototype is the List function
 List.prototype.constructor = List
 
 ###
@@ -179,9 +181,17 @@ Methods related to Traversable prototype
 ---------------------------------------------------------------------------------------------
 ### 
 
+###*
+  @private
+###
 List.prototype.buildFromArray = (arr) -> 
   new List(arr)
 
+###*
+  Applies function 'f' on each element in the list. This return nothing and is only invoked
+  for the side-effects of f. 
+  @see mahj.Traversable
+###
 List.prototype.forEach = ( f ) -> 
   if !this.isEmpty()
     f(this.head()) 
@@ -221,17 +231,6 @@ List.prototype.foldLeft = (seed) -> (f) =>
     else 
       __foldLeft( f(acc, xs.head()), xs.tail())
   __foldLeft(seed,this)
-
-###
-  Applies the function ‘f’ on each element in the collection and returns a new collection with the 
-  values returned from applying the function ‘f’.
-  
-  @param {Function(*)} f The function to apply on each element
-  @return A new list with the values of applying the function 'f' on each element
-### 
-# List.prototype.map = (f) -> 
-#   that = this
-#   this.foldRight(new Nil())( (acc, elem) -> that.cons( f(elem), acc ))
 
 ###* 
   Applies a binary operator on all elements of this list going right to left and ending with the
