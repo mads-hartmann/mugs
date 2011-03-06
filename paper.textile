@@ -32,6 +32,7 @@ h2(#table_of_contents). Table of Contents
 ## "Implemented Data Structures":#implemented_data_structures
 # "User’s guide and examples":#users_guide_and_examples
 # "Technical description of the program":#technical_description_of_the_program
+## "Object construction":#object_construction
 # "Test":#test
 # "Conclusion":#conclusion
 # "References":#references
@@ -169,7 +170,9 @@ h3(#implemented_data_structures). Implemented Data Structures
 
 The following abstract data types have have been implemented: List, Set, Queue, Map, MultiMap, Stack. Some abstract data types have more than one implementation based on different data structures that offer different running time complexities of their operations. This allows the developer to pick the implementation that fits his/her needs. This section will describe each abstract data types and their implementations. 
 
-Though the abstract data types are different in many ways they all support the same subset of operations. The most important operations are described below. For a full list of operations on each data type see the API documentation. Each of the operations run in <code>O(n)</code> as they all iterate through the entire collection and apply a function on each element. 
+Though the abstract data types are different in many ways they all support the same subset of operations. The most important operations are described below. For a full list of operations on each data type see the API documentation. 
+
+In the following table the complexities are expressed in terms of n or n' where n is the size of the original collection and n' is the size of the resulting collection.
 
 <table>
 	<thead>
@@ -182,7 +185,7 @@ Though the abstract data types are different in many ways they all support the s
 	<tr>
 		<td>map( f )</td>
 		<td>Applies the function 'f' on each element in the collection and returns a new collection with the values returned from applying the function 'f'.</td>
-		<td>@O(n)@</td>
+		<td>@O(N)@</td>
 	</tr>
 	<tr>
 		<td>flatMap( f )</td>
@@ -196,12 +199,12 @@ Though the abstract data types are different in many ways they all support the s
 	</tr>
 	<tr>
 		<td>forEach( f )</td>
-		<td>Apply the function f on each element in the collection returning nothing. This is all about side effects.</td>
-		<td>@O(n)@</td>
+		<td>Applies the function f on each element in the collection and returns nothing. This means that forEach is invoked for the side effects of f.</td>
+		<td>@O(n')@</td>
 	</tr>
 	<tr>
 		<td>foldLeft( seed )( f )</td>
-		<td>Allies the binary function 'f' on each element in the list starting from left. The function 'f' takes two arguments: The first is the accumulation of applying the function f on the elements of the collection so far. The second is the current value. </td>
+		<td>Applies the binary function 'f' on each element in the list starting from left. The function 'f' takes two arguments: The first is the accumulation of applying the function f on the elements of the collection so far. The second is the current value. </td>
 		<td>@O(n)@</td>
 	</tr>
 </table>
@@ -292,7 +295,7 @@ TODO
 
 h4(#stack). Stack
 
-A stack inserts and retrieves elements according to the first-in-last-out (FILO) principle. The Stack Abstract Data Type has been implemented using a List because of it's quick access, insertion and removal of the first element. 
+A stack inserts and retrieves elements according to the last-in-first-out (LIFO) principle. The Stack Abstract Data Type has been implemented using a List because of it's quick access, insertion and removal of the first element. 
 
 <table>
 	<thead>
@@ -406,7 +409,28 @@ If I have the time it would be cool to implement one or two of the problems in "
 
 h2(#technical_description_of_the_program). Technical description of the program
 
-TODO
+h3(#object_construction). Object construction
+
+There are many different ways to construct a new object in javascript and each one comes with its own set of merits and penalties. In this section I will introduce X different ways to construct objects in javascript and explain which one I've chosen for this library and why. 
+
+h4(#factory_functions). factory function
+
+In this approach you create a function .. 
+
+<pre><code>var Class = function(){
+	this.method = function(){};
+}</code></pre>
+
+The advantage of this approach is that you can define any variables you want inside of the function and they will act as private members. The disadvantage is that instances created with this method will be heavy objects in the sense that all of them will store the code for each method. 
+
+h4(#prototype). Prototype 
+
+<pre><code>var Class = function(){}
+Class.prototype.method = function(){}</code></pre>
+
+This resolves the disadvantage of the factory approach as all the instances share the same prototype object. This means that object creation is roughly 3 x faster (see section about performance tests) because the interpreter doesn't need to add the same methods to all of the objects and the objects takes up less memory. 
+
+However, because the methods are no longer stored directly on the object the interpreter needs to do, at least, one extra lookup before it can execute the method. Because of this it takes roughly %40 longer to invoke a method on an object with this approach. 
 
 h2(#test). Test
 
