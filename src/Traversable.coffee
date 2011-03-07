@@ -15,6 +15,9 @@ if true then true
 ###
 mahj.Traversable = () -> this
 
+###*
+  @private
+###
 mahj.Traversable.prototype.buildFromArray = () -> throw new Error("Should be implemented in subclass")  
   
 mahj.Traversable.prototype.forEach = () -> throw new Error("Should be implemented in subclass")  
