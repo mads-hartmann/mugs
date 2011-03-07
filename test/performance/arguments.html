@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Inheritance Performance</title>
+	<meta name="author" content="Mads Hartmann Jensen">
+	
+	<!-- JSLitmus -->
+	<script src="../../lib/jslitmus/JSLitmus.js" charset="utf-8"></script> 
+	
+	<!-- 
+		Performance test showing the difference between passing arguments directly or using a 
+		arguments object to emulate named arguments
+	-->
+	
+	<script type="text/javascript" charset="utf-8">
+		
+		var normalFunction = function(x,y) {
+			return x + y;
+		};
+		
+		var namedArgumentsFunction = function(args) {
+			return args.x + args.y;
+		};
+		
+	</script>	
+
+	<script type="text/javascript">
+
+	JSLitmus.test('Testing normal function', function() {
+		normalFunction(5,5);
+	});
+	
+	JSLitmus.test('Testing function with named arguments', function() {
+		normalFunction({ x: 5, y: 5});
+	});
+	</script>
+	
+</head>
+	<body></body>
+</html>
+
+
