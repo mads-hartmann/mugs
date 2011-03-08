@@ -412,7 +412,7 @@ h2(#technical_description_of_the_program). Technical description of the program
 
 h3(#prototype_chain). Prototype chain 
 
-<img src="images/prototype-chain.png" width="529" height="501" alt="Prototype Chain" />
+<img src="images/prototype-chain.png" width="506" height="514" alt="Prototype Chain" />
 
 h3(#javascript_call_stack). Javascript call-stack
 
