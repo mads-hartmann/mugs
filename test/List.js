@@ -83,7 +83,7 @@ $(document).ready(function(){
     ok(product == 3628800, "The product of all integers from 1 to 10 is 3628800" );
   });
     
-  module("List - Traversable method");
+  module("List - Traversable methods");
   
   test("You can map a list to another list", function() {
     var list = new List(1,2,3,4).map( function(elem){ return elem*2; });
