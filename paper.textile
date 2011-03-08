@@ -29,7 +29,7 @@ h2(#table_of_contents). Table of Contents
 # "Problem analysis":#problem_analysis
 ## "Equality and Comparison":#equality_and_comparison
 ## "Handling Exceptional States":#handling_exceptional_states
-## "Implemented Data Structures":#implemented_data_structures
+## "Implemented Data Types":#implemented_data_types
 # "User’s guide and examples":#users_guide_and_examples
 # "Technical description of the program":#technical_description_of_the_program
 ## "Javascript call-stack":#javascript_call_stack
@@ -74,14 +74,15 @@ h3(#overview_of_collections). Overview of collections
 Even though Javascript, being the dynamic language that it is, doesn't have interfaces I've made sure that there is a set of methods that are supported by all collection prototypes. Each collection must implement these methods and is free to add any additional methods specific to that abstract data types. 
 
 The library contains an implementation of the following abstract data types:
+
 # List 
-# Set (TODO)
-# Map (TODO)
-# MultiMap (TODO)
-# Stack (TODO)
-# Queue (TODO)
-# Random Access List (TODO)
-# Priority Queue (TODO)
+# Set 
+# Map 
+# MultiMap
+# Stack
+# Queue 
+# Random Access List
+# Priority Queue
 
 h3(#comparison_with_other_collections). Comparison with other collection libraries
 
@@ -148,26 +149,41 @@ TODO
 
 h3(#handling_exceptional_states). Handling Exceptional States
 
-*Spørgsmål: Skal jeg være mere beskrivende og forklare hvordan map, flatMap etc. er implementeret i Some og None så læseren kan se hvorfor man kan skrive vale.map( (a) -> b ).map( (b) -> c ).getOrElse(q) uden er beskymre sig om den første map er Some eller None?*
+This section explains how the library deals with methods where a successful result isn't guaranteed. An example of this could be the @get(key)@ method on Map. In cases like this the convention is to return an instance of Option instead of null or throwing an exception. Instances of Option are either an of the type of Some or None. Some is a single element container which contains the result of successfully executing the method. The use of the Option type is adopted from the Scala standard library. Readers coming from a functional programming background might recognize Option as a Monad.  
 
-This section explains how the library deals with exceptional states. 
+To display the power of Option I've created two applications that will get a value from one Map and use that value to receive a second value from another map and finally print that value to the console. The first solutions takes an imperative approach to the problem and assumes that the get() method on Map will return null if the key doesn't exist. This is similar to the Map class in the standard Java collection. The second solution takes a functional approach and the @get()@ method on Map returns an Option. 
 
-If the invocation of a method is not always guaranteed to be successful, for example a map lookup, it returns an instance of Option instead of throwing an exception. Instances of Option are either an instance of Some or None. Some is a single element container which contains the result of successfully executing the method. The use of the Option type is adopted from the Scala standard library.
+Both solutions assume that the following two maps are declared.
 
-The Option type returned from a method forces the developer to deal with the possibility of an error before it's possible to access the properties of the object. If exceptions were used the the developer would be free to ignore the possibility of an exception being thrown.
+<pre><code>persons = new Map({ key: 'Mads', value: 1234 })
+details = new Map({ key: 1234, value: { address: 'Grundtvigs Sidevej 1 st th' } })</code></pre>
 
-The most idiomatic way to deal with Option is to treat it as a collection and use the <code>map</code>, <code>flatMap</code>, <code>filter</code> and <code>foreach</code> methods. This allows the develop to chain operations on Option without having to check for the existence of a value before the very last expression where the developer can supply a fallback value using the <code>getOrElse()</code> method. See the example below:
+The following is the imperative solution:
 
-<pre><code>persons = new Map({ 'key' : 'Mads', 'value' : 1234 })
-details = new Map({ 'key' : 1234, 'value' : { 'address' : 'Grundtvigs Sidevej 1 st th' } })
+<pre><code>address = null
+madsId = persons.get("Mads")
+if (madsId != null) {
+	madsDetails = details.get(madsId)
+	if (madsDetails != null) {
+		address = madsDetails.address
+	}
+}
+if (address != null) {
+	console.log(address)
+} else {
+	console.log((address)
+}</code></pre>
 
-address = persons.get("Mads")
-                 .map( (id) -> details.get(id) )
-                 .map( (obj) -> obj.address )
+The following is the functional solution:
+
+<pre><code>address = persons.get("Mads").map( (id) -> details.get(id) ).map( (obj) -> obj.address )
 console.log(address.getOrElse("No address for user"))</code></pre>
 
+There are two things to take away from these examples. The first is that the most idiomatic way to deal with Option is to treat it as a collection and use the <code>map</code>, <code>flatMap</code>, <code>filter</code> and <code>foreach</code> methods. This allows the develop to chain operations on Option without having to check for the existence of a value before the very last expression where the developer can supply a fallback value using the @getOrElse()@ method. This results in code that's shorter and more concise as the above examples show. It is possible to chain operations on Option due to the fact that all operations on @None@ return @None@ except for @getOrElse(value)@ which return the value. @getOrElse(value)@ on @Some@ will return the element stored in the container and ignore @value@.
 
-h3(#implemented_data_structures). Implemented Data Structures
+The second advantage that @Option@ has over null/exceptions is that it *always* forces the developer to consider the possibility of an error as it isn't possible to access the values directly. This is compared to null/exceptions where the developer would have to read the source code or documentation to realize that an error might occur. 
+
+h3(#implemented_data_types). Implemented Data Types
 
 The following abstract data types have have been implemented: List, Set, Queue, Map, MultiMap, Stack. Some abstract data types have more than one implementation based on different data structures that offer different running time complexities of their operations. This allows the developer to pick the implementation that fits his/her needs. This section will describe each abstract data types and their implementations. 
 
