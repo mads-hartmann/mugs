@@ -8,6 +8,7 @@ if require?
   RedBlackLeaf        = RedBlackNodeWrapper.Leaf
   RED                 = RedBlackNodeWrapper.RED
   BLACK               = RedBlackNodeWrapper.BLACK
+  Traversable = (require './Traversable').Traversable
 
 ###*
   TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. The
@@ -64,6 +65,8 @@ TreeMap = (keyValuePairs, comparator) ->
     this.tree = RedBlackLeaf(BLACK)
   this.tree.comparator = comparator if comparator?
   this
+
+TreeMap.prototype = new mahj.Traversable()
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -134,7 +137,7 @@ TreeMap.prototype.buildFromArray = (arr) ->
   @see mahj.Traversable
 ###
 TreeMap.prototype.forEach = ( f ) -> 
-  this.tree.inorderMap( f )
+  this.tree.inorderTraversal( f )
 
     
 if exports?

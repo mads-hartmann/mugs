@@ -51,6 +51,81 @@ $(document).ready(function(){
     ok(keys.get(2).get() == 3);
   });
   
+  module("TreeMap - Traversable methods");
   
+  test("You can map a TreeMap to another TreeMap", function() {
+    var map = new TreeMap([
+      {key: 1, value: 1},
+      {key: 2, value: 2},
+      {key: 3, value: 3}
+    ]).map( function(kv){
+      return { key: kv.key, value: kv.value*2 };
+    });
+    var shouldbe = new TreeMap([
+      {key: 1, value: 2},
+      {key: 2, value: 4},
+      {key: 3, value: 6}
+    ]);
+    
+    ok( map.get(1).get() == shouldbe.get(1).get() );    
+    ok( map.get(2).get() == shouldbe.get(2).get() );    
+    ok( map.get(3).get() == shouldbe.get(3).get() );    
+  });
+  
+  test("You can flatMap a TreeMap to another TreeMap", function() {
+    var map = new TreeMap([
+      { key: 1, value: 1},
+      { key: 4, value: 4}
+    ]).flatMap( function(kv){ 
+      return new TreeMap([
+        { key: kv.key , value: kv.value},
+        { key: kv.key +1, value: kv.value+1},
+        { key: kv.key +2, value: kv.value+2}
+      ]);
+    });
+    
+    var shouldbe = new TreeMap([
+      { key: 1, value: 1},
+      { key: 2, value: 2},
+      { key: 3, value: 3},
+      { key: 4, value: 4},
+      { key: 5, value: 5},
+      { key: 6, value: 6}
+    ]);
+    
+    ok( map.get(1).get() == shouldbe.get(1).get() );    
+    ok( map.get(2).get() == shouldbe.get(2).get() );    
+    ok( map.get(3).get() == shouldbe.get(3).get() );    
+    ok( map.get(4).get() == shouldbe.get(4).get() );
+    ok( map.get(5).get() == shouldbe.get(5).get() );
+    ok( map.get(6).get() == shouldbe.get(6).get() );
+  });
+
+  test("You can filter a TreeMap", function() {
+    var map = new TreeMap([
+      { key: 1, value: 1},
+      { key: 2, value: 2},
+      { key: 3, value: 3},
+      { key: 4, value: 4},
+      { key: 5, value: 5},
+      { key: 6, value: 6}
+    ]).filter( function(kv) {
+      return kv.key > 3;
+    });
+    
+    var shouldbe = new TreeMap([
+      { key: 4, value: 4},
+      { key: 5, value: 5},
+      { key: 6, value: 6}
+    ]);
+    
+    ok( map.get(1).isEmpty() === true );    
+    ok( map.get(2).isEmpty() === true );    
+    ok( map.get(3).isEmpty() === true );    
+    ok( map.get(4).get() == shouldbe.get(4).get() );
+    ok( map.get(5).get() == shouldbe.get(5).get() );
+    ok( map.get(6).get() == shouldbe.get(6).get() );
+    
+  });
   
 });
