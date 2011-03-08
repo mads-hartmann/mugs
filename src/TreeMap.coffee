@@ -25,10 +25,10 @@ if require?
   --------------------------------------------------------
   Methods that all containers have to implement 
   --------------------------------------------------------
-  map( f )                                            O(n)    TODO
-  flatMap( f )                                        O(n)    TODO
-  filter( f )                                         O(n)    TODO
-  forEach( f )                                        O(n)    TODO
+  map( f )                                            O(n)    
+  flatMap( f )                                        O(n)    
+  filter( f )                                         O(n)    
+  forEach( f )                                        O(n)    
   foldLeft(s)(f)                                      O(n)    TODO
   isEmpty()                                           O(1)    TODO
   contains( element )                                 O(n)    TODO
@@ -90,8 +90,7 @@ TreeMap.prototype.insert = (key, value) -> this.buildFromTree(this.tree.insert(k
 TreeMap.prototype.get = (key) -> this.tree.get(key)
   
 ###*
-  Returns a new TreeMap without the given (key,value) pair with the 
-  given key.
+  Returns a new TreeMap without the given key-value pair.
   @param {*} key The key of the value you want to remove 
   @return {TreeMap} A new TreeMap that doesn't contain the key-value pair
 ###

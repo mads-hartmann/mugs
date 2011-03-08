@@ -25,11 +25,11 @@ if require?
   Methods inherited from mahj.Traversable
   --------------------------------------------------------
   map( f )                                            O(n)    
-  flatMap( f )                                        O(n)    TODO
-  filter( f )                                         O(n)    TODO
-  forEach( f )                                        O(n)    TODO
+  flatMap( f )                                        O(n)    
+  filter( f )                                         O(n)    
+  forEach( f )                                        O(n)    
   foldLeft(s)(f)                                      O(n)    
-  isEmpty()                                           O(1)    TODO
+  isEmpty()                                           O(1)    
   contains( element )                                 O(n)    TODO
   forAll( f )                                         O(n)    TODO
   take( x )                                           O(n)    TODO

@@ -125,7 +125,6 @@ $(document).ready(function(){
     ok( map.get(4).get() == shouldbe.get(4).get() );
     ok( map.get(5).get() == shouldbe.get(5).get() );
     ok( map.get(6).get() == shouldbe.get(6).get() );
-    
   });
   
 });
