@@ -27,20 +27,28 @@ $(document).ready(function(){
     ok(map.get(2).isEmpty() === true);
   });
   
-  test("You can get a list containing all of the keys",function() {
+  test("You can get a list containing all of the values",function() {
     var map = new TreeMap([
       { key: 1, value: "one"},
       { key: 2, value: "two"},
       { key: 3, value: "three"}
     ]);
     var values = map.values();
-    ok(values.get(0) == "one");
-    ok(values.get(1) == "two");
-    ok(values.get(2) == "three");
+    ok(values.get(0).get() == "one");
+    ok(values.get(1).get() == "two");
+    ok(values.get(2).get() == "three");
   });
   
-  test("You can get a list containing all of the values",function() {
-    
+  test("You can get a list containing all of the keys",function() {
+    var map = new TreeMap([
+      { key: 1, value: "one"},
+      { key: 2, value: "two"},
+      { key: 3, value: "three"}
+    ]);
+    var keys = map.keys();
+    ok(keys.get(0).get() == 1);
+    ok(keys.get(1).get() == 2);
+    ok(keys.get(2).get() == 3);
   });
   
   

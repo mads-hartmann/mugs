@@ -54,13 +54,13 @@ RedBlackLeaf = (color) ->
   this.value   = new None()
   this
 
-RedBlackLeaf.prototype.isEmpty =      ()      -> true 
-RedBlackLeaf.prototype.containsKey =  (key)   -> false
-RedBlackLeaf.prototype.get =          (key)   -> new None()
-RedBlackLeaf.prototype.keys =      ()      -> new Nil() 
-RedBlackLeaf.prototype.values =      ()      -> new Nil() 
-RedBlackLeaf.prototype.inorderMap =   (func)  -> new Nil()
-RedBlackLeaf.prototype.insert =       (key,value) -> new RedBlackNode(RED, new RedBlackLeaf(BLACK), key, value, new RedBlackLeaf(BLACK))
+RedBlackLeaf.prototype.isEmpty = () -> true 
+RedBlackLeaf.prototype.containsKey = (key) -> false
+RedBlackLeaf.prototype.get = (key) -> new None()
+RedBlackLeaf.prototype.keys = () -> new Nil() 
+RedBlackLeaf.prototype.values = () -> new Nil() 
+RedBlackLeaf.prototype.inorderTraversal = (f) -> # nothing
+RedBlackLeaf.prototype.insert = (key,value) -> new RedBlackNode(RED, new RedBlackLeaf(BLACK), key, value, new RedBlackLeaf(BLACK))
 
 RedBlackNode = (color, left, key, value, right, comparator) -> 
   this.color      = color
@@ -71,76 +71,102 @@ RedBlackNode = (color, left, key, value, right, comparator) ->
   this.comparator = if (comparator) then  else RedBlackNode.prototype.standard_comparator
   this
 
-# The standard compare function. It's used if the user doesn't 
-# supply one when creating the tree
+###*
+  The standard compare function. It's used if the user doesn't 
+  supply one when creating the tree
+###
 RedBlackNode.prototype.standard_comparator = (elem1, elem2) -> 
   if      (elem1 < elem2) then -1
   else if (elem1 > elem2) then  1
   else                          0
-  
-
-    
-  
-# Given a key it finds the value, if any.
+      
+###*
+  Given a key it finds the value, if any.
+###
 RedBlackNode.prototype.get = (key) -> 
   comp = this.comparator(key, this.key)
   if      (comp < 0) then this.left.get(key)
   else if (comp > 0) then this.right.get(key)
   else                    new Some(this.value)
       
-# Finds the smallest key in the tree 
-# Complexity of O ( log n )
+###* 
+  Finds the smallest key in the tree
+  Complexity of O ( log n )
+###
 RedBlackNode.prototype.minKey = () -> 
   if (this.left.isEmpty()) then this.key else this.left.minKey()
 
-# Finds the largest key in the tree 
-# Complexity of O ( log n )
+###*
+  Finds the largest key in the tree
+  Complexity of O ( log n )
+###
 RedBlackNode.prototype.maxKey = () ->     
   if (this.right.isEmpty()) then this.key else this.right.maxKey()
   
-# Checks if the given key exists in the tree
+###*
+  Checks if the given key exists in the tree
+###
 RedBlackNode.prototype.containsKey = (key) -> 
   comp = this.comparator(key, this.key)
   if      (comp < 0) then this.left.containsKey(key)
   else if (comp > 0) then this.right.containsKey(key)
   else true 
   
-# returns a sorted List with all of the keys by doing an 
-# inorder traversal 
-RedBlackNode.prototype.keys = () -> this.inorderMap( (key,value) -> key )
+###*
+  returns a sorted List with all of the keys stored in the tree
+  @return {List} A sorted List with all of the key stored in the tree
+###
+RedBlackNode.prototype.keys = () -> 
+  elements = []
+  this.inorderTraversal( (kv) -> elements.push(kv.key) )
+  new List().buildFromArray(elements)
       
-# returns a sorted List with all of the values by doing an 
-# inorder traversal
-RedBlackNode.prototype.values = () -> this.inorderMap( (key,value) -> value )
+###*
+  returns a sorted List with all of the values stored in the tree
+  @return {List} A sorted List with all of the values stored in the tree
+###
+RedBlackNode.prototype.values = () -> 
+  elements = []
+  this.inorderTraversal( (kv) -> elements.push(kv.value) )
+  new List().buildFromArray(elements)
+
+###*
+  This will do an inorderTraversal of the tree applying the function 'f'
+  on each key/value pair in the tree. This doesn't return anything and is only
+  executed for the side-effects of f. 
   
-# Returns the result of applying the function 'func' on each 
-# key,value pair of the tree during an inorder traversal 
-RedBlackNode.prototype.inorderMap = (f) -> 
-  smaller = if !this.left.isEmpty()  then this.left.inorderMap(f)  else new Nil()
-  bigger  = if !this.right.isEmpty() then this.right.inorderMap(f) else new Nil()
-  that = new List(f(this.key, this.value))    
-  smaller.append( that ).append(bigger)
+  @param {Function} f A function taking one arguments with properties key and value
+###
+RedBlackNode.prototype.inorderTraversal = (f) -> 
+  smaller = if !this.left.isEmpty()  then this.left.inorderTraversal(f)  
+  f({key: this.key, value: this.value})
+  bigger  = if !this.right.isEmpty() then this.right.inorderTraversal(f) 
     
-# Returns a new tree with the inserted element.
+###*
+  Returns a new tree with the inserted element.
+###
 RedBlackNode.prototype.insert = (key,value) -> 
-  __insert = (tree) => 
+  that = this
+  __insert = (tree) -> 
     {color: c, left: l, key: k, value: v, right: r} = tree
-    compare = this.comparator(key, k)
+    compare = that.comparator(key, k)
     
     if (tree.isEmpty()) 
       new RedBlackNode(RED, new RedBlackLeaf(BLACK), key, value, new RedBlackLeaf(BLACK))
     else if (compare < 0) 
-      this.balance(c, __insert(l), k, v, r)
+      that.balance(c, __insert(l), k, v, r)
     else if (compare > 0)
-      this.balance(c, l, k,v, __insert(r))
+      that.balance(c, l, k,v, __insert(r))
     else
       tree
     
-  t = __insert(this)
+  t = __insert(that)
   new RedBlackNode(BLACK, t.left, t.key, t.value, t.right)
   
-# Returns a new tree without the 'key'
-# Port from this racket example: http://matt.might.net/articles/red-black-delete/
+###*
+  Returns a new tree without the 'key'
+  Port from this racket example: http://matt.might.net/articles/red-black-delete/
+###
 RedBlackNode.prototype.remove = (key) -> 
   __rm = (tree) => 
     isExternalNode          = () -> tree.left.isEmpty() && tree.right.isEmpty() 
@@ -190,9 +216,11 @@ RedBlackNode.prototype.remove = (key) ->
   else 
     __rm(this)
   
-# The bubble procedure moves double-blacks from children to parents, 
-# or eliminates them entirely if possible.
-# A black is substracted from the children, and added to the parent:
+###*  
+  The bubble procedure moves double-blacks from children to parents,
+  or eliminates them entirely if possible.
+  A black is subtracted from the children, and added to the parent:
+### 
 RedBlackNode.prototype.bubble = (color, left, key, value, right) -> 
   if ( left.color == DOUBLE_BLACK || right.color == DOUBLE_BLACK)
     this.balance( 
@@ -203,39 +231,41 @@ RedBlackNode.prototype.bubble = (color, left, key, value, right) ->
       new RedBlackNode(right.color.subtract(), right.left, right.key, right.value, right.right))
   else 
     new RedBlackNode(color, left, key, value, right)
-      
-# This function balances the tree by eliminating any black-red-red path in the tree.
-# This situation can occur in any of four configurations:
-#                                                                                   
-# Reading the nodes from top to bottom:                                              
-# 
-# 1. Black node followed by a red left node followed by a red left node                                        
-# 2. Black node followed by a red left node followed by a red right node                                       
-# 3. Black node followed by a red right node followed by a red right node                                      
-# 4. Black node followed by a red right node followed by a red left node                                       
-#                                                                                   
-# The solution is always the same: Rewrite the black-red-red path as a red node with
-# two black children.
-#
-# However to support removal two additional colors have been addded to the mix:
-# Negative-black and double black.
-#
-# The double black can occur instead of black in the four configurations above. 
-# The solution is then to convert it into a black node with two black children. 
-#
-# Luckily the same code can handle both the black and double black cases by using a 
-# little trick: Each color has a `subtract` and an `add` method which returns another 
-# color (see each color object for more information). Instead of rewriting 
-# "the black/double black-red-red"" into a red node with two black children we just 
-# subtract the color of the root thus turning black into red and double-black into black.
-#
-# The negative black node can occur in the following two configurations:
-#
-# 1. Double black followed by left negative black whith two black children
-# 2. Double black followed by right negative black with two black children
-#
-# The solution is to transform it into a node with two black children and a left (or right
-# depending on the initial configuration) red node.                             
+
+###*      
+  This function balances the tree by eliminating any black-red-red path in the tree.
+  This situation can occur in any of four configurations:
+                                                                                    
+  Reading the nodes from top to bottom:                                              
+  
+  1. Black node followed by a red left node followed by a red left node                                        
+  2. Black node followed by a red left node followed by a red right node                                       
+  3. Black node followed by a red right node followed by a red right node                                      
+  4. Black node followed by a red right node followed by a red left node                                       
+                                                                                    
+  The solution is always the same: Rewrite the black-red-red path as a red node with
+  two black children.
+ 
+  However to support removal two additional colors have been addded to the mix:
+  Negative-black and double black.
+ 
+  The double black can occur instead of black in the four configurations above. 
+  The solution is then to convert it into a black node with two black children. 
+ 
+  Luckily the same code can handle both the black and double black cases by using a 
+  little trick: Each color has a `subtract` and an `add` method which returns another 
+  color (see each color object for more information). Instead of rewriting 
+  "the black/double black-red-red"" into a red node with two black children we just 
+  subtract the color of the root thus turning black into red and double-black into black.
+ 
+  The negative black node can occur in the following two configurations:
+ 
+  1. Double black followed by left negative black whith two black children
+  2. Double black followed by right negative black with two black children
+ 
+  The solution is to transform it into a node with two black children and a left (or right
+  depending on the initial configuration) red node.                             
+###
 RedBlackNode.prototype.balance = (color, left, key, value, right) ->  
   leftFollowedByLeft   = () -> 
     (!left.isEmpty() && !left.left.isEmpty()) && 
@@ -316,7 +346,9 @@ RedBlackNode.prototype.balance = (color, left, key, value, right) ->
   else
     new RedBlackNode(color, left, key, value, right)
   
-# A node is never empty.
+###*
+  A node is never empty
+###
 RedBlackNode.prototype.isEmpty = () -> false
 
 # Exporing objects if people are using this as a node module
