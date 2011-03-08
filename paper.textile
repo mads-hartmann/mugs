@@ -410,6 +410,10 @@ If I have the time it would be cool to implement one or two of the problems in "
 
 h2(#technical_description_of_the_program). Technical description of the program
 
+h3(#prototype_chain). Prototype chain 
+
+<img src="images/prototype-chain.png" width="529" height="501" alt="Prototype Chain" />
+
 h3(#javascript_call_stack). Javascript call-stack
 
 All the implementations of javascript that I have tried have a fixed upper bound of the size of the call-stack. In firefox it's 3000, chrome 26.205 and Safari 52.427. Also javascript doesn't do tail-call optimizations. This restricts how "functional" it's possible to.
