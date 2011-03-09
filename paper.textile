@@ -432,28 +432,47 @@ h2(#technical_description_of_the_program). Technical description of the program
 
 h3(#object_construction). Object construction
 
-There are many different ways to construct a new object in javascript and each one comes with its own set of merits and penalties. In this section I will introduce 3 different ways to construct objects in javascript and explain which one I've chosen for this library and why. 
+There are many different ways to create and initialize a new object in javascript and each one comes with its own set of merits and penalties. In this section I will introduce 3 different ways to construct objects in javascript and explain which one I've chosen for this library and why. 
 
-h4(#factory_functions). Factory function
+h4(#factory_functions). Factory Function
 
-In this approach you create a function .. 
+In the Factory Function approach you create a function which acts as the constructor for the object you want to create. It can take any number of arguments and it uses those arguments to add properties and methods to object. The example below shows a Person factory function which takes two arguments: firstName, lastName. It uses those arguments to create two properties and a function on the object.
 
-<pre><code>var Class = function(){
-	this.method = function(){};
-}</code></pre>
+<pre><code>var Person = function(firstName, lastName){
+	this.firstName = firstName;
+	this.lastName  = lastName;
+	this.fullName = function(){ return this.firstName + " " + this.lastName; };
+	return this; 
+};
 
-The advantage of this approach is that you can define any variables you want inside of the function and they will act as private members. The disadvantage is that instances created with this method will be heavy objects in the sense that all of them will store the code for each method. 
+new Person("Mads","Hartmann");</code></pre>
+
+The advantage of this approach is that you can define any variables you want inside of the function and they will act as private members. The disadvantage is that instances created with this function will be heavy objects in the sense that all of them will store the code for each method. 
 
 h4(#prototype). Classical  
 
-<pre><code>var Class = function(){}
-Class.prototype.method = function(){}</code></pre>
+In the Classical approach you create a function which only initializes the properties of the object. Instead of adding the methods directly on each object you add it to the prototype instead as shown below. 
 
-This resolves the disadvantage of the factory approach as all the instances share the same prototype object. This means that object creation is roughly 3 x faster (see section about performance tests) because the interpreter doesn't need to add the same methods to all of the objects and the objects takes up less memory. 
+<pre><code>var Person = function(firstName, lastName){
+	this.firstName = firstName;
+	this.lastName  = lastName;
+	return this; 
+};
 
-However, because the methods are no longer stored directly on the object the interpreter needs to do, at least, one extra lookup before it can execute the method. Because of this it takes roughly %40 longer to invoke a method on an object with this approach. With this approach it's not possible for the objects to have any private state. 
+Person.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
+
+new Person("Mads","Hartmann");</code></pre>
+
+This resolves the disadvantage of the Factory Function approach as all the instances share the same prototype object. This means that object creation is roughly 3 x faster (see section about performance tests) because the interpreter doesn't need to add the same methods to all of the objects and the objects takes up less memory. 
+
+There are two disadvantages of this approach. Firstly, because the methods are no longer stored directly on the object the interpreter needs to do, at least, one extra lookup before it can execute the method. Because of this it takes roughly %40 longer to invoke a method on an object. The second disadvantage is that it's no longer possible to the objects to have private state. 
 
 h4(#object_create). Object.create
+
+<pre><code>var Person = {
+	fullName: function() { return this.firstName + " " + this.lastName; }
+};
+Object.create(Person, {firstName: "Mads", lastName: "Hartmann"});</code></pre>
 
 h3(#javascript_call_stack). Javascript call-stack
 
