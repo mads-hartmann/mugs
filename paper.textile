@@ -487,9 +487,32 @@ This approach allows for great flexibility and shows JavaScripts true prototypal
 
 h3(#javascript_call_stack). Javascript call-stack
 
-All the implementations of javascript that I have tried have a fixed upper bound of the size of the call-stack. In firefox it's 3000, chrome 26.205 and Safari 52.427. Also javascript doesn't do tail-call optimizations. This restricts how "functional" it's possible to.
+Most JavaScript implementations have a fixed upper bound on the size of the call-stack. The following table shows the maximum size of the call-stack in different browsers. 
 
-Instead of writing the map function on a list using the tail-recursive foldLeft method I instead use the forEach method and rely on side-effect to construct a new List with the mapped values. However, luckily this is an implementation detail and the API of the collections are still the same so if the javascript implementations should improve in the future it's possible for me to change the library implementation.
+<table>
+	<thead>
+	<tr>
+		<td> Browser </td>
+		<td> Max size of call-stack</td>
+	</tr>
+	</thead>
+	<tr> 
+		<td>Firefox (Version 3.6.13 on OS X)</td>
+		<td>3000</td>
+	</tr>
+	<tr> 
+		<td>Chrome (Version 10.0.648.127 on OS X)</td>
+		<td>26.205</td>
+	</tr>
+	<tr> 
+		<td>Safari (Version 5.0.3 (6533.19.4) on OS X)</td>
+		<td>52.427</td>
+	</tr>
+</table>
+
+This, unfortunately, means that recursive functions have the possibility of breaking the application. Seeing that recursive functions are one of the backbones of  functional programming this is a huge restriction on how elegantly I've been able to implement the different data structures. For methods like map which are applied on every element in a collection I've been forced to rely on side-effects as a recursive function would break the application when applied on collections with more than 3000 (in the case of Firefox) elements. 
+
+Luckily this is an implementation detail and the API of the collections are still the same so if the javascript implementations should improve in the future it's possible for me to change the library implementation without introducing any breaking changes. 
 
 h2(#test). Test
 
