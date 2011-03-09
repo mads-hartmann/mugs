@@ -430,19 +430,11 @@ If I have the time it would be cool to implement one or two of the problems in "
 
 h2(#technical_description_of_the_program). Technical description of the program
 
-h3(#prototype_chain). Prototype chain 
-
-h3(#javascript_call_stack). Javascript call-stack
-
-All the implementations of javascript that I have tried have a fixed upper bound of the size of the call-stack. In firefox it's 3000, chrome 26.205 and Safari 52.427. Also javascript doesn't do tail-call optimizations. This restricts how "functional" it's possible to.
-
-Instead of writing the map function on a list using the tail-recursive foldLeft method I instead use the forEach method and rely on side-effect to construct a new List with the mapped values. However, luckily this is an implementation detail and the API of the collections are still the same so if the javascript implementations should improve in the future it's possible for me to change the library implementation. 
-
 h3(#object_construction). Object construction
 
-There are many different ways to construct a new object in javascript and each one comes with its own set of merits and penalties. In this section I will introduce X different ways to construct objects in javascript and explain which one I've chosen for this library and why. 
+There are many different ways to construct a new object in javascript and each one comes with its own set of merits and penalties. In this section I will introduce 3 different ways to construct objects in javascript and explain which one I've chosen for this library and why. 
 
-h4(#factory_functions). factory function
+h4(#factory_functions). Factory function
 
 In this approach you create a function .. 
 
@@ -452,7 +444,7 @@ In this approach you create a function ..
 
 The advantage of this approach is that you can define any variables you want inside of the function and they will act as private members. The disadvantage is that instances created with this method will be heavy objects in the sense that all of them will store the code for each method. 
 
-h4(#prototype). Prototype 
+h4(#prototype). Classical  
 
 <pre><code>var Class = function(){}
 Class.prototype.method = function(){}</code></pre>
@@ -460,6 +452,14 @@ Class.prototype.method = function(){}</code></pre>
 This resolves the disadvantage of the factory approach as all the instances share the same prototype object. This means that object creation is roughly 3 x faster (see section about performance tests) because the interpreter doesn't need to add the same methods to all of the objects and the objects takes up less memory. 
 
 However, because the methods are no longer stored directly on the object the interpreter needs to do, at least, one extra lookup before it can execute the method. Because of this it takes roughly %40 longer to invoke a method on an object with this approach. With this approach it's not possible for the objects to have any private state. 
+
+h4(#object_create). Object.create
+
+h3(#javascript_call_stack). Javascript call-stack
+
+All the implementations of javascript that I have tried have a fixed upper bound of the size of the call-stack. In firefox it's 3000, chrome 26.205 and Safari 52.427. Also javascript doesn't do tail-call optimizations. This restricts how "functional" it's possible to.
+
+Instead of writing the map function on a list using the tail-recursive foldLeft method I instead use the forEach method and rely on side-effect to construct a new List with the mapped values. However, luckily this is an implementation detail and the API of the collections are still the same so if the javascript implementations should improve in the future it's possible for me to change the library implementation.
 
 h2(#test). Test
 
