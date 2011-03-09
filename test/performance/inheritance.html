@@ -28,8 +28,8 @@
 			this.i = "i";
 			this.k = "j";
 			return this;
-		}
-		var B = function(){ return this; }
+		};
+		var B = function(){ return this; };
 		B.prototype.a = "a";
 		B.prototype.b = "b";
 		B.prototype.c = "c";
@@ -50,6 +50,10 @@
 	
 	JSLitmus.test('Creating object - appending methods to prototype', function() {
 		new B();
+	});
+	
+	JSLitmus.test('Creating objects - using Object.create with prototype',function() {
+		Object.create(B);
 	});
 	
 	var a = new A();
