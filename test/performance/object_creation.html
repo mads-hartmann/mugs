@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Inheritance Performance</title>
+	<meta name="author" content="Mads Hartmann Jensen">
+	
+	<!-- JSLitmus -->
+	<script src="../../lib/jslitmus/JSLitmus.js" charset="utf-8"></script> 
+	
+	<!-- 
+		Performance test showing the difference between adding methods directly to objects instead of 
+		adding methods to the prototype object. 
+	-->
+	
+	<script type="text/javascript" charset="utf-8">
+		var PersonFactory = function(firstName, lastName){
+			this.firstName = firstName;
+			this.lastName  = lastName;
+			this.fullName = function(){ return this.firstName + " " + this.lastName; };
+			return this; 
+		};
+
+		var PersonClass = function(firstName, lastName){
+			this.firstName = firstName;
+			this.lastName  = lastName;
+			return this; 
+		};
+
+		PersonClass.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
+		
+		var PersonObject = {
+			fullName: function() { return this.firstName + " " + this.lastName; }
+		};
+		
+	</script>	
+
+	<script type="text/javascript">
+
+	JSLitmus.test('Creating object - Factory Function', function() {
+		new PersonFactory("Mads","Hartmann");
+	});
+	
+	JSLitmus.test('Creating object - Classical', function() {
+		new PersonClass("Mads","Hartmann");
+	});
+	
+	JSLitmus.test('Creating objects - Object.create',function() {
+		Object.create(PersonObject, {
+			firstName: { 
+				value: "Mads" 
+			}, 
+			lastName: { 
+				value: "Hartmann"
+			} 
+		});
+	});
+	</script>
+	
+</head>
+	<body></body>
+</html>
+
+
