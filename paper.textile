@@ -28,7 +28,7 @@ h2(#table_of_contents). Table of Contents
 ## "Coffeescript":#coffeescript
 # "Problem analysis":#problem_analysis
 ## "Equality and Comparison":#equality_and_comparison
-## "Handling Exceptional States":#handling_exceptional_states
+## "Handling Operations That Might Fail":#handling_operations_that_might_fail
 ## "Implemented Data Types":#implemented_data_types
 # "User’s guide and examples":#users_guide_and_examples
 # "Technical description of the program":#technical_description_of_the_program
@@ -147,20 +147,20 @@ h3(#equality_and_comparison). Equality and comparison
 
 TODO
 
-h3(#handling_exceptional_states). Handling Exceptional States
+h3(#handling_operations_that_might_fail). Handling Operations That Might Fail
 
-This section explains how the library deals with methods where a successful result isn't guaranteed. An example of this could be the @get(key)@ method on Map. In cases like this the convention is to return an instance of Option instead of null or throwing an exception. Instances of Option are either an of the type of Some or None. Some is a single element container which contains the result of successfully executing the method. The use of the Option type is adopted from the Scala standard library. Readers coming from a functional programming background might recognize Option as a Monad.  
+This section explains how the library deals with methods where a successful result isn't guaranteed. An example of this could be the @get(key)@ method on Map. In cases like this I've chosen to return an instance of Option rather than null or throwing an exception. Instances of Option are either an instance of the type of Some or None. Some is a single element container which contains the result of successfully executing the method. The use of the Option type is adopted from the Scala standard library. Readers coming from a functional programming background might recognize Option as a Monad.
 
-To display the power of Option I've created two applications that will get a value from one Map and use that value to receive a second value from another map and finally print that value to the console. The first solutions takes an imperative approach to the problem and assumes that the get() method on Map will return null if the key doesn't exist. This is similar to the Map class in the standard Java collection. The second solution takes a functional approach and the @get()@ method on Map returns an Option. 
+To display the power of Option I've created three applications that will get a value from a Map and use that value to receive a second value from another map and finally print that value to the console. The first solutions takes an imperative approach to the problem and assumes that the get() method on Map will return null if the key doesn't exist. This is similar to the Map class in the standard Java collection. The second solution assumes that the @get()@ method throws an exception if the key isn't present in the Map. The final solution takes a functional approach and the @get()@ method on Map returns an Option. All of the examples have been implemented using Coffeescript. 
 
-Both solutions assume that the following two maps are declared.
+All of the solutions assume that the following two maps are declared.
 
 <pre><code>persons = new Map({ key: 'Mads', value: 1234 })
 details = new Map({ key: 1234, value: { address: 'Grundtvigs Sidevej 1 st th' } })</code></pre>
 
-The following is the imperative solution:
+The following is the application that relies on null:
 
-<pre><code>address = null
+<pre><code>address = null;
 madsId = persons.get("Mads")
 if (madsId != null) {
 	madsDetails = details.get(madsId)
@@ -171,7 +171,18 @@ if (madsId != null) {
 if (address != null) {
 	console.log(address)
 } else {
-	console.log((address)
+	console.log("No address for user")
+}</code></pre>
+
+The following is the application that relies on exceptions:
+
+<pre><code>try {
+	madsId = persons.get("Mads"),
+	madsDetails = defailts.get(madsId)
+	address = madsDetails.address
+	console.log(address);
+} catch(e) {
+	console.log("No address for user")
 }</code></pre>
 
 The following is the functional solution:
@@ -179,9 +190,17 @@ The following is the functional solution:
 <pre><code>address = persons.get("Mads").map( (id) -> details.get(id) ).map( (obj) -> obj.address )
 console.log(address.getOrElse("No address for user"))</code></pre>
 
-There are two things to take away from these examples. The first is that the most idiomatic way to deal with Option is to treat it as a collection and use the <code>map</code>, <code>flatMap</code>, <code>filter</code> and <code>foreach</code> methods. This allows the develop to chain operations on Option without having to check for the existence of a value before the very last expression where the developer can supply a fallback value using the @getOrElse()@ method. This results in code that's shorter and more concise as the above examples show. It is possible to chain operations on Option due to the fact that all operations on @None@ return @None@ except for @getOrElse(value)@ which return the value. @getOrElse(value)@ on @Some@ will return the element stored in the container and ignore @value@.
+The example that assumes the @get()@ method returns an Option is clearly the shortest but Option also has other advantages over null or exceptions. These advantages are easiest to express by explaining the disadvantages of using null or exceptions.
 
-The second advantage that @Option@ has over null/exceptions is that it *always* forces the developer to consider the possibility of an error as it isn't possible to access the values directly. This is compared to null/exceptions where the developer would have to read the source code or documentation to realize that an error might occur. 
+Both exceptions and null share the common disadvantage that the developer is free to ignore the possibility of an error when invoking a method. This may be intentional or by mistake as the only way to figure out if a method has the possibility of throwing an error or return null is by reading the source code or documentation. When using Option the developer is *always* forced to consider the possibility of an error as it isn't possible to access the values directly. Because javascript isn't statically typed the developer would still have to run the program at least once to discover that an option was returner rather than the actual value but this is still better than null/exceptions where the developer would have to run the program in such a way that would invoke the error before realizing the possibility of an error. 
+
+When methods return null you always have to check if a value is null before using it in subsequent expressions. This will clutter the programs with a lot of @if( value != null ) { }@ statements which hide the true intent of the program. When using Option you can chain operations without having to check for the existence of a value before the very last expression where the developer can supply a fallback value using the @getOrElse()@ method. This is done using the @map@, @flatMap@, @filter@ and @foreach@ methods. This results in code that is shorter and more concise as the above example show. It is possible to chain operations on Option due to the fact that all operations on @None@ return @None@ except for @getOrElse(value)@ which return the value. @getOrElse(value)@ on @Some@ will return the element stored in the container and ignore @value@.
+
+To summarize, the advantages of using Option rather than null or exceptions are: 
+
+# Earlier recognition of possible errors.
+# Operations are chain-able.
+# Results in shorter and more concise code.
 
 h3(#implemented_data_types). Implemented Data Types
 
