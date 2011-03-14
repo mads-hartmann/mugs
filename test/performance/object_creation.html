@@ -16,7 +16,7 @@
 	-->
 	
 	<script type="text/javascript" charset="utf-8">
-		var PersonFactory = function(firstName, lastName){
+		var PersonFunctional = function(firstName, lastName){
 			this.firstName = firstName;
 			this.lastName  = lastName;
 			this.fullName = function(){ return this.firstName + " " + this.lastName; };
@@ -24,22 +24,22 @@
 		};
 		
 		var fullNameFunc = function(){ return this.firstName + " " + this.lastName; };
-		var PersonFactory2 = function(firstName,lastName) {
+		var PersonFunctional2 = function(firstName,lastName) {
 			this.firstName = firstName;
 			this.lastName  = lastName;
 			this.fullName = fullNameFunc;
 			return this;
 		};
 
-		var PersonClass = function(firstName, lastName){
+		var PersonClassical = function(firstName, lastName){
 			this.firstName = firstName;
 			this.lastName  = lastName;
 			return this; 
 		};
 
-		PersonClass.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
+		PersonClassical.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
 		
-		var PersonObject = {
+		var PersonPrototypal = {
 			fullName: function() { return this.firstName + " " + this.lastName; }
 		};
 		
@@ -48,19 +48,19 @@
 	<script type="text/javascript">
 
 	JSLitmus.test('Creating object - Factory Function', function() {
-		new PersonFactory("Mads","Hartmann");
+		new PersonFunctional("Mads","Hartmann");
 	});
 	
 	JSLitmus.test('Creating object - Factory Function 2', function() {
-		new PersonFactory2("Mads","Hartmann");
+		new PersonFunctional2("Mads","Hartmann");
 	});
 	
 	JSLitmus.test('Creating object - Classical', function() {
-		new PersonClass("Mads","Hartmann");
+		new PersonClassical("Mads","Hartmann");
 	});
 	
 	JSLitmus.test('Creating objects - Object.create',function() {
-		Object.create(PersonObject, {
+		Object.create(PersonPrototypal, {
 			firstName: { 
 				value: "Mads" 
 			}, 
