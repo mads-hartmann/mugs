@@ -252,5 +252,17 @@ List.prototype.foldRight = (seed) -> (f) =>
       f(__foldRight(xs.tail()), xs.head())
   __foldRight(this) 
 
+###*
+  Returns a new list with the elements in reversed order.
+  @return A new list with the elements in reversed order
+###
+List.prototype.reverse = () -> 
+  result = new List()
+  rest = this
+  while (!rest.isEmpty()) 
+    result = result.prepend(rest.head())
+    rest = rest.tail()
+  result
+
 if exports?
   exports.List = List

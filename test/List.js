@@ -82,6 +82,15 @@ $(document).ready(function(){
     ok(sum == 55, "The sum of all integers from 1 to 10 is 55");
     ok(product == 3628800, "The product of all integers from 1 to 10 is 3628800" );
   });
+
+  test("You can reverse a list", function() {
+    var list = new List(1,2,3).reverse(),
+        shouldBe = new List(3,2,1);
+    
+    ok(list.get(0).get() == shouldBe.get(0).get());
+    ok(list.get(1).get() == shouldBe.get(1).get());
+    ok(list.get(2).get() == shouldBe.get(2).get());
+  });
     
   module("List - Traversable methods");
   
