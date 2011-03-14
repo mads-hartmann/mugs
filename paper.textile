@@ -504,6 +504,29 @@ Object.create(Person, {
 
 This approach allows for great flexibility and shows JavaScripts true prototypal nature. Unfortunately Object.create isn't implemented in all modern browsers and in the ones where it is implemented the Prototypal application isn't as performant as the Pseudoclassical one. Because of this I've chosen to use the Pseudoclassical approach in this library. 
 
+h4. Comparisons
+
+<table>
+	<thead>
+	<tr>
+		<td></td>
+		<td></td>
+	</tr>
+	</thead> 
+	<tr>
+		<td>Functional</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>Pseudoclassical</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>Prototypal</td>
+		<td></td>
+	</tr>
+</table>
+
 h3(#javascript_call_stack). Javascript call-stack
 
 This section investigates the behavior of the call-stack of different javascript implementations. The following table shows the maximum depth of the call-stack in different browsers. Two measurements have been made: One using a recursive function and one using a tail-recursive function. The latter has been added to test if any of the javascript implementations did any  tail-recursive optimizations.
