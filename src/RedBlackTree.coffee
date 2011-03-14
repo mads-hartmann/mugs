@@ -143,7 +143,8 @@ RedBlackNode.prototype.inorderTraversal = (f) ->
   bigger  = if !this.right.isEmpty() then this.right.inorderTraversal(f) 
     
 ###*
-  Returns a new tree with the inserted element.
+  Returns a new tree with the inserted element.  If the Tree already contains that key 
+  the old value is replaced with the new value
 ###
 RedBlackNode.prototype.insert = (key,value) -> 
   that = this
@@ -158,7 +159,7 @@ RedBlackNode.prototype.insert = (key,value) ->
     else if (compare > 0)
       that.balance(c, l, k,v, __insert(r))
     else
-      tree
+      new RedBlackNode(RED, tree.left, key, value, tree.right)
     
   t = __insert(that)
   new RedBlackNode(BLACK, t.left, t.key, t.value, t.right)
