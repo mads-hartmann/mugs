@@ -149,7 +149,7 @@ TODO
 
 h3(#handling_operations_that_might_fail). Handling Operations That Might Fail
 
-This section explains how the library deals with methods where a successful result isn't guaranteed. An example of this could be the @get(key)@ method on Map. In cases like this I've chosen to return an instance of Option rather than null or throwing an exception. Instances of Option are either an instance of the type of Some or None. Some is a single element container which contains the result of successfully executing the method. The use of the Option type is adopted from the Scala standard library. Readers coming from a functional programming background might recognize Option as a Monad.
+This section explains how the library deals with methods where a successful result isn't guaranteed. An example of this could be the @get(key)@ method on Map. In cases like this I've chosen to return an instance of Option rather than null or throwing an exception. Instances of Option are either an instance of the type of Some or None. Some is a single element container which contains the result of successfully executing the method. The use of the Option type is adopted from the Scala standard library. Readers coming from a functional programming background might recognize Option as a monad.
 
 To display the power of Option I've created three applications that will get a value from a Map and use that value to receive a second value from another map and finally print that value to the console. The first solutions takes an imperative approach to the problem and assumes that the get() method on Map will return null if the key doesn't exist. This is similar to the Map class in the standard Java collection. The second solution assumes that the @get()@ method throws an exception if the key isn't present in the Map. The final solution takes a functional approach and the @get()@ method on Map returns an Option. All of the examples have been implemented using Coffeescript. 
 
@@ -194,7 +194,7 @@ The example that assumes the @get()@ method returns an Option is clearly the sho
 
 Both exceptions and null share the common disadvantage that the developer is free to ignore the possibility of an error when invoking a method. This may be intentional or by mistake as the only way to figure out if a method has the possibility of throwing an error or return null is by reading the source code or documentation. When using Option the developer is *always* forced to consider the possibility of an error as it isn't possible to access the values directly. Because javascript isn't statically typed the developer would still have to run the program at least once to discover that an option was returner rather than the actual value but this is still better than null/exceptions where the developer would have to run the program in such a way that would invoke the error before realizing the possibility of an error. 
 
-When methods return null you always have to check if a value is null before using it in subsequent expressions. This will clutter the programs with a lot of @if( value != null ) { }@ statements which hide the true intent of the program. When using Option you can chain operations without having to check for the existence of a value before the very last expression where the developer can supply a fallback value using the @getOrElse()@ method. This is done using the @map@, @flatMap@, @filter@ and @foreach@ methods. This results in code that is shorter and more concise as the above example show. It is possible to chain operations on Option due to the fact that all operations on @None@ return @None@ except for @getOrElse(value)@ which return the value. @getOrElse(value)@ on @Some@ will return the element stored in the container and ignore @value@.
+When methods return null you always have to check if a value is null before using it in subsequent expressions. This will clutter the programs with a lot of @if( value != null ) { }@ statements which hide the true intent of the program. When using Option you can chain operations without having to check for the existence of a value before the very last expression where the developer can supply a fallback value using the @getOrElse()@ method. This is done using the @map@, @flatMap@, @filter@ and @foreach@ methods. This results in code that is shorter and more concise as the above example show. It is possible to chain operations on Option because that all operations on @None@ return @None@ except for @getOrElse(value)@ which return the value. @getOrElse(value)@ on @Some@ will return the element stored in the container and ignore @value@.
 
 To summarize, the advantages of using Option rather than null or exceptions are: 
 
@@ -313,18 +313,13 @@ The TreeSet is implemented using a Red Black Tree which is a balanced tree with 
 		<td>@O(log n)@</td>
 	</tr>
 	<tr>
-		<td>update( index, element)</td>
-		<td>Update the value with index 'index'. This will copy all values up to the given index.</td>
-		<td>@O(log n)@</td>
-	</tr>
-	<tr>
-		<td>get( index )</td>
-		<td>Get the element stored with the given index</td>
-		<td>@O(log n)@</td>
-	</tr>
-	<tr>
-		<td>remove( index )</td>
+		<td>remove( element )</td>
 		<td>Removes the element stored at the given index</td>
+		<td>@O(log n)@</td>
+	</tr>
+	<tr>
+		<td>contains( element )</td>
+		<td>Tests if the set contains the element</td>
 		<td>@O(log n)@</td>
 	</tr>
 </table>
@@ -335,7 +330,7 @@ TODO
 
 h4(#stack). Stack
 
-A stack inserts and retrieves elements according to the last-in-first-out (LIFO) principle. The Stack Abstract Data Type has been implemented using a List because of it's quick access, insertion and removal of the first element. 
+A stack inserts and retrieves elements according to the last-in-first-out (LIFO) principle. The Stack Abstract Data Type has been implemented using a List because of its quick access, insertion and removal of the first element. 
 
 <table>
 	<thead>
@@ -364,7 +359,7 @@ A stack inserts and retrieves elements according to the last-in-first-out (LIFO)
 
 h4(#queue). Queue
 
-A queue inserts and retrieves elements according to the first-in-first-out (FIFO) principle. The Queue Abstract Data Type has been implemented using a .... not sure yet ....
+A queue inserts and retrieves elements according to the first-in-first-out (FIFO) principle. The Queue Abstract Data Type has been implemented using two Lists.
 
 <table>
 	<thead>
@@ -466,7 +461,7 @@ In the Functional approach you create a function which acts as the constructor f
 
 new PersonFunctional("Mads","Hartmann");</code></pre>
 
-The advantage of this approach is that you can define any variables you want inside of the function and they will act as private members. The disadvantage is that instances created with this function will be heavy objects in the sense that all of them will store the code for each method. 
+The advantage of this approach is that you can define any variables you want inside of the function and they will act as private members. The disadvantage is that instances created with this function will be heavy objects in the sense that all of them will store the code (TODO: Can't figure out if it stores the entire AST on each object) for each method. 
 
 h4(#prototype). Pseudoclassical  
 
