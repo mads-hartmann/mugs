@@ -22,6 +22,14 @@
 			this.fullName = function(){ return this.firstName + " " + this.lastName; };
 			return this; 
 		};
+		
+		var fullNameFunc = function(){ return this.firstName + " " + this.lastName; };
+		var PersonFactory2 = function(firstName,lastName) {
+			this.firstName = firstName;
+			this.lastName  = lastName;
+			this.fullName = fullNameFunc;
+			return this;
+		};
 
 		var PersonClass = function(firstName, lastName){
 			this.firstName = firstName;
@@ -41,6 +49,10 @@
 
 	JSLitmus.test('Creating object - Factory Function', function() {
 		new PersonFactory("Mads","Hartmann");
+	});
+	
+	JSLitmus.test('Creating object - Factory Function 2', function() {
+		new PersonFactory2("Mads","Hartmann");
 	});
 	
 	JSLitmus.test('Creating object - Classical', function() {
