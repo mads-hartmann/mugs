@@ -457,14 +457,14 @@ h4(#factory_functions). Functional
 
 In the Functional approach you create a function which acts as the constructor for the object you want to create. It can take any number of arguments and it uses those arguments to add properties and methods to the object. The example below shows a Person function which takes two arguments: firstName, lastName. It uses those arguments to create two properties and a method on the object.
 
-<pre><code>var Person = function(firstName, lastName){
+<pre><code>var PersonFunctional = function(firstName, lastName){
 	this.firstName = firstName;
 	this.lastName  = lastName;
 	this.fullName = function(){ return this.firstName + " " + this.lastName; };
 	return this; 
 };
 
-new Person("Mads","Hartmann");</code></pre>
+new PersonFunctional("Mads","Hartmann");</code></pre>
 
 The advantage of this approach is that you can define any variables you want inside of the function and they will act as private members. The disadvantage is that instances created with this function will be heavy objects in the sense that all of them will store the code for each method. 
 
@@ -472,17 +472,17 @@ h4(#prototype). Pseudoclassical
 
 In the Pseudoclassical approach you create a function which only initializes the properties of the object. Instead of adding the methods directly on each object you add it to the prototype as shown below. 
 
-<pre><code>var Person = function(firstName, lastName){
+<pre><code>var PersonClassical = function(firstName, lastName){
 	this.firstName = firstName;
 	this.lastName  = lastName;
 	return this; 
 };
 
-Person.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
+PersonClassical.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
 
-new Person("Mads","Hartmann");</code></pre>
+new PersonClassical("Mads","Hartmann");</code></pre>
 
-This resolves the disadvantage of the Functional approach as all the instances share the same prototype object. This means that object creation is roughly 3 x faster (see section about performance tests) because the interpreter doesn't need to add the same methods to all of the objects. This also results in objects that use less memory.
+This resolves the disadvantage of the Functional approach as all the instances share the same prototype object. This means that object creation is faster because the interpreter doesn't have to add the same methods to all of the objects. This also results in objects that use less memory.
 
 There are two disadvantages to this approach. Firstly, because the methods are no longer stored directly on the object the interpreter needs to do one extra lookup before it can execute the method. Because of this it takes roughly %40 longer to invoke a method on an object. The second disadvantage is that it's no longer possible for the objects to have any private state. 
 
@@ -490,10 +490,10 @@ h4(#object_create). Prototypal
 
 The ECMAScript 5 Language Specification defines a new method on Object: Object.create. Given an object and a properties object it will create a new object. The following code shows how to create a @Person@ prototype and use it to create new instance of @Person@.
 
-<pre><code>var Person = {
+<pre><code>var PersonPrototypal = {
 	fullName: function() { return this.firstName + " " + this.lastName; }
 };
-Object.create(Person, {
+Object.create(PersonPrototypal, {
 	firstName: { 
 		value: "Mads"
 	}, 
@@ -502,7 +502,63 @@ Object.create(Person, {
 	} 
 });</code></pre>
 
-This approach allows for great flexibility and shows JavaScripts true prototypal nature. Unfortunately Object.create isn't implemented in all modern browsers and in the ones where it is implemented the Prototypal application isn't as performant as the Pseudoclassical one. Because of this I've chosen to use the Pseudoclassical approach in this library. 
+This approach allows for great flexibility and shows JavaScripts true prototypal nature. Unfortunately Object.create isn't implemented in all modern browsers.
+
+h4. Comparisons
+
+The following table shows the results of testing the performance of the three different approaches. The tests show the number of operations per second the javascript machine can execute when creating a new object based on each approach. The test framework JSLitmus has been used to execute the tests. 
+
+<table>
+	<thead>
+	<tr>
+		<td>Browser</td>
+		<td>Functional</td>
+		<td>Pseudoclassical</td>
+		<td>Prototypal</td>
+	</tr>
+	</thead> 
+	<tr>
+		<td>Safari (Version 5.0.3 (6533.19.4) on OS X)</td>
+		<td>2301285 Ops/sec</td>
+		<td>14842260 Ops/sec</td>
+		<td>758273 Ops/sec</td>
+	</tr>
+	<tr>
+		<td>Chrome (Version 10.0.648.127 on OS X)</td>
+		<td>26421811 Ops/sec</td>
+		<td>45519014 Ops/sec</td>
+		<td>171517 Ops/sec</td>
+	</tr>
+	<tr>
+		<td>Firefox (Version 3.6.13 on OS X)</td>
+		<td>1485148 Ops/sec</td>
+		<td>1969373 Ops/sec</td>
+		<td>Not supported</td>
+	</tr>
+</table>
+
+The table shows that the Pseudoclassical approach is the most performant solution across all the testes browsers and as such this is the approach I'm using in the library.
+
+The following code shows the JSLitmus tests used to produce the output above. The tests use the functions and objects shown earlier in this section.
+
+<pre>JSLitmus.test('Creating object - Functional', function() {
+	new PersonFunctional("Mads","Hartmann");
+});
+
+JSLitmus.test('Creating object - Classical', function() {
+	new PersonClassical("Mads","Hartmann");
+});
+
+JSLitmus.test('Creating objects - Prototypal',function() {
+	Object.create(PersonPrototypal, {
+		firstName: { 
+			value: "Mads" 
+		}, 
+		lastName: { 
+			value: "Hartmann"
+		} 
+	});
+});</pre>
 
 h3(#javascript_call_stack). Javascript call-stack
 
