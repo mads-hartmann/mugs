@@ -21,8 +21,6 @@ if require?
   Some     = Option.Some
   None     = Option.None
   List     = require('./list').List
-  Cons     = require('./list').Cons
-  Nil      = require('./list').Nil
 
 # Constants used to color the trees. The proprty 'color' is only for debugging.
 RED = { 
@@ -57,8 +55,8 @@ RedBlackLeaf = (color) ->
 RedBlackLeaf.prototype.isEmpty = () -> true 
 RedBlackLeaf.prototype.containsKey = (key) -> false
 RedBlackLeaf.prototype.get = (key) -> new None()
-RedBlackLeaf.prototype.keys = () -> new Nil() 
-RedBlackLeaf.prototype.values = () -> new Nil() 
+RedBlackLeaf.prototype.keys = () -> new List() 
+RedBlackLeaf.prototype.values = () -> new List() 
 RedBlackLeaf.prototype.inorderTraversal = (f) -> # nothing
 RedBlackLeaf.prototype.insert = (key,value) -> new RedBlackNode(RED, new RedBlackLeaf(BLACK), key, value, new RedBlackLeaf(BLACK))
 
