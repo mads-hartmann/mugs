@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - TreeMap</title>
+		<title>JsDoc Reference - TreeSet</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -281,7 +281,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h2 class="classTitle">
 				
-				Class TreeMap
+				Class TreeSet
 			</h2>
 
 <!-- ============================== class summary ========================== -->			
@@ -291,16 +291,16 @@ ul.inheritsList
 					<a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a>.<br />
 				
 			
-				TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.
+				TreeSet provides the implementation of the abstract data type Set based on a Red Black Tree
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/bin_TreeMap.js.html">TreeMap.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/bin_TreeSet.js.html">TreeSet.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class TreeMap.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class TreeSet.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -313,9 +313,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/TreeMap.html#constructor">TreeMap</a></b>(keyValuePairs, comparator)
+								<b><a href="../symbols/TreeSet.html#constructor">TreeSet</a></b>(elements, comparator)
 							</div>
-							<div class="description">TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.</div>
+							<div class="description"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -329,7 +329,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class TreeMap.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class TreeSet.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -342,7 +342,16 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#forEach">forEach</a></b>(f)
+								<div class="fixedFont"><b><a href="../symbols/TreeSet.html#contains">contains</a></b>(element)
+								</div>
+								<div class="description">Tests if the set contains the element</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/TreeSet.html#forEach">forEach</a></b>(f)
 								</div>
 								<div class="description">Applies function 'f' on each value in the map.</div>
 							</td>
@@ -351,45 +360,27 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#get">get</a></b>(key)
+								<div class="fixedFont"><b><a href="../symbols/TreeSet.html#insert">insert</a></b>(element)
 								</div>
-								<div class="description">If a (key,value) pair exists return Some(value), otherwise None()</div>
+								<div class="description">Insert an element in the set.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#insert">insert</a></b>(key, value)
+								<div class="fixedFont"><b><a href="../symbols/TreeSet.html#remove">remove</a></b>(element)
 								</div>
-								<div class="description">Return a new TreeMap containing the given (key,value) pair.</div>
+								<div class="description">Delete an element from the set</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#keys">keys</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/TreeSet.html#values">values</a></b>()
 								</div>
-								<div class="description">Returns a sorted list containing all of the keys in the TreeMap</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#remove">remove</a></b>(key)
-								</div>
-								<div class="description">Returns a new TreeMap without the given key-value pair.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#values">values</a></b>()
-								</div>
-								<div class="description">Returns a sorted list containing all of the values in the TreeMap</div>
+								<div class="description">The elements of the set</div>
 							</td>
 						</tr>
 					
@@ -414,48 +405,13 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>TreeMap</b>(keyValuePairs, comparator)
+						<b>TreeSet</b>(elements, comparator)
 				</div>
 				
 				<div class="description">
-					TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. The
-  map contains the following operations
-
-  <pre>
-  --------------------------------------------------------
-  Core operations of the Map ADT
-  --------------------------------------------------------
-  insert( key,value )                               O(logn)
-  get( index )                                      O(logn)
-  remove( index )                                   O(logn)
-  contains( key )                                   O(logn)
-  --------------------------------------------------------
-  Methods that all containers have to implement
-  --------------------------------------------------------
-  map( f )                                            O(n)
-  flatMap( f )                                        O(n)
-  filter( f )                                         O(n)
-  forEach( f )                                        O(n)
-  foldLeft(s)(f)                                      O(n)    TODO
-  isEmpty()                                           O(1)    TODO
-  contains( element )                                 O(n)    TODO
-  forAll( f )                                         O(n)    TODO
-  take( x )                                           O(n)    TODO
-  takeWhile( f )                                      O(n)    TODO
-  size()                                              O(n)    TODO
-  --------------------------------------------------------
-  </pre>
+					
 					
 				</div>
-				
-				
-				
-				<pre class="code">  var map = new TreeMap([
-    {key: 1, value: "one"},
-    {key: 4, value: "four"},
-    {key: 3, value: "three"},
-    {key: 2, value: "two"}
-  ]);</pre>
 				
 				
 				
@@ -465,17 +421,16 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{Array}</span>  <b>keyValuePairs</b>
+								 <b>elements</b>
 								
 							</dt>
-								<dd>An array containing objects with the properties key & value.</dd>
+								<dd></dd>
 						
 							<dt>
-								<span class="light fixedFont">{Function=}</span>  <b>comparator</b>
+								 <b>comparator</b>
 								
 							</dt>
-								<dd>A comparator function that can compare the keys (optional). Will use a
-                                default comparator for integers if no comparator is given</dd>
+								<dd></dd>
 						
 						</dl>
 					
@@ -497,6 +452,42 @@ ul.inheritsList
 				<div class="sectionTitle">
 					Method Detail
 				</div>
+				
+					<a name="contains"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>contains</b>(element)
+					
+					</div>
+					<div class="description">
+						Tests if the set contains the element
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>element</b>
+									
+								</dt>
+								<dd>The element to check for</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
 				
 					<a name="forEach"> </a>
 					<div class="fixedFont">
@@ -522,7 +513,7 @@ ul.inheritsList
 									<b>f</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The unary function to apply on each element in the set.</dd>
 							
 							</dl>
 						
@@ -542,58 +533,16 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="get"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span>
-					<b>get</b>(key)
-					
-					</div>
-					<div class="description">
-						If a (key,value) pair exists return Some(value), otherwise None()
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{*}</span> <b>key</b>
-									
-								</dt>
-								<dd>The key of the value you want to read.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span> Some(value) if it exists in the map. Otherwise None</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
 					<a name="insert"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span>
-					<b>insert</b>(key, value)
+					
+					<b>insert</b>(element)
 					
 					</div>
 					<div class="description">
-						Return a new TreeMap containing the given (key,value) pair.
+						Insert an element in the set. If the set already contains an element equal to the given value,
+  it is replaced with the new value.
 						
 						
 					</div>
@@ -605,61 +554,16 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{*}</span> <b>key</b>
+									<b>element</b>
 									
 								</dt>
-								<dd>The key to store the value by</dd>
-							
-								<dt>
-									<span class="light fixedFont">{*}</span> <b>value</b>
-									
-								</dt>
-								<dd>The value to store in the map</dd>
+								<dd>The element to insert into the set</dd>
 							
 							</dl>
 						
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span> A new TreeMap that also contains the new key-value pair</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="keys"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
-					<b>keys</b>()
-					
-					</div>
-					<div class="description">
-						Returns a sorted list containing all of the keys in the TreeMap
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A sorted list containing all of the keys in the TreeMap</dd>
-							
-							</dl>
 						
 						
 						
@@ -669,12 +573,12 @@ ul.inheritsList
 					<a name="remove"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span>
-					<b>remove</b>(key)
+					
+					<b>remove</b>(element)
 					
 					</div>
 					<div class="description">
-						Returns a new TreeMap without the given key-value pair.
+						Delete an element from the set
 						
 						
 					</div>
@@ -686,23 +590,16 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{*}</span> <b>key</b>
+									<b>element</b>
 									
 								</dt>
-								<dd>The key of the value you want to remove</dd>
+								<dd>The element to remove from the set</dd>
 							
 							</dl>
 						
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span> A new TreeMap that doesn't contain the key-value pair</dd>
-							
-							</dl>
 						
 						
 						
@@ -717,7 +614,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						Returns a sorted list containing all of the values in the TreeMap
+						The elements of the set
 						
 						
 					</div>
@@ -732,7 +629,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> sorted list containing all of the values in the TreeMap</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A list containing all the element of the set</dd>
 							
 							</dl>
 						

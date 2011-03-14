@@ -16,6 +16,9 @@
 mahj.Traversable = function() {
   return this;
 };
+/**
+  @private
+*/
 mahj.Traversable.prototype.buildFromArray = function() {
   throw new Error("Should be implemented in subclass");
 };

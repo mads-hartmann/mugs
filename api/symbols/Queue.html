@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - TreeMap</title>
+		<title>JsDoc Reference - Queue</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -281,26 +281,24 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h2 class="classTitle">
 				
-				Class TreeMap
+				Class Queue
 			</h2>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
-				<br />Extends
-					<a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a>.<br />
 				
 			
-				TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.
+				Queue provides an implementation of the Queue ADT based on two Lists.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/bin_TreeMap.js.html">TreeMap.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/bin_Queue.js.html">Queue.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class TreeMap.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Queue.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -313,9 +311,10 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/TreeMap.html#constructor">TreeMap</a></b>(keyValuePairs, comparator)
+								<b><a href="../symbols/Queue.html#constructor">Queue</a></b>()
 							</div>
-							<div class="description">TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.</div>
+							<div class="description">Queue provides the implementation of the abstract data type Queue based on two Lists as
+  described in Chris Okasaki's book Purely Functional Data Structures.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -329,7 +328,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class TreeMap.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Queue.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -342,54 +341,36 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#forEach">forEach</a></b>(f)
+								<div class="fixedFont"><b><a href="../symbols/Queue.html#dequeue">dequeue</a></b>()
 								</div>
-								<div class="description">Applies function 'f' on each value in the map.</div>
+								<div class="description">Removes the front element from the queue</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#get">get</a></b>(key)
+								<div class="fixedFont"><b><a href="../symbols/Queue.html#enqueue">enqueue</a></b>(elem)
 								</div>
-								<div class="description">If a (key,value) pair exists return Some(value), otherwise None()</div>
+								<div class="description">Adds a new element to the queue</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#insert">insert</a></b>(key, value)
+								<div class="fixedFont"><b><a href="../symbols/Queue.html#front">front</a></b>()
 								</div>
-								<div class="description">Return a new TreeMap containing the given (key,value) pair.</div>
+								<div class="description">Reads the front element in the queue</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#keys">keys</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/Queue.html#values">values</a></b>()
 								</div>
-								<div class="description">Returns a sorted list containing all of the keys in the TreeMap</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#remove">remove</a></b>(key)
-								</div>
-								<div class="description">Returns a new TreeMap without the given key-value pair.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#values">values</a></b>()
-								</div>
-								<div class="description">Returns a sorted list containing all of the values in the TreeMap</div>
+								<div class="description">Returns a List with all of the elements in the queue.</div>
 							</td>
 						</tr>
 					
@@ -397,10 +378,6 @@ ul.inheritsList
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a>: </dt><dd><a href="../symbols/mahj.Traversable.html#filter">filter</a>, <a href="../symbols/mahj.Traversable.html#flatMap">flatMap</a>, <a href="../symbols/mahj.Traversable.html#isEmpty">isEmpty</a>, <a href="../symbols/mahj.Traversable.html#map">map</a></dd>
-				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -414,35 +391,21 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>TreeMap</b>(keyValuePairs, comparator)
+						<b>Queue</b>()
 				</div>
 				
 				<div class="description">
-					TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. The
-  map contains the following operations
+					Queue provides the implementation of the abstract data type Queue based on two Lists as
+  described in Chris Okasaki's book Purely Functional Data Structures. The Queue contains
+  the following operations:
 
   <pre>
   --------------------------------------------------------
-  Core operations of the Map ADT
+  Core operations of the Queue ADT
   --------------------------------------------------------
-  insert( key,value )                               O(logn)
-  get( index )                                      O(logn)
-  remove( index )                                   O(logn)
-  contains( key )                                   O(logn)
-  --------------------------------------------------------
-  Methods that all containers have to implement
-  --------------------------------------------------------
-  map( f )                                            O(n)
-  flatMap( f )                                        O(n)
-  filter( f )                                         O(n)
-  forEach( f )                                        O(n)
-  foldLeft(s)(f)                                      O(n)    TODO
-  isEmpty()                                           O(1)    TODO
-  contains( element )                                 O(n)    TODO
-  forAll( f )                                         O(n)    TODO
-  take( x )                                           O(n)    TODO
-  takeWhile( f )                                      O(n)    TODO
-  size()                                              O(n)    TODO
+  enqueue()                               (amortized) O(1)
+  dequeue(elem)                                       O(1)
+  top()                                               O(1)
   --------------------------------------------------------
   </pre>
 					
@@ -450,34 +413,7 @@ ul.inheritsList
 				
 				
 				
-				<pre class="code">  var map = new TreeMap([
-    {key: 1, value: "one"},
-    {key: 4, value: "four"},
-    {key: 3, value: "three"},
-    {key: 2, value: "two"}
-  ]);</pre>
 				
-				
-				
-				
-					
-						<dl class="detailList">
-						<dt class="heading">Parameters:</dt>
-						
-							<dt>
-								<span class="light fixedFont">{Array}</span>  <b>keyValuePairs</b>
-								
-							</dt>
-								<dd>An array containing objects with the properties key & value.</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Function=}</span>  <b>comparator</b>
-								
-							</dt>
-								<dd>A comparator function that can compare the keys (optional). Will use a
-                                default comparator for integers if no comparator is given</dd>
-						
-						</dl>
 					
 					
 					
@@ -498,151 +434,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="forEach"> </a>
+					<a name="dequeue"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>forEach</b>(f)
+					<b>dequeue</b>()
 					
 					</div>
 					<div class="description">
-						Applies function 'f' on each value in the map. This return nothing and is only invoked
-  for the side-effects of f.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>f</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">See:</dt>
-							
-								<dd><a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a></dd>
-							
-							</dl>
-						
-
-					<hr />
-				
-					<a name="get"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span>
-					<b>get</b>(key)
-					
-					</div>
-					<div class="description">
-						If a (key,value) pair exists return Some(value), otherwise None()
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{*}</span> <b>key</b>
-									
-								</dt>
-								<dd>The key of the value you want to read.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span> Some(value) if it exists in the map. Otherwise None</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="insert"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span>
-					<b>insert</b>(key, value)
-					
-					</div>
-					<div class="description">
-						Return a new TreeMap containing the given (key,value) pair.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{*}</span> <b>key</b>
-									
-								</dt>
-								<dd>The key to store the value by</dd>
-							
-								<dt>
-									<span class="light fixedFont">{*}</span> <b>value</b>
-									
-								</dt>
-								<dd>The value to store in the map</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span> A new TreeMap that also contains the new key-value pair</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="keys"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
-					<b>keys</b>()
-					
-					</div>
-					<div class="description">
-						Returns a sorted list containing all of the keys in the TreeMap
+						Removes the front element from the queue
 						
 						
 					</div>
@@ -657,7 +457,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A sorted list containing all of the keys in the TreeMap</dd>
+								<dd>A new queue without the former front element</dd>
 							
 							</dl>
 						
@@ -666,15 +466,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="remove"> </a>
+					<a name="enqueue"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span>
-					<b>remove</b>(key)
+					
+					<b>enqueue</b>(elem)
 					
 					</div>
 					<div class="description">
-						Returns a new TreeMap without the given key-value pair.
+						Adds a new element to the queue
 						
 						
 					</div>
@@ -686,10 +486,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{*}</span> <b>key</b>
+									<b>elem</b>
 									
 								</dt>
-								<dd>The key of the value you want to remove</dd>
+								<dd>The element to add to the queue</dd>
 							
 							</dl>
 						
@@ -700,7 +500,39 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span> A new TreeMap that doesn't contain the key-value pair</dd>
+								<dd>A new queue with the element in the back of the queue</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="front"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>front</b>()
+					
+					</div>
+					<div class="description">
+						Reads the front element in the queue
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>The front element in the queue</dd>
 							
 							</dl>
 						
@@ -712,12 +544,12 @@ ul.inheritsList
 					<a name="values"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
+					
 					<b>values</b>()
 					
 					</div>
 					<div class="description">
-						Returns a sorted list containing all of the values in the TreeMap
+						Returns a List with all of the elements in the queue.
 						
 						
 					</div>
@@ -732,7 +564,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> sorted list containing all of the values in the TreeMap</dd>
+								<dd>A List with all of the elements in the queue.</dd>
 							
 							</dl>
 						
@@ -749,7 +581,7 @@ ul.inheritsList
 			<hr />
 			<div class="fineprint" style="clear:both">
 				
-				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Mar 14 2011 14:19:02 GMT+0100 (CET)
+				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Mar 14 2011 14:19:01 GMT+0100 (CET)
 			</div>
 		</div>
 

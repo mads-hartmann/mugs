@@ -26,11 +26,11 @@ if (typeof require != "undefined" && require !== null) {
   Methods inherited from mahj.Traversable
   --------------------------------------------------------
   map( f )                                            O(n)
-  flatMap( f )                                        O(n)    TODO
-  filter( f )                                         O(n)    TODO
-  forEach( f )                                        O(n)    TODO
+  flatMap( f )                                        O(n)
+  filter( f )                                         O(n)
+  forEach( f )                                        O(n)
   foldLeft(s)(f)                                      O(n)
-  isEmpty()                                           O(1)    TODO
+  isEmpty()                                           O(1)
   contains( element )                                 O(n)    TODO
   forAll( f )                                         O(n)    TODO
   take( x )                                           O(n)    TODO
@@ -210,9 +210,17 @@ List.prototype.prependList = function(list) {
 Methods related to Traversable prototype
 ---------------------------------------------------------------------------------------------
 */
+/**
+  @private
+*/
 List.prototype.buildFromArray = function(arr) {
   return new List(arr);
 };
+/**
+  Applies function 'f' on each element in the list. This return nothing and is only invoked
+  for the side-effects of f.
+  @see mahj.Traversable
+*/
 List.prototype.forEach = function(f) {
   if (!this.isEmpty()) {
     f(this.head());
@@ -261,13 +269,6 @@ List.prototype.foldLeft = function(seed) {
     return __foldLeft(seed, this);
   }, this);
 };
-/*
-  Applies the function ‘f’ on each element in the collection and returns a new collection with the
-  values returned from applying the function ‘f’.
-
-  @param {Function(*)} f The function to apply on each element
-  @return A new list with the values of applying the function 'f' on each element
-*/
 /**
   Applies a binary operator on all elements of this list going right to left and ending with the
   seed value. This is a curried function that takes a seed value which returns a function that
@@ -292,6 +293,20 @@ List.prototype.foldRight = function(seed) {
     };
     return __foldRight(this);
   }, this);
+};
+/**
+  Returns a new list with the elements in reversed order.
+  @return A new list with the elements in reversed order
+*/
+List.prototype.reverse = function() {
+  var rest, result;
+  result = new List();
+  rest = this;
+  while (!rest.isEmpty()) {
+    result = result.prepend(rest.head());
+    rest = rest.tail();
+  }
+  return result;
 };
 if (typeof exports != "undefined" && exports !== null) {
   exports.List = List;

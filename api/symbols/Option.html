@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - TreeMap</title>
+		<title>JsDoc Reference - Option</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -281,26 +281,24 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h2 class="classTitle">
 				
-				Class TreeMap
+				Class Option
 			</h2>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
-				<br />Extends
-					<a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a>.<br />
 				
 			
-				TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/bin_TreeMap.js.html">TreeMap.js</a>.
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/bin_Option.js.html">Option.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class TreeMap.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Option.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -313,9 +311,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/TreeMap.html#constructor">TreeMap</a></b>(keyValuePairs, comparator)
+								<b><a href="../symbols/Option.html#constructor">Option</a></b>()
 							</div>
-							<div class="description">TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.</div>
+							<div class="description">Don't use the Option prototype directly, use the <a href="../symbols/Some.html">Some</a> or <a href="../symbols/None.html">None</a>.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -329,7 +327,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class TreeMap.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Option.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -342,54 +340,67 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#forEach">forEach</a></b>(f)
+								<div class="fixedFont"><b><a href="../symbols/Option.html#filter">filter</a></b>(predicate)
 								</div>
-								<div class="description">Applies function 'f' on each value in the map.</div>
+								<div class="description">Returns this Option if it is nonempty '''and''' applying the 'predicate' to
+  this Option's value returns true.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#get">get</a></b>(key)
+								<div class="fixedFont"><b><a href="../symbols/Option.html#flatMap">flatMap</a></b>(f)
 								</div>
-								<div class="description">If a (key,value) pair exists return Some(value), otherwise None()</div>
+								<div class="description">Returns the result of applying f to this option's value if this Option is
+  nonempty, otherwise None.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#insert">insert</a></b>(key, value)
+								<div class="fixedFont"><b><a href="../symbols/Option.html#foreach">foreach</a></b>(f)
 								</div>
-								<div class="description">Return a new TreeMap containing the given (key,value) pair.</div>
+								<div class="description">Apply the given procedure f to the option's value, if it is nonempty.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#keys">keys</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/Option.html#get">get</a></b>()
 								</div>
-								<div class="description">Returns a sorted list containing all of the keys in the TreeMap</div>
+								<div class="description">Returns the option's value if the option is nonempty.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#remove">remove</a></b>(key)
+								<div class="fixedFont"><b><a href="../symbols/Option.html#getOrElse">getOrElse</a></b>(otherwise)
 								</div>
-								<div class="description">Returns a new TreeMap without the given key-value pair.</div>
+								<div class="description">Returns the option's value if the option is nonempty, otherwise return the value
+  'otherwise'.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/TreeMap.html#values">values</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/Option.html#isEmpty">isEmpty</a></b>()
 								</div>
-								<div class="description">Returns a sorted list containing all of the values in the TreeMap</div>
+								<div class="description">Checks if the Option is empty.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Option.html#map">map</a></b>(f)
+								</div>
+								<div class="description">Returns a Some containing the result of applying f to this Option's
+  value if this Option is nonempty.</div>
 							</td>
 						</tr>
 					
@@ -397,10 +408,6 @@ ul.inheritsList
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a>: </dt><dd><a href="../symbols/mahj.Traversable.html#filter">filter</a>, <a href="../symbols/mahj.Traversable.html#flatMap">flatMap</a>, <a href="../symbols/mahj.Traversable.html#isEmpty">isEmpty</a>, <a href="../symbols/mahj.Traversable.html#map">map</a></dd>
-				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -414,76 +421,33 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>TreeMap</b>(keyValuePairs, comparator)
+						<b>Option</b>()
 				</div>
 				
 				<div class="description">
-					TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. The
-  map contains the following operations
-
-  <pre>
-  --------------------------------------------------------
-  Core operations of the Map ADT
-  --------------------------------------------------------
-  insert( key,value )                               O(logn)
-  get( index )                                      O(logn)
-  remove( index )                                   O(logn)
-  contains( key )                                   O(logn)
-  --------------------------------------------------------
-  Methods that all containers have to implement
-  --------------------------------------------------------
-  map( f )                                            O(n)
-  flatMap( f )                                        O(n)
-  filter( f )                                         O(n)
-  forEach( f )                                        O(n)
-  foldLeft(s)(f)                                      O(n)    TODO
-  isEmpty()                                           O(1)    TODO
-  contains( element )                                 O(n)    TODO
-  forAll( f )                                         O(n)    TODO
-  take( x )                                           O(n)    TODO
-  takeWhile( f )                                      O(n)    TODO
-  size()                                              O(n)    TODO
-  --------------------------------------------------------
-  </pre>
+					Don't use the Option prototype directly, use the <a href="../symbols/Some.html">Some</a> or <a href="../symbols/None.html">None</a>. An option represents
+  an optional value. It consists of either Some or None.
 					
 				</div>
 				
 				
 				
-				<pre class="code">  var map = new TreeMap([
-    {key: 1, value: "one"},
-    {key: 4, value: "four"},
-    {key: 3, value: "three"},
-    {key: 2, value: "two"}
-  ]);</pre>
 				
-				
-				
-				
+					
+					
+					
+					
+					
+					
 					
 						<dl class="detailList">
-						<dt class="heading">Parameters:</dt>
+						<dt class="heading">See:</dt>
 						
-							<dt>
-								<span class="light fixedFont">{Array}</span>  <b>keyValuePairs</b>
-								
-							</dt>
-								<dd>An array containing objects with the properties key & value.</dd>
+							<dd><a href="../symbols/Some.html">Some</a></dd>
 						
-							<dt>
-								<span class="light fixedFont">{Function=}</span>  <b>comparator</b>
-								
-							</dt>
-								<dd>A comparator function that can compare the keys (optional). Will use a
-                                default comparator for integers if no comparator is given</dd>
+							<dd><a href="../symbols/None.html">None</a></dd>
 						
 						</dl>
-					
-					
-					
-					
-					
-					
 					
 
 			</div>
@@ -498,16 +462,16 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="forEach"> </a>
+					<a name="filter"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>forEach</b>(f)
+					<b>filter</b>(predicate)
 					
 					</div>
 					<div class="description">
-						Applies function 'f' on each value in the map. This return nothing and is only invoked
-  for the side-effects of f.
+						Returns this Option if it is nonempty '''and''' applying the 'predicate' to
+  this Option's value returns true. Otherwise, return None
 						
 						
 					</div>
@@ -519,25 +483,109 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>f</b>
+									<span class="light fixedFont">{function(*): boolean}</span> <b>predicate</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>A function that decides if the value
+                                should be included in the resulting collection</dd>
 							
 							</dl>
 						
 						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="flatMap"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/Option.html">Option</a>}</span>
+					<b>flatMap</b>(f)
+					
+					</div>
+					<div class="description">
+						Returns the result of applying f to this option's value if this Option is
+  nonempty, otherwise None. This is Slightly different from `map` in that f is
+  expected to return an Option (which could be None).
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{function(*): Option}</span> <b>f</b>
+									
+								</dt>
+								<dd>The unary function to apply</dd>
+							
+							</dl>
 						
 						
 						
 						
 						
 							<dl class="detailList">
-							<dt class="heading">See:</dt>
+							<dt class="heading">Returns:</dt>
 							
-								<dd><a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a></dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/Option.html">Option</a>}</span> The result of applying the function f on the
+                   element inside the Option if nonempty. Otherwise None.</dd>
 							
 							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="foreach"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>foreach</b>(f)
+					
+					</div>
+					<div class="description">
+						Apply the given procedure f to the option's value, if it is nonempty. Otherwise,
+  do nothing.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{function(*): *}</span> <b>f</b>
+									
+								</dt>
+								<dd>A unary function.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>Nothing. This is all about side effects</dd>
+							
+							</dl>
+						
+						
 						
 
 					<hr />
@@ -545,12 +593,46 @@ ul.inheritsList
 					<a name="get"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span>
-					<b>get</b>(key)
+					<span class="light">{*}</span>
+					<b>get</b>()
 					
 					</div>
 					<div class="description">
-						If a (key,value) pair exists return Some(value), otherwise None()
+						Returns the option's value if the option is nonempty. This will throw an exception if
+  invoked on an instance of None.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{*}</span> The value stored in the Option.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getOrElse"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>getOrElse</b>(otherwise)
+					
+					</div>
+					<div class="description">
+						Returns the option's value if the option is nonempty, otherwise return the value
+  'otherwise'.
 						
 						
 					</div>
@@ -562,10 +644,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{*}</span> <b>key</b>
+									<span class="light fixedFont">{*}</span> <b>otherwise</b>
 									
 								</dt>
-								<dd>The key of the value you want to read.</dd>
+								<dd>The value to return if the Option is None.</dd>
 							
 							</dl>
 						
@@ -576,7 +658,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span> Some(value) if it exists in the map. Otherwise None</dd>
+								<dd>The option's value if Some otherwise the value passed to the function</dd>
 							
 							</dl>
 						
@@ -585,15 +667,48 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="insert"> </a>
+					<a name="isEmpty"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span>
-					<b>insert</b>(key, value)
+					<span class="light">{boolean}</span>
+					<b>isEmpty</b>()
 					
 					</div>
 					<div class="description">
-						Return a new TreeMap containing the given (key,value) pair.
+						Checks if the Option is empty.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{boolean}</span> True if the Option is empty, i.e. of type None. Otherwise false.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="map"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/Option.html">Option</a>}</span>
+					<b>map</b>(f)
+					
+					</div>
+					<div class="description">
+						Returns a Some containing the result of applying f to this Option's
+  value if this Option is nonempty. Otherwise return None.
 						
 						
 					</div>
@@ -605,16 +720,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{*}</span> <b>key</b>
+									<span class="light fixedFont">{function(*):*}</span> <b>f</b>
 									
 								</dt>
-								<dd>The key to store the value by</dd>
-							
-								<dt>
-									<span class="light fixedFont">{*}</span> <b>value</b>
-									
-								</dt>
-								<dd>The value to store in the map</dd>
+								<dd>The unary function to apply</dd>
 							
 							</dl>
 						
@@ -625,114 +734,8 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span> A new TreeMap that also contains the new key-value pair</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="keys"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
-					<b>keys</b>()
-					
-					</div>
-					<div class="description">
-						Returns a sorted list containing all of the keys in the TreeMap
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> A sorted list containing all of the keys in the TreeMap</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="remove"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span>
-					<b>remove</b>(key)
-					
-					</div>
-					<div class="description">
-						Returns a new TreeMap without the given key-value pair.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{*}</span> <b>key</b>
-									
-								</dt>
-								<dd>The key of the value you want to remove</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/TreeMap.html">TreeMap</a>}</span> A new TreeMap that doesn't contain the key-value pair</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="values"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{<a href="../symbols/List.html">List</a>}</span>
-					<b>values</b>()
-					
-					</div>
-					<div class="description">
-						Returns a sorted list containing all of the values in the TreeMap
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{<a href="../symbols/List.html">List</a>}</span> sorted list containing all of the values in the TreeMap</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/Option.html">Option</a>}</span> Some containing the result of applying the function f on the
+                   element inside the Option if nonempty. Otherwise None.</dd>
 							
 							</dl>
 						
@@ -749,7 +752,7 @@ ul.inheritsList
 			<hr />
 			<div class="fineprint" style="clear:both">
 				
-				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Mar 14 2011 14:19:02 GMT+0100 (CET)
+				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Mar 14 2011 14:19:01 GMT+0100 (CET)
 			</div>
 		</div>
 

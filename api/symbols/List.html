@@ -249,7 +249,19 @@ ul.inheritsList
 				
 				<li><a href="../symbols/List.html">List</a></li>
 				
+				<li><a href="../symbols/None.html">None</a></li>
+				
+				<li><a href="../symbols/Option.html">Option</a></li>
+				
+				<li><a href="../symbols/Queue.html">Queue</a></li>
+				
+				<li><a href="../symbols/Some.html">Some</a></li>
+				
+				<li><a href="../symbols/Stack.html">Stack</a></li>
+				
 				<li><a href="../symbols/TreeMap.html">TreeMap</a></li>
+				
+				<li><a href="../symbols/TreeSet.html">TreeSet</a></li>
 				
 			</ul>
 		</li>
@@ -275,6 +287,8 @@ ul.inheritsList
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a>.<br />
 				
 			
 				List provides the implementation of the abstract data type List based on a Singly-Linked list
@@ -358,7 +372,7 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/List.html#foldLeft">foldLeft</a></b>(seed)
 								</div>
 								<div class="description">Applies a binary operator on all elements of this list going left to right and ending with the
-    seed value.</div>
+  seed value.</div>
 							</td>
 						</tr>
 					
@@ -368,7 +382,16 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/List.html#foldRight">foldRight</a></b>(seed)
 								</div>
 								<div class="description">Applies a binary operator on all elements of this list going right to left and ending with the
-    seed value.</div>
+  seed value.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/List.html#forEach">forEach</a></b>(f)
+								</div>
+								<div class="description">Applies function 'f' on each element in the list.</div>
 							</td>
 						</tr>
 					
@@ -384,9 +407,18 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/List.html#head">head</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/List.html#isEmpty">isEmpty</a></b>()
 								</div>
-								<div class="description">Checks if the list is empty</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -414,7 +446,7 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/List.html#prependList">prependList</a></b>(list)
 								</div>
 								<div class="description">Creates a new list by copying all of the items in the argument 'list'
-    before of 'this' list</div>
+  before of 'this' list</div>
 							</td>
 						</tr>
 					
@@ -424,6 +456,24 @@ ul.inheritsList
 								<div class="fixedFont"><b><a href="../symbols/List.html#remove">remove</a></b>(index)
 								</div>
 								<div class="description">Removes the element at the given index.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/List.html#reverse">reverse</a></b>()
+								</div>
+								<div class="description">Returns a new list with the elements in reversed order.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/List.html#tail">tail</a></b>()
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -440,6 +490,10 @@ ul.inheritsList
 				</table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a>: </dt><dd><a href="../symbols/mahj.Traversable.html#filter">filter</a>, <a href="../symbols/mahj.Traversable.html#flatMap">flatMap</a>, <a href="../symbols/mahj.Traversable.html#map">map</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -470,14 +524,14 @@ ul.inheritsList
   get( index )                                        O(n)
   remove( index )                                     O(n)
   --------------------------------------------------------
-  Methods that all containers have to implement
+  Methods inherited from mahj.Traversable
   --------------------------------------------------------
-  map( f )                                            O(n)    TODO
-  flatMap( f )                                        O(n)    TODO
-  filter( f )                                         O(n)    TODO
-  forEach( f )                                        O(n)    TODO
+  map( f )                                            O(n)
+  flatMap( f )                                        O(n)
+  filter( f )                                         O(n)
+  forEach( f )                                        O(n)
   foldLeft(s)(f)                                      O(n)
-  isEmpty()                                           O(1)    TODO
+  isEmpty()                                           O(1)
   contains( element )                                 O(n)    TODO
   forAll( f )                                         O(n)    TODO
   take( x )                                           O(n)    TODO
@@ -569,8 +623,8 @@ ul.inheritsList
 					
 					
 					
-					<pre class="code">    new List(1,2,3).appendList(new List(4,5,6));
-    // returns a list with the element 1,2,3,4,5,6</pre>
+					<pre class="code">  new List(1,2,3).appendList(new List(4,5,6));
+  // returns a list with the element 1,2,3,4,5,6</pre>
 					
 					
 					
@@ -605,7 +659,7 @@ ul.inheritsList
 					<a name="first"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span>
+					<span class="light">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span>
 					<b>first</b>()
 					
 					</div>
@@ -625,7 +679,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span> Some(first) if it exists, otherwise None</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span> Some(first) if it exists, otherwise None</dd>
 							
 							</dl>
 						
@@ -643,16 +697,16 @@ ul.inheritsList
 					</div>
 					<div class="description">
 						Applies a binary operator on all elements of this list going left to right and ending with the
-    seed value. This is a curried function that takes a seed value which returns a function that
-    takes a function which will then be applied to the elements
+  seed value. This is a curried function that takes a seed value which returns a function that
+  takes a function which will then be applied to the elements
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">    new List(1,2,3,4,5).foldLeft(0)(function(acc,current){ acc+current })
-    // returns 15 (the sum of the elements in the list)</pre>
+					<pre class="code">  new List(1,2,3,4,5).foldLeft(0)(function(acc,current){ acc+current })
+  // returns 15 (the sum of the elements in the list)</pre>
 					
 					
 					
@@ -693,16 +747,16 @@ ul.inheritsList
 					</div>
 					<div class="description">
 						Applies a binary operator on all elements of this list going right to left and ending with the
-    seed value. This is a curried function that takes a seed value which returns a function that
-    takes a function which will then be applied to the elements.
+  seed value. This is a curried function that takes a seed value which returns a function that
+  takes a function which will then be applied to the elements.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">    new List(1,2,3,4,5).foldRight(0)(function(acc,current){ acc+current })
-    // returns 15 (the sum of the elements in the list)</pre>
+					<pre class="code">  new List(1,2,3,4,5).foldRight(0)(function(acc,current){ acc+current })
+  // returns 15 (the sum of the elements in the list)</pre>
 					
 					
 					
@@ -734,10 +788,54 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="forEach"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>forEach</b>(f)
+					
+					</div>
+					<div class="description">
+						Applies function 'f' on each element in the list. This return nothing and is only invoked
+  for the side-effects of f.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>f</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dd><a href="../symbols/mahj.html#.Traversable">mahj.Traversable</a></dd>
+							
+							</dl>
+						
+
+					<hr />
+				
 					<a name="get"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span>
+					<span class="light">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span>
 					<b>get</b>(index)
 					
 					</div>
@@ -768,9 +866,34 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span> Some(element) is it exists, otherwise None</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span> Some(element) is it exists, otherwise None</dd>
 							
 							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="head"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>head</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
 						
 						
 						
@@ -780,12 +903,12 @@ ul.inheritsList
 					<a name="isEmpty"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{boolean}</span>
+					
 					<b>isEmpty</b>()
 					
 					</div>
 					<div class="description">
-						Checks if the list is empty
+						
 						
 						
 					</div>
@@ -796,13 +919,6 @@ ul.inheritsList
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{boolean}</span> true if container is empty, otherwise false.</dd>
-							
-							</dl>
 						
 						
 						
@@ -812,7 +928,7 @@ ul.inheritsList
 					<a name="last"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span>
+					<span class="light">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span>
 					<b>last</b>()
 					
 					</div>
@@ -832,7 +948,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/_global_.html#Some">Some</a>|<a href="../symbols/_global_.html#None">None</a>}</span> Some(last) if it exists, otherwise None</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/Some.html">Some</a>|<a href="../symbols/None.html">None</a>}</span> Some(last) if it exists, otherwise None</dd>
 							
 							</dl>
 						
@@ -893,15 +1009,15 @@ ul.inheritsList
 					</div>
 					<div class="description">
 						Creates a new list by copying all of the items in the argument 'list'
-    before of 'this' list
+  before of 'this' list
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">    new List(4,5,6).prependList(new List(1,2,3));
-    // returns a list with the element 1,2,3,4,5,6</pre>
+					<pre class="code">  new List(4,5,6).prependList(new List(1,2,3));
+  // returns a list with the element 1,2,3,4,5,6</pre>
 					
 					
 					
@@ -976,6 +1092,63 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="reverse"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>reverse</b>()
+					
+					</div>
+					<div class="description">
+						Returns a new list with the elements in reversed order.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>A new list with the elements in reversed order</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="tail"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>tail</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="update"> </a>
 					<div class="fixedFont">
 					
@@ -1033,7 +1206,7 @@ ul.inheritsList
 			<hr />
 			<div class="fineprint" style="clear:both">
 				
-				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Feb 28 2011 19:02:28 GMT+0100 (CET)
+				Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Mar 14 2011 14:19:01 GMT+0100 (CET)
 			</div>
 		</div>
 

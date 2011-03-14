@@ -8,74 +8,151 @@
 	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
 <span class='line'>  2</span>   @fileoverview Contains the implementation of the Map data structure based on a Red-Black Tree
 <span class='line'>  3</span>   @author Mads Hartmann Jensen (mads379@gmail.com)
-<span class='line'>  4</span> */</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">BLACK</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">RED</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">RedBlackLeaf</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">RedBlackNode</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">RedBlackNodeWrapper</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">TreeMap</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  4</span> */</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">BLACK</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">RED</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">RedBlackLeaf</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">RedBlackNode</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">RedBlackNodeWrapper</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Traversable</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">TreeMap</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  5</span> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">require</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">"undefined"</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">require</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  6</span> </span><span class="WHIT">  </span><span class="NAME">RedBlackNodeWrapper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'../src/RedBlackTree'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  7</span> </span><span class="WHIT">  </span><span class="NAME">RedBlackNode</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">RedBlackNodeWrapper.RedBlackNode</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  8</span> </span><span class="WHIT">  </span><span class="NAME">RedBlackLeaf</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">RedBlackNodeWrapper.Leaf</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  9</span> </span><span class="WHIT">  </span><span class="NAME">RED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">RedBlackNodeWrapper.RED</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 10</span> </span><span class="WHIT">  </span><span class="NAME">BLACK</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">RedBlackNodeWrapper.BLACK</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 11</span> </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 12</span> </span><span class="COMM">/**
-<span class='line'> 13</span>   TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. The
-<span class='line'> 14</span>   map contains the following operations
-<span class='line'> 15</span> 
-<span class='line'> 16</span>   &lt;pre>
-<span class='line'> 17</span>   --------------------------------------------------------
-<span class='line'> 18</span>   Core operations of the Map ADT
-<span class='line'> 19</span>   --------------------------------------------------------
-<span class='line'> 20</span>   insert( key,value )                               O(logn)
-<span class='line'> 21</span>   get( index )                                      O(logn)
-<span class='line'> 22</span>   remove( index )                                   O(logn)
-<span class='line'> 23</span>   contains( key )                                   O(logn)
-<span class='line'> 24</span>   --------------------------------------------------------
-<span class='line'> 25</span>   Methods that all containers have to implement
-<span class='line'> 26</span>   --------------------------------------------------------
-<span class='line'> 27</span>   map( f )                                            O(n)    TODO
-<span class='line'> 28</span>   flatMap( f )                                        O(n)    TODO
-<span class='line'> 29</span>   filter( f )                                         O(n)    TODO
-<span class='line'> 30</span>   forEach( f )                                        O(n)    TODO
-<span class='line'> 31</span>   foldLeft(s)(f)                                      O(n)    TODO
-<span class='line'> 32</span>   isEmpty()                                           O(1)    TODO
-<span class='line'> 33</span>   contains( element )                                 O(n)    TODO
-<span class='line'> 34</span>   forAll( f )                                         O(n)    TODO
-<span class='line'> 35</span>   take( x )                                           O(n)    TODO
-<span class='line'> 36</span>   takeWhile( f )                                      O(n)    TODO
-<span class='line'> 37</span>   size()                                              O(n)    TODO
-<span class='line'> 38</span>   --------------------------------------------------------
-<span class='line'> 39</span>   &lt;/pre>
-<span class='line'> 40</span> 
-<span class='line'> 41</span>    @class TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.
-<span class='line'> 42</span>    @public
-<span class='line'> 43</span> */</span><span class="WHIT">
-<span class='line'> 44</span> </span><span class="NAME">TreeMap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">comparator</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 45</span> </span><span class="WHIT">  </span><span class="NAME">this.tree</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RedBlackNode</span><span class="PUNC">(</span><span class="NAME">RED</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RedBlackLeaf</span><span class="PUNC">(</span><span class="NAME">BLACK</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RedBlackLeaf</span><span class="PUNC">(</span><span class="NAME">BLACK</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">comparator</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 46</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">comparator</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 47</span> </span><span class="WHIT">    </span><span class="NAME">this.tree.comparator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">comparator</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 48</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 49</span> </span><span class="WHIT">  </span><span class="NAME">this.insert</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 50</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.constructFromTree</span><span class="PUNC">(</span><span class="NAME">this.tree.insert</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 51</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 52</span> </span><span class="WHIT">  </span><span class="NAME">this.get</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 53</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.tree.get</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 54</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 55</span> </span><span class="WHIT">  </span><span class="NAME">this.remove</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 56</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.constructFromTree</span><span class="PUNC">(</span><span class="NAME">this.tree.remove</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 57</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 58</span> </span><span class="WHIT">  </span><span class="NAME">this.keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 59</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.tree.keys</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 60</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 61</span> </span><span class="WHIT">  </span><span class="NAME">this.values</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 62</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.tree.values</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 63</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 64</span> </span><span class="WHIT">  </span><span class="NAME">this.constructFromTree</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">tree</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 65</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">set</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 66</span> </span><span class="WHIT">    </span><span class="NAME">set</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TreeMap</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 67</span> </span><span class="WHIT">    </span><span class="NAME">set.tree</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">tree</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 68</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">set</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 69</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 70</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 71</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 72</span> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">exports</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">"undefined"</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">exports</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 73</span> </span><span class="WHIT">  </span><span class="NAME">exports.TreeMap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">TreeMap</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 74</span> </span><span class="PUNC">}</span></pre></body></html>
+<span class='line'> 11</span> </span><span class="WHIT">  </span><span class="NAME">Traversable</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'./Traversable'</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">Traversable</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="COMM">/**
+<span class='line'> 14</span>   TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. The
+<span class='line'> 15</span>   map contains the following operations
+<span class='line'> 16</span> 
+<span class='line'> 17</span>   &lt;pre>
+<span class='line'> 18</span>   --------------------------------------------------------
+<span class='line'> 19</span>   Core operations of the Map ADT
+<span class='line'> 20</span>   --------------------------------------------------------
+<span class='line'> 21</span>   insert( key,value )                               O(logn)
+<span class='line'> 22</span>   get( index )                                      O(logn)
+<span class='line'> 23</span>   remove( index )                                   O(logn)
+<span class='line'> 24</span>   contains( key )                                   O(logn)
+<span class='line'> 25</span>   --------------------------------------------------------
+<span class='line'> 26</span>   Methods that all containers have to implement
+<span class='line'> 27</span>   --------------------------------------------------------
+<span class='line'> 28</span>   map( f )                                            O(n)
+<span class='line'> 29</span>   flatMap( f )                                        O(n)
+<span class='line'> 30</span>   filter( f )                                         O(n)
+<span class='line'> 31</span>   forEach( f )                                        O(n)
+<span class='line'> 32</span>   foldLeft(s)(f)                                      O(n)    TODO
+<span class='line'> 33</span>   isEmpty()                                           O(1)    TODO
+<span class='line'> 34</span>   contains( element )                                 O(n)    TODO
+<span class='line'> 35</span>   forAll( f )                                         O(n)    TODO
+<span class='line'> 36</span>   take( x )                                           O(n)    TODO
+<span class='line'> 37</span>   takeWhile( f )                                      O(n)    TODO
+<span class='line'> 38</span>   size()                                              O(n)    TODO
+<span class='line'> 39</span>   --------------------------------------------------------
+<span class='line'> 40</span>   &lt;/pre>
+<span class='line'> 41</span> 
+<span class='line'> 42</span>   @class TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.
+<span class='line'> 43</span>   @constructor
+<span class='line'> 44</span>   @example
+<span class='line'> 45</span>   var map = new TreeMap([
+<span class='line'> 46</span>     {key: 1, value: "one"},
+<span class='line'> 47</span>     {key: 4, value: "four"},
+<span class='line'> 48</span>     {key: 3, value: "three"},
+<span class='line'> 49</span>     {key: 2, value: "two"}
+<span class='line'> 50</span>   ]);
+<span class='line'> 51</span>   @param {Array} keyValuePairs An array containing objects with the properties key & value.
+<span class='line'> 52</span>   @param {Function=} comparator A comparator function that can compare the keys (optional). Will use a
+<span class='line'> 53</span>                                 default comparator for integers if no comparator is given
+<span class='line'> 54</span>   @public
+<span class='line'> 55</span>   @augments mahj.Traversable
+<span class='line'> 56</span> */</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="NAME">TreeMap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">keyValuePairs</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">comparator</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">kv</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">treeUnderConstruction</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_i</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_len</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">keyValuePairs</span><span class="WHIT"> </span><span class="KEYW">instanceof</span><span class="WHIT"> </span><span class="NAME">Array</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">keyValuePairs.length</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">    </span><span class="NAME">treeUnderConstruction</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RedBlackLeaf</span><span class="PUNC">(</span><span class="NAME">BLACK</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">    </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">keyValuePairs.length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">_i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">_len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">_i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">      </span><span class="NAME">kv</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">keyValuePairs</span><span class="PUNC">[</span><span class="NAME">_i</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">      </span><span class="NAME">treeUnderConstruction</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">treeUnderConstruction.insert</span><span class="PUNC">(</span><span class="NAME">kv.key</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">kv.value</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">    </span><span class="NAME">this.tree</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">treeUnderConstruction</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">    </span><span class="NAME">this.tree</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">RedBlackLeaf</span><span class="PUNC">(</span><span class="NAME">BLACK</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">  </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">comparator</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">    </span><span class="NAME">this.tree.comparator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">comparator</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="NAME">TreeMap.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">mahj.Traversable</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="COMM">/*
+<span class='line'> 76</span> ---------------------------------------------------------------------------------------------
+<span class='line'> 77</span> Methods related to the MAP ADT
+<span class='line'> 78</span> ---------------------------------------------------------------------------------------------
+<span class='line'> 79</span> */</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="COMM">/**
+<span class='line'> 81</span>   Return a new TreeMap containing the given (key,value) pair.
+<span class='line'> 82</span>   @param {*} key The key to store the value by
+<span class='line'> 83</span>   @param {*} value The value to store in the map
+<span class='line'> 84</span>   @return {TreeMap} A new TreeMap that also contains the new key-value pair
+<span class='line'> 85</span> */</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="NAME">TreeMap.prototype.insert</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.buildFromTree</span><span class="PUNC">(</span><span class="NAME">this.tree.insert</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="COMM">/**
+<span class='line'> 90</span>   If a (key,value) pair exists return Some(value), otherwise None()
+<span class='line'> 91</span>   @param {*} key The key of the value you want to read.
+<span class='line'> 92</span>   @return {Some|None} Some(value) if it exists in the map. Otherwise None
+<span class='line'> 93</span> */</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="NAME">TreeMap.prototype.get</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.tree.get</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="COMM">/**
+<span class='line'> 98</span>   Returns a new TreeMap without the given key-value pair.
+<span class='line'> 99</span>   @param {*} key The key of the value you want to remove
+<span class='line'>100</span>   @return {TreeMap} A new TreeMap that doesn't contain the key-value pair
+<span class='line'>101</span> */</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="NAME">TreeMap.prototype.remove</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.buildFromTree</span><span class="PUNC">(</span><span class="NAME">this.tree.remove</span><span class="PUNC">(</span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="COMM">/**
+<span class='line'>106</span>   Returns a sorted list containing all of the keys in the TreeMap
+<span class='line'>107</span>   @return {List} A sorted list containing all of the keys in the TreeMap
+<span class='line'>108</span> */</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="NAME">TreeMap.prototype.keys</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.tree.keys</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="COMM">/**
+<span class='line'>113</span>   Returns a sorted list containing all of the values in the TreeMap
+<span class='line'>114</span>   @return {List} sorted list containing all of the values in the TreeMap
+<span class='line'>115</span> */</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="NAME">TreeMap.prototype.values</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.tree.values</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="COMM">/**
+<span class='line'>120</span>   Used to construct a TreeMap from RedBlackTree. This is intended
+<span class='line'>121</span>   for internal use only. Would've marked it private if I could.
+<span class='line'>122</span>   @private
+<span class='line'>123</span> */</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="NAME">TreeMap.prototype.buildFromTree</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">tree</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">  </span><span class="NAME">map</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TreeMap</span><span class="PUNC">(</span><span class="NAME">this.comparator</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">  </span><span class="NAME">map.tree</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">tree</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">map</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="COMM">/*
+<span class='line'>131</span> ---------------------------------------------------------------------------------------------
+<span class='line'>132</span> Methods related to Traversable prototype
+<span class='line'>133</span> ---------------------------------------------------------------------------------------------
+<span class='line'>134</span> */</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="COMM">/**
+<span class='line'>136</span>   @private
+<span class='line'>137</span> */</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="NAME">TreeMap.prototype.buildFromArray</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">arr</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TreeMap</span><span class="PUNC">(</span><span class="NAME">arr</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.comparator</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="COMM">/**
+<span class='line'>142</span>   Applies function 'f' on each value in the map. This return nothing and is only invoked
+<span class='line'>143</span>   for the side-effects of f.
+<span class='line'>144</span>   @see mahj.Traversable
+<span class='line'>145</span> */</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="NAME">TreeMap.prototype.forEach</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">f</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.tree.inorderTraversal</span><span class="PUNC">(</span><span class="NAME">f</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">exports</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="STRN">"undefined"</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">exports</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">  </span><span class="NAME">exports.TreeMap</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">TreeMap</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="PUNC">}</span></pre></body></html>
