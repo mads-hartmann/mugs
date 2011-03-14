@@ -62,7 +62,7 @@ TreeMap = (keyValuePairs, comparator) ->
       treeUnderConstruction = treeUnderConstruction.insert(kv.key, kv.value)
     this.tree = treeUnderConstruction
   else 
-    this.tree = RedBlackLeaf(BLACK)
+    this.tree = new RedBlackLeaf(BLACK)
   this.tree.comparator = comparator if comparator?
   this
 
@@ -114,9 +114,9 @@ TreeMap.prototype.values = () -> this.tree.values()
   @private
 ###
 TreeMap.prototype.buildFromTree = (tree) -> 
-  set = new TreeMap(this.comparator)
-  set.tree = tree
-  set
+  map = new TreeMap(this.comparator)
+  map.tree = tree
+  map
 
 ###
 ---------------------------------------------------------------------------------------------
