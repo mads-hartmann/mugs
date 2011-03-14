@@ -451,7 +451,7 @@ h2(#technical_description_of_the_program). Technical description of the program
 
 h3(#object_construction). Object construction
 
-There are many different ways to create and initialize a new object in javascript and each one comes with its own set of merits and penalties. In this section I will introduce 3 different ways to construct objects in javascript and explain which one I've chosen for this library and why. 
+There are many different ways to create and initialize a new object in javascript and each one comes with its own set of merits and penalties. In this section I will describe three different ways to construct objects in javascript and explain which one I've chosen for this library and why. 
 
 h4(#factory_functions). Factory Function
 
@@ -506,32 +506,66 @@ This approach allows for great flexibility and shows JavaScripts true prototypal
 
 h3(#javascript_call_stack). Javascript call-stack
 
-Most JavaScript implementations have a fixed upper bound on the size of the call-stack. The following table shows the maximum size of the call-stack in different browsers. 
+This section investigates the behavior of the call-stack of different javascript implementations. The following table shows the maximum depth of the call-stack in different browsers. Two measurements have been made: One using a recursive function and one using a tail-recursive function. The latter has been added to test if any of the javascript implementations did any  tail-recursive optimizations.
 
 <table>
 	<thead>
 	<tr>
 		<td> Browser </td>
-		<td> Max size of call-stack</td>
+		<td> Max depth of call-stack (recursive)</td>
+		<td> Max depth of call-stack (tail-recursive)</td>
 	</tr>
 	</thead>
 	<tr> 
 		<td>Firefox (Version 3.6.13 on OS X)</td>
 		<td>3000</td>
+		<td>3000</td>
 	</tr>
 	<tr> 
 		<td>Chrome (Version 10.0.648.127 on OS X)</td>
-		<td>26.205</td>
+		<td>16379</td>
+		<td>16381</td>
 	</tr>
 	<tr> 
 		<td>Safari (Version 5.0.3 (6533.19.4) on OS X)</td>
-		<td>52.427</td>
+		<td>52426</td>
+		<td>47660</td>
 	</tr>
 </table>
 
-This, unfortunately, means that recursive functions have the possibility of breaking the application. Seeing that recursive functions are one of the backbones of  functional programming this is a huge restriction on how elegantly I've been able to implement the different data structures. For methods like map which are applied on every element in a collection I've been forced to rely on side-effects as a recursive function would break the application when applied on collections with more than 3000 (in the case of Firefox) elements. 
+These numbers show that none of the browsers support tail-recursive functions. This, unfortunately, means that tail-recursive functions have the possibility of breaking the application. This restricts how elegantly I've been able to implement the different data structures. For methods like map which are applied on every element in a collection I've been forced to rely on side-effects as a tail-recursive function would break the application when applied on collections with more than 3000 (in the case of Firefox) elements. 
 
 Luckily this is an implementation detail and the API of the collections are still the same so if the javascript implementations should improve in the future it's possible for me to change the library implementation without introducing any breaking changes. 
+
+The following is the program that has been used to measure the maximum depth of the call-stack using a recursive function. 
+
+<pre>window.onload = function(){
+	var globalCounter = 0,
+		result;
+	try {
+		result = (function tailcall(){
+			globalCounter++;
+			return 1 + tailcall();
+		})(globalCounter);
+	} catch (e) {
+		document.body.innerHTML = "Maximum call stack size: " + globalCounter;
+		document.body.innerHTML = document.body.innerHTML + "<br />Result of function: " + result;
+	}
+};</pre>
+
+The following is the program that has been used to see if the javascript implementation had support for tail-call optimization. 
+
+<pre>window.onload = function(){
+	var cnt = 0;
+	try {
+		(function tailcall(counter){
+			cnt = counter+1;
+			tailcall(cnt);
+		})(cnt);
+	} catch (e) {
+		document.body.innerHTML = "Maximum call stack size: " + cnt;
+	}
+};</pre>
 
 h2(#test). Test
 
