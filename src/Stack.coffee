@@ -1,5 +1,6 @@
 ###*
-  @fileoverview Contains the implementation of the Stack data structure based on a LIst
+  @fileoverview Contains the implementation of the Stack data structure based on a List <br />
+  
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
 if require?
@@ -21,8 +22,8 @@ if require?
   </pre>
 
   @class Stack provides the implementation of the abstract data type Stack based on a List
-  @param elements A repeatable argument with the elements you want on the Stack. 
-                  The last element will be on top
+  @param elements A repeatable argument with the elements you want on the Stack. The last 
+                  element will be on top of the stack.
   @public
 ###
 Stack = (elements...) ->
@@ -31,6 +32,7 @@ Stack = (elements...) ->
 
 ###*
   Removes the top element from the stack.
+  
   @return A new stack without the former top element
   @complexity O(1)
 ###  
@@ -39,6 +41,7 @@ Stack.prototype.pop = () ->
 
 ###*
   Push an element on the stack
+  
   @param elem the element to push on the stack
   @return A new stack with the new element on top
   @complexity O(1)
@@ -48,6 +51,7 @@ Stack.prototype.push = (elem) ->
 
 ###*
   Returns the top element of the stack.
+  
   @return the top element.
   @complexity O(1)
 ###
@@ -56,6 +60,7 @@ Stack.prototype.top = () ->
 
 ###*
   Returns a List with all of the elements in the stack
+  
   @return A list with all of the elements in the Stack 
   @complexity O(1)
 ###
@@ -64,6 +69,7 @@ Stack.prototype.values = () ->
   
 ###*
   This will build a new Stack from a List. This is used internally. 
+  
   @complexity O(1)
   @private
 ###

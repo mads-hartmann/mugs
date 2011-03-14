@@ -1,25 +1,27 @@
 ###*
-  @fileoverview Contains the implementation of the Queue ADT based on two Lists's <br />
+  @fileoverview Contains the implementation of the Queue ADT based on two Lists as 
+                described in Chris Okasaki's book Purely Functional Data Structures. <br />
+                
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
 if require?
   List = require './list'
 
 ###*
-  Queue provides the implementation of the abstract data type Queue based on two Lists. The 
-  Queue contains the following operations:
+  Queue provides the implementation of the abstract data type Queue based on two Lists as 
+  described in Chris Okasaki's book Purely Functional Data Structures. The Queue contains 
+  the following operations:
   
   <pre>
   --------------------------------------------------------
   Core operations of the Queue ADT 
   --------------------------------------------------------
   enqueue()                               (amortized) O(1)
-  dequeue(elem )                                      O(1)
+  dequeue(elem)                                       O(1)
   top()                                               O(1)
   --------------------------------------------------------
   </pre>
   
-  Invariant: front is empty only if rear is empty
   @class Queue provides an implementation of the Queue ADT based on two Lists. 
   @public 
 ###
@@ -34,12 +36,15 @@ Queue = (elements...) ->
 
 ###*
   Removes the front element from the queue
+  
   @return A new queue without the former front element
 ###
 Queue.prototype.dequeue = () -> 
   this.buildFromLists(this.front__.tail(), this.rear__)
+
 ###*
   Adds a new element to the queue
+  
   @param elem The element to add to the queue
   @return A new queue with the element in the back of the queue
 ###
@@ -48,6 +53,7 @@ Queue.prototype.enqueue = (elem) ->
 
 ###*
   Reads the front element in the queue
+  
   @return The front element in the queue 
 ###
 Queue.prototype.front = () -> 
@@ -55,6 +61,7 @@ Queue.prototype.front = () ->
 
 ###*
   Returns a List with all of the elements in the queue. 
+  
   @return A List with all of the elements in the queue. 
 ###
 Queue.prototype.values = () -> 
@@ -72,7 +79,7 @@ Queue.prototype.buildFromLists = (front, rear) ->
   queue = new Queue()
   if front.isEmpty() 
     queue.front__ = rear.reverse()
-    queue.rear__ = front #front is empty so might as well use it instead of creaing a new empty list
+    queue.rear__ = front #front is empty so we use it instead of a new empty list.
   else 
     queue.rear__ = rear
     queue.front__ = front
