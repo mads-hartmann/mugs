@@ -451,11 +451,11 @@ h2(#technical_description_of_the_program). Technical description of the program
 
 h3(#object_construction). Object construction
 
-There are many different ways to create and initialize a new object in javascript and each one comes with its own set of merits and penalties. In this section I will describe three different ways to construct objects in javascript and explain which one I've chosen for this library and why. 
+There are many different ways to create and initialize a new object in javascript and each one comes with its own set of merits and penalties. In this section I will describe three different ways to construct objects in javascript and explain which one I've chosen for this library and why. The three approaches are explained in depth in Douglas Crockford's book JavaScript: The Good Parts. 
 
-h4(#factory_functions). Factory Function
+h4(#factory_functions). Functional
 
-In the Factory Function approach you create a function which acts as the constructor for the object you want to create. It can take any number of arguments and it uses those arguments to add properties and methods to the object. The example below shows a Person factory function which takes two arguments: firstName, lastName. It uses those arguments to create two properties and a method on the object.
+In the Functional approach you create a function which acts as the constructor for the object you want to create. It can take any number of arguments and it uses those arguments to add properties and methods to the object. The example below shows a Person function which takes two arguments: firstName, lastName. It uses those arguments to create two properties and a method on the object.
 
 <pre><code>var Person = function(firstName, lastName){
 	this.firstName = firstName;
@@ -468,9 +468,9 @@ new Person("Mads","Hartmann");</code></pre>
 
 The advantage of this approach is that you can define any variables you want inside of the function and they will act as private members. The disadvantage is that instances created with this function will be heavy objects in the sense that all of them will store the code for each method. 
 
-h4(#prototype). Classical  
+h4(#prototype). Pseudoclassical  
 
-In the Classical approach you create a function which only initializes the properties of the object. Instead of adding the methods directly on each object you add it to the prototype as shown below. 
+In the Pseudoclassical approach you create a function which only initializes the properties of the object. Instead of adding the methods directly on each object you add it to the prototype as shown below. 
 
 <pre><code>var Person = function(firstName, lastName){
 	this.firstName = firstName;
@@ -482,11 +482,11 @@ Person.prototype.fullName = function(){ return this.firstName + " " + this.lastN
 
 new Person("Mads","Hartmann");</code></pre>
 
-This resolves the disadvantage of the Factory Function approach as all the instances share the same prototype object. This means that object creation is roughly 3 x faster (see section about performance tests) because the interpreter doesn't need to add the same methods to all of the objects. This also results in objects that use less memory.
+This resolves the disadvantage of the Functional approach as all the instances share the same prototype object. This means that object creation is roughly 3 x faster (see section about performance tests) because the interpreter doesn't need to add the same methods to all of the objects. This also results in objects that use less memory.
 
 There are two disadvantages to this approach. Firstly, because the methods are no longer stored directly on the object the interpreter needs to do one extra lookup before it can execute the method. Because of this it takes roughly %40 longer to invoke a method on an object. The second disadvantage is that it's no longer possible for the objects to have any private state. 
 
-h4(#object_create). Object.create
+h4(#object_create). Prototypal
 
 The ECMAScript 5 Language Specification defines a new method on Object: Object.create. Given an object and a properties object it will create a new object. The following code shows how to create a @Person@ prototype and use it to create new instance of @Person@.
 
@@ -502,7 +502,7 @@ Object.create(Person, {
 	} 
 });</code></pre>
 
-This approach allows for great flexibility and shows JavaScripts true prototypal nature. Unfortunately Object.create isn't implemented in all modern browsers and in the ones where it is implemented the Object.create application isn't as performant as the Classical one. Because of this I've chosen to use the Classical approach in this library. 
+This approach allows for great flexibility and shows JavaScripts true prototypal nature. Unfortunately Object.create isn't implemented in all modern browsers and in the ones where it is implemented the Prototypal application isn't as performant as the Pseudoclassical one. Because of this I've chosen to use the Pseudoclassical approach in this library. 
 
 h3(#javascript_call_stack). Javascript call-stack
 
