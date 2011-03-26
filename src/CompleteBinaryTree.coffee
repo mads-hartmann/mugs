@@ -31,15 +31,15 @@ CompleteBinaryTree =
   update: (index, item) ->
     if index == 0 and this.isLeaf
       new CompleteBinaryTreeLeaf(item)
-    else if index == 0 and not this.isLeaf
+    else if index == 0 && !this.isLeaf
       new CompleteBinaryTreeNode(item, this.left, this.right)
     else if index > 0 && this.isLeaf
       throw new Error("Subscript error")
     else
       if index <= this.size / 2
-        new CompleteBinaryTreeNode(this.item, this.left.update(index-1,item), this.right)
+        new CompleteBinaryTreeNode(this.item, this.left.update(index - 1, item), this.right)
       else 
-        new CompleteBinaryTreeNode(this.item, this.left, this.right.update(index - 1 - this.left.size))
+        new CompleteBinaryTreeNode(this.item, this.left, this.right.update(index - 1 - this.left.size, item))
 
 
 ###*
