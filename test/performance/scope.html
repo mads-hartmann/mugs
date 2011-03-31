@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Scope Performance</title>
+    <meta name="author" content="Mads Hartmann Jensen">
+
+    <!-- JSLitmus -->
+    <script src="../../lib/jslitmus/JSLitmus.js" charset="utf-8"></script>
+
+    <!--
+        This performance tests shows the difference between have functions
+    	in inner scope or outer scope when:
+
+	    	- creating objects
+		    - calling the functions
+    -->
+
+    <script type="text/javascript" charset="utf-8">
+
+    // Creating some varibles so it has to search a bit to find
+    // the function in the scope
+    var a = "a",
+        b = "b",
+        c = "c",
+        d = "d",
+        e = "e",
+        f = "f";
+
+    // The function is declared in the inner scope
+    var ObjectInnerScope = function(firstName, lastName){
+        this.firstName = firstName;
+        this.lastName  = lastName;
+        this.fullName = function(){ return this.firstName + " " + this.lastName; };
+        return this;
+    };
+
+    // The function is declared in the outer scope and referenced in the
+    // inner scope.
+    var fullNameFunc = function(){ return this.firstName + " " + this.lastName; };
+    var ObjectOuterScope = function(firstName,lastName) {
+        this.firstName = firstName;
+        this.lastName  = lastName;
+        this.fullName = fullNameFunc;
+        return this;
+    };
+
+    var objectWithOuterScope = new ObjectOuterScope("Mads","Hartmann");
+    var objectWithInnerScope = new ObjectInnerScope("Mads","Hartmann");
+
+    </script>
+
+    <script type="text/javascript">
+
+    JSLitmus.test('Creating object with inner scope', function() {
+        new ObjectInnerScope("Mads","Hartmann");
+    });
+
+    JSLitmus.test('Creating object with outer scope', function() {
+        new ObjectOuterScope("Mads","Hartmann");
+    });
+
+    JSLitmus.test('Invoking a function with inner scope', function() {
+        objectWithInnerScope.fullName();
+    });
+
+    JSLitmus.test('Invoking a function with outer scope', function() {
+        objectWithOuterScope.fullName();
+    });
+
+    </script>
+
+</head>
+    <body></body>
+</html>
+
+

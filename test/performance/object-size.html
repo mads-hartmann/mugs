@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>object-size</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Mads Hartmann Jensen">
+	<script type="text/javascript" charset="utf-8">
+
+		/*		
+			The following three tests should two things: 
+			
+				- That using prototypes (classical) results in smaller objects
+				- Weather the function AST is copied or not. If the size of PersonFunctional
+				  and PersonFunctional2 are the same then the AST isn't copied
+		*/
+		
+		var PersonFunctional = function(firstName, lastName){
+			this.firstName = firstName;
+			this.lastName  = lastName;
+			this.fullName = function(){ return this.firstName + " " + this.lastName; };
+			return this; 
+		};
+		
+		var fullNameFunc = function(){ return this.firstName + " " + this.lastName; };
+		var PersonFunctional2 = function(firstName,lastName) {
+			this.firstName = firstName;
+			this.lastName  = lastName;
+			this.fullName = fullNameFunc;
+			return this;
+		};
+		
+		var PersonClassical = function(firstName, lastName){
+			this.firstName = firstName;
+			this.lastName  = lastName;
+			return this; 
+		};
+
+		PersonClassical.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
+		
+		var personFunctionalInstance = new PersonFunctional("mads","hartmann");
+		var personClassicalInstance = new PersonClassical("mads","hartmann");
+		var personFunctionalInstance2 = new PersonFunctional2("mads","hartmann");
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Method Invocation Performance</title>
+        <meta name="author" content="Mads Hartmann Jensen">
+
+
+        <script src="../../lib/jslitmus/JSLitmus.js" charset="utf-8"></script>
+
+        <!--
+            This performance measures how much time is used when invoking a method
+            on a prototype vs. directly on the object. 
+        -->
+
+        <script type="text/javascript" charset="utf-8">
+          
+            var A = function(){ 
+                this.a = function(){ return "a"+"a"+"a"+"a"; };
+                return this;
+            };
+
+            var B = function(){
+                this.b = function(){ return "a"+"a"+"a"+"a"; };
+                return this;
+            };
+
+            var C = function(){ 
+                this.c = function(){ return "a"+"a"+"a"+"a"; };
+                return this;
+            };
+
+            var D = function(){
+                this.d = function(){ return "a"+"a"+"a"+"a"; };
+                return this;
+            };
+            
+            C.prototype = new D();
+            B.prototype = new C();
+            A.prototype = new B();
+            
+            var a = new A();
+        
+            JSLitmus.test('Invoking a on instance of A', function() {
+                a.a();
+            });
+        
+        
+            JSLitmus.test('Invoking d on instance of A', function() {
+                a.d();
+            });
+        
+        </script>
+    </head>
+    <body></body>
+</html>
