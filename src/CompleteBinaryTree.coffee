@@ -17,16 +17,16 @@
   and CompleteBinaryTreeLeaf are the concrete implementations. 
 ###
 CompleteBinaryTree =
-  lookup: (index) ->
+  get: (index) ->
     if index == 0
       this.item
     else if index > 0 && this.isLeaf
       throw new Error("Subscript error")
     else
       if index <= this.size / 2
-        this.left.lookup(index-1)
+        this.left.get(index-1)
       else
-        this.right.lookup(index - 1 - this.left.size)
+        this.right.get(index - 1 - this.left.size)
         
   update: (index, item) ->
     if index == 0 and this.isLeaf
