@@ -23,13 +23,6 @@
 			return this; 
 		};
 		
-		var fullNameFunc = function(){ return this.firstName + " " + this.lastName; };
-		var PersonFunctional2 = function(firstName,lastName) {
-			this.firstName = firstName;
-			this.lastName  = lastName;
-			this.fullName = fullNameFunc;
-			return this;
-		};
 
 		var PersonClassical = function(firstName, lastName){
 			this.firstName = firstName;
@@ -43,16 +36,22 @@
 			fullName: function() { return this.firstName + " " + this.lastName; }
 		};
 		
+		var PersonFunctionClassical = (function() {
+		  var F = function(firstName, lastName) {
+		    this.firstName = firstName;
+		    this.lastName = lastName;
+		  };
+		  F.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
+		  return F;
+		})();
+		
+		
 	</script>	
 
 	<script type="text/javascript">
 
 	JSLitmus.test('Creating object - Factory Function', function() {
 		new PersonFunctional("Mads","Hartmann");
-	});
-	
-	JSLitmus.test('Creating object - Factory Function 2', function() {
-		new PersonFunctional2("Mads","Hartmann");
 	});
 	
 	JSLitmus.test('Creating object - Classical', function() {
@@ -69,6 +68,11 @@
 			} 
 		});
 	});
+	
+	JSLitmus.test('Creating object - FunctionClassical', function() {
+		new PersonFunctionClassical("Mads","Hartmann");
+	});
+	
 	</script>
 	
 </head>
