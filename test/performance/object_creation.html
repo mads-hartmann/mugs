@@ -6,75 +6,76 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Inheritance Performance</title>
 	<meta name="author" content="Mads Hartmann Jensen">
-	
+
 	<!-- JSLitmus -->
-	<script src="../../lib/jslitmus/JSLitmus.js" charset="utf-8"></script> 
-	
-	<!-- 
-		Performance test showing the difference between adding methods directly to objects instead of 
-		adding methods to the prototype object. 
+	<script src="../../lib/jslitmus/JSLitmus.js" charset="utf-8"></script>
+
+	<!--
+		Performance test showing the difference between adding methods directly to objects instead of
+		adding methods to the prototype object.
 	-->
-	
+
 	<script type="text/javascript" charset="utf-8">
 		var PersonFunctional = function(firstName, lastName){
 			this.firstName = firstName;
 			this.lastName  = lastName;
 			this.fullName = function(){ return this.firstName + " " + this.lastName; };
-			return this; 
+			return this;
 		};
-		
+
 
 		var PersonClassical = function(firstName, lastName){
 			this.firstName = firstName;
 			this.lastName  = lastName;
-			return this; 
+			return this;
 		};
 
 		PersonClassical.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
-		
+
 		var PersonPrototypal = {
 			fullName: function() { return this.firstName + " " + this.lastName; }
 		};
-		
-		var PersonFunctionClassical = (function() {
+
+		var HybridPerson = (function() {
 		  var F = function(firstName, lastName) {
 		    this.firstName = firstName;
 		    this.lastName = lastName;
+        return this;
 		  };
 		  F.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
 		  return F;
 		})();
-		
-		
-	</script>	
+
+
+	</script>
 
 	<script type="text/javascript">
 
-	JSLitmus.test('Creating object - Factory Function', function() {
-		new PersonFunctional("Mads","Hartmann");
+  JSLitmus.test('Creating object - Factory Function', function() {
+   new PersonFunctional("Mads","Hartmann");
+  });
+
+  JSLitmus.test('Creating object - Classical', function() {
+   new PersonClassical("Mads","Hartmann");
+  });
+
+  JSLitmus.test('Creating objects - Object.create',function() {
+   Object.create(PersonPrototypal, {
+     firstName: {
+       value: "Mads"
+     },
+     lastName: {
+       value: "Hartmann"
+     }
+   });
+  });
+
+	JSLitmus.test('Creating object - Hybrid', function() {
+		new HybridPerson("Mads","Hartmann");
 	});
-	
-	JSLitmus.test('Creating object - Classical', function() {
-		new PersonClassical("Mads","Hartmann");
-	});
-	
-	JSLitmus.test('Creating objects - Object.create',function() {
-		Object.create(PersonPrototypal, {
-			firstName: { 
-				value: "Mads" 
-			}, 
-			lastName: { 
-				value: "Hartmann"
-			} 
-		});
-	});
-	
-	JSLitmus.test('Creating object - FunctionClassical', function() {
-		new PersonFunctionClassical("Mads","Hartmann");
-	});
-	
+
 	</script>
-	
+
 </head>
 	<body></body>
 </html>

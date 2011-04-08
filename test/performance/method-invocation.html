@@ -11,13 +11,13 @@
 
         <!--
             This performance measures how much time is used when invoking a method
-            on a prototype vs. directly on the object. 
+            on a prototype vs. directly on the object.
         -->
 
         <script type="text/javascript" charset="utf-8">
-          
-            var A = function(){ 
-                this.a = function(){ return "a"+"a"+"a"+"a"; };
+
+            var A = function(){
+                this.a = function(){ return 2+42; };
                 return this;
             };
 
@@ -26,31 +26,33 @@
                 return this;
             };
 
-            var C = function(){ 
+            var C = function(){
                 this.c = function(){ return "a"+"a"+"a"+"a"; };
                 return this;
             };
 
             var D = function(){
-                this.d = function(){ return "a"+"a"+"a"+"a"; };
+                this.d = function(){ return 2+42; };
                 return this;
             };
-            
+
             C.prototype = new D();
             B.prototype = new C();
             A.prototype = new B();
-            
+
             var a = new A();
-        
+
+            var result;
+
             JSLitmus.test('Invoking a on instance of A', function() {
-                a.a();
+                result += a.a();
             });
-        
-        
+
+
             JSLitmus.test('Invoking d on instance of A', function() {
-                a.d();
+                result += a.d();
             });
-        
+
         </script>
     </head>
     <body></body>
