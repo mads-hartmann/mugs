@@ -45,11 +45,26 @@ $(document).ready(function(){
             .insert(2,2)
             .insert(71,71)
             .insert(42,42)
-            .insert(88,88)
+            .insert(88,88);
 
         var n1 = node.remove(7);
         var n2 = node.remove(3);
         var n3 = node.remove(1);
+    });
+
+
+    test("Test increasing", function(){
+      var total = 100;
+      var item;
+      var tree = new LLRBNode(1,1);
+      for (item = 2; item < total ; item++) {
+        tree = tree.insert(item,item);
+      }
+      ok(tree.checkMaxDepth());
+      for (item = 2; item < total ; item++) {
+        tree = tree.remove(item);
+      }
+      ok(tree.checkMaxDepth());
     });
 
     test("Get the min key",function(){
@@ -85,68 +100,98 @@ $(document).ready(function(){
             .insert(10,10)
             .insert(11,11)
             .insert(12,12);
-       
+
        ok(node.count() == 12);
        ok(node.checkMaxDepth());
 
     });
 
 
-    // test("The structure should be valid after insertion (3)",function(){
+    test("Rotate left leaves the tree in a valid state",function(){
+        var node = new LLRBNode(4,4,false,
+                                new Some(new LLRBNode(2,2,false,new None(), new None())),
+                                new Some(new LLRBNode(7,7,true,
+                                                      new Some(new LLRBNode(5,5,false,new None(),new None())),
+                                                      new Some(new LLRBNode(8,8,false,new None(),new None())))));
+        
+        var node2 = node.rotateLeft(node);
+        ok(node2.count() == 5);
+        ok(node2.checkMaxDepth());
+    });
 
-    //      var node = new LLRBNode(1,1)
-    //         .insert(50,50)
-    //         .insert(3,3)
-    //         .insert(4,4)
-    //         .insert(7,7)
-    //         .insert(9,9)
-    //         .insert(20,20)
-    //         .insert(18,18)
-    //         .insert(2,2)
-    //         .insert(71,71)
-    //         .insert(42,42)
-    //         .insert(88,88);
+    test("Rotate right leaves the tree in a valid state", function(){
+        var node = new LLRBNode(7,7,false,
+                               new Some(new LLRBNode(4,4,true,
+                                                    new Some(new LLRBNode(2,2,false, new None(), new None())),
+                                                    new Some(new LLRBNode(5,5,false, new None(), new None())))),
+                               new Some(new LLRBNode(8,8,false, new None(), new None())));
 
-    //     ok(node.get(1).get() == 1);
-    //     ok(node.get(2).get() == 2);
-    //     ok(node.get(3).get() == 3);
-    //     ok(node.get(4).get() == 4);
-    //     ok(node.get(7).get() == 7);
-    //     ok(node.get(9).get() == 9);
-    //     ok(node.get(18).get() == 18);
-    //     ok(node.get(20).get() == 20);
-    //     ok(node.get(42).get() == 42);
-    //     ok(node.get(50).get() == 50);
-    //     ok(node.get(71).get() == 71);
-    //     ok(node.get(88).get() == 88);
+        var node2 = node.rotateRight();
+        ok(node2.count() == 5);
+        ok(node2.key == 4);
+        ok(node2.left.get().key == 2);
+        ok(node2.right.get().key == 7);
+        ok(node2.right.get().left.get().key == 5);
+        ok(node2.right.get().right.get().key == 8);
 
-    //     // TODO: This is NOT correctly balanced :-(
-    //     node.removeMinKey();
+    });
 
-    // });
+    test("The structure should be valid after insertion (3)",function(){
 
-    // test("You can remove the min key",function(){
-    //      var node = new LLRBNode(1,1)
-    //         .insert(50,50)
-    //         .insert(3,3)
-    //         .insert(4,4)
-    //         .insert(7,7)
-    //         .insert(9,9)
-    //         .insert(20,20)
-    //         .insert(18,18)
-    //         .insert(2,2)
-    //         .insert(71,71)
-    //         .insert(42,42)
-    //         .insert(88,88);
+        var node = new LLRBNode(1,1)
+            .insert(50,50)
+            .insert(3,3)
+            .insert(4,4)
+            .insert(7,7)
+            .insert(9,9);
 
+       ok(node.count() == 6);
+       ok(node.checkMaxDepth());
 
-    //     var n1 = node.removeMinKey();
+       var n2 = node
+            .insert(20,20)
+            .insert(18,18)
+            .insert(2,2);
 
-    //     ok(n1.get(1).isEmpty());
+       ok(n2.count() == 9);
+       ok(n2.checkMaxDepth());
 
-    //     var n2 = n1.removeMinKey();
-    //     var n3 = n2.removeMinKey();
-    // });
+       var n3 = n2
+            .insert(71,71)
+            .insert(42,42)
+            .insert(88,88);
+
+        ok(n3.count() == 12);
+        ok(n3.checkMaxDepth());
+    });
+
+    test("You can remove the min key",function(){
+         var node = new LLRBNode(1,1)
+            .insert(50,50)
+            .insert(3,3)
+            .insert(4,4)
+            .insert(7,7)
+            .insert(9,9)
+            .insert(20,20)
+            .insert(18,18)
+            .insert(2,2)
+            .insert(71,71)
+            .insert(42,42)
+            .insert(88,88);
+
+        ok(node.count() == 12);
+        ok(node.checkMaxDepth());
+
+        var n1 = node.removeMinKey();
+
+        ok(n1.count() == 11);
+        ok(n1.checkMaxDepth());
+        
+        var n2 = n1.removeMinKey();
+   
+        ok(n2.count() == 10);
+        ok(n2.checkMaxDepth());
+    });
 
     test("you can override ta value",function(){
         var node = new LLRBNode(10,10).insert(10,8);

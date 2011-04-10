@@ -1,7 +1,19 @@
+###*
+# @author Mads Hartmann Jensen (2011, mads379@gmail.com)
+###
 LLRBNode = (() ->
 
   ###
-    Public interface
+  # Immutable implementation of Left Leaning Red Black Tree as
+  # described in this paper: http://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
+  #
+  # Invartiant 1: No red node has a red child
+  # Invartiant 2: Every leaf path has the same number of black nodes
+  # Invartiant 3: Only the left child can be red (left leaning)
+  ###
+
+  ###
+  # Public interface
   ###
 
   F = (key,value,color,left,right) ->
@@ -21,31 +33,30 @@ LLRBNode = (() ->
       if left?  && left   != _ then left  else this.left,
       if right? && right  != _ then right else this.right)
 
-  F.prototype.insert = (key,item) -> insert(new Some(this),key,item).copy(_,_,BLACK,_,_)
-  F.prototype.remove = (key) -> remove(new Some(this),key).map( (n) -> n.copy(_,_,BLACK,_,_)).get()
-  F.prototype.removeMinKey = () -> removeMin(new Some(this)).get()
-  F.prototype.minKey = () -> min(new Some(this)).get().key
-  F.prototype.get = (key) -> get(this,key)
-  F.prototype.count = () -> count(new Some(this))
+  F.prototype.insert       = (key,item) -> insert(new Some(this),key,item).copy(_,_,BLACK,_,_)
+  F.prototype.remove       = (key)      -> remove(new Some(this),key).get().copy(_,_,BLACK,_,_)
+  F.prototype.removeMinKey = ()         -> removeMin(new Some(this)).get().copy(_,_,BLACK,_,_)
+  F.prototype.minKey       = ()         -> min(new Some(this)).get().key
+  F.prototype.get          = (key)      -> get(new Some(this),key)
+  F.prototype.count        = ()         -> count(new Some(this))
 
   ###
-    Private : ADT Operations
+  # Private : ADT Operations
   ###
 
   # return the value associated with the given wrapped in an option.
-  get = (node, key) ->
-    x = new Some(node)
-    while !x.isEmpty()
-      cmp = node.comparator(key,x.get().key)
-      if      cmp == 0 then return new Some(x.get().value)
-      else if cmp <  0 then x = x.get().left;
-      else if cmp >  0 then x = x.get().right;
+  get = (optionNode, key) ->
+    while !optionNode.isEmpty()
+      cmp = optionNode.get().comparator(key,optionNode.get().key)
+      if      cmp == 0 then return new Some(optionNode.get().value)
+      else if cmp <  0 then optionNode = optionNode.get().left;
+      else if cmp >  0 then optionNode = optionNode.get().right;
     return new None()
 
   # returns the node with the minimum key is tree rooted at optionNode
   min = (optionNode) ->
     if (optionNode.isEmpty())
-        return new None();
+      return new None();
     n = optionNode.get() # it's okay. just checked that it wasn't empty
     if n.left.isEmpty()
       return new Some(n)
@@ -67,12 +78,11 @@ LLRBNode = (() ->
 
   # takes option wrapper node and returns an option wrapped node
   removeMin = (optionNode) ->
-    if (optionNode.isEmpty())
+    if (optionNode.isEmpty() or optionNode.get().left.isEmpty())
       return new None()
-    n = optionNode.get() # it's okay. just checked that it wasn't empty
 
-    if n.left.isEmpty()
-      return new None()
+    n = optionNode.get()
+
     if !isRed(n.left) and !isRed(n.left.get().left)
       n = moveRedLeft(n)
 
@@ -88,26 +98,25 @@ LLRBNode = (() ->
     n = optionNode.get() # it's okay. just checked that it wasn't empty
 
     if n.comparator(key,n.key) < 0
-      if isRed(n.left) and isRed(n.left.get().left)
+      if !n.left.isEmpty() and !isRed(n.left) and !isRed(n.left.get().left)
          n = moveRedLeft(n)
       n = n.copy(_,_,_,remove(n.left,key),_)
     else
       if isRed(n.left)
         n = rotateRight(n)
-      if n.comparator(n.key,key) == 0 and n.right.isEmpty()
-        return new None()
-      if !isRed(n.right) and !isRed(n.right.map(getLeft))
+      if !n.right.isEmpty() and !isRed(n.right) and !isRed(n.right.get().left)
         n = moveRedRight(n)
-      if n.comparator(key,n.key) == 0
-        val   = get(n.right.get(), min(n.right).get().key).get()
-        key   = min(n.right).get().key
-        n  = n.copy(key,val,_,_,removeMin(n.right,key))
-      else
-        n = n.copy(_,_,_,_,remove(n.right, key))
+      if n.comparator(key, n.key) == 0
+        if n.right.isEmpty()
+          return new None()
+        else
+          smallest = min(n.right).get()
+          n  = n.copy(smallest.key,smallest.val,_,_,removeMin(n.right))
+      n = n.copy(_,_,_,_,remove(n.right, key))
     return new Some(fixUp(n))
 
   ###
-    Misc. other relevant functions
+  # Misc. other relevant functions
   ###
 
   # returns the elements in the tree rooted at the node
@@ -119,7 +128,7 @@ LLRBNode = (() ->
       count(n.left) + 1 + count(n.right)
 
   ###
-    Private : Bunch of small helper functions
+  # Private : Bunch of small helper functions
   ###
 
   RED       = true
@@ -129,8 +138,6 @@ LLRBNode = (() ->
   # looks inside an option to see if the node is red. false if it's empty.
   isRed = (optionNode) -> optionNode.map( (n) -> n.color).getOrElse(false)
 
-  getLeft   = (node) -> node.left
-
   standard_comparator = (elem1, elem2) ->
     if      (elem1 < elem2) then -1
     else if (elem1 > elem2) then  1
@@ -138,15 +145,15 @@ LLRBNode = (() ->
 
   # takes a plain node and returns a plain node
   fixUp = (n) ->
-    if isRed(n.right) and !isRed(n.left) then return rotateLeft(n)
-    if isRed(n.left)  and isRed(n.left.get().left) then return rotateRight(n)
-    if isRed(n.left)  and isRed(n.right) then return colorFlip(n)
+    if isRed(n.right) and !isRed(n.left)           then n = rotateLeft(n)
+    if isRed(n.left)  and isRed(n.left.get().left) then n = rotateRight(n)
+    if isRed(n.left)  and isRed(n.right)           then n = colorFlip(n)
     return n
 
   # takes a plain node and returns a plain node
   moveRedLeft = (node) ->
     n = colorFlip(node)
-    if isRed(n.right.map(getLeft))
+    if isRed(n.right.get().left)
       n = n.copy(_,_,_,_,new Some(rotateRight(n.right.get())))
       n = rotateLeft(n)
       n = colorFlip(n)
@@ -155,7 +162,7 @@ LLRBNode = (() ->
   # takes a plain node and returns a plain node
   moveRedRight = (node) ->
     n = colorFlip(node)
-    if isRed(n.left.map(getLeft))
+    if isRed(n.left.get().left)
       n = rotateRight(n)
       n = colorFlip(n)
     return n
@@ -177,16 +184,8 @@ LLRBNode = (() ->
     node.copy(_,_,!node.color,new Some(left),new Some(right))
 
   ###
-    These methods are only for test purposes
+  # These methods are only for test purposes
   ###
-
-  # returns the depth of the tree rooted at the node
-  depth = (optionNode) ->
-    if optionNode.isEmpty()
-      0
-    else
-      n = optionNode.get()
-      1 + Math.max(depth(n.left),depth(n.right))
 
   # returns true if the depth is below the max allowed depth
   checkMaxDepth = (node) ->
@@ -202,7 +201,7 @@ LLRBNode = (() ->
       if isRed(optionNode) && isRed(optionNode.get().left)
         throw new Error("Red node has red child(" + node.key+","+node.value+")")
       if isRed(node.right)
-        throw new Error("Right child is red: (" + node.key+","+node.value+")")
+        throw new Error("Right child of (" + node.key+","+node.value+") is red")
       blackDepth = check(node.left)
       if blackDepth != check(node.right)
         throw new Error("Black depths differ")
@@ -210,7 +209,8 @@ LLRBNode = (() ->
         return blackDepth + if isRed(optionNode) then 0 else 1
 
   F.prototype.checkMaxDepth = () -> checkMaxDepth(this)
-  F.prototype.check = () -> check(new Some(this))
+  F.prototype.rotateRight   = () -> rotateRight(this)
+  F.prototype.rotateLeft    = () -> rotateLeft(this)
 
   return F
 )()
