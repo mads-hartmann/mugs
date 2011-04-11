@@ -93,25 +93,30 @@ Option.prototype.foreach = ( f ) ->
   @constructor
   @augments Option
 ###
-Some = (value)  -> 
-  if (value == undefined) 
-    return new None()
-  else 
-    this.__value  = value
-  this
+Some = (() -> 
+  F = (value)  -> 
+    if (value == undefined) 
+      return new None()
+    else 
+      this.__value  = value
+    this
+  
+  F.prototype = new Option()
 
-Some.prototype = new Option()
-Some.prototype.constructor = Some
+  F.prototype.constructor = F
 
-###* 
-  See documentation in {@link Option}
-###
-Some.prototype.isEmpty = () -> false
+  ###* 
+    See documentation in {@link Option}
+  ###
+  F.prototype.isEmpty = () -> false
 
-###* 
-  See documentation in {@link Option}
-###
-Some.prototype.get = () -> this.__value
+  ###* 
+    See documentation in {@link Option}
+  ###
+  F.prototype.get = () -> this.__value
+  
+  return F
+)()
   
 ###*
   None represents the non-existing of a value. It's part of the {@link Option} monad. 
