@@ -15,33 +15,27 @@
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
 
-# Importing dependencies
-if require?
-  Option   = require './option'
-  mugs.Some     = Option.mugs.Some
-  mugs.None     = Option.mugs.None
-  List     = require('./list').List
-
 # Constants used to color the trees. The proprty 'color' is only for debugging.
-RED = {
+mugs.RedBlack = {}
+mugs.RedBlack.RED = {
   color:      "RED",
-  add:        () -> BLACK ,
-  subtract:   () -> NEGATIVE_BLACK
+  add:        () -> mugs.RedBlack.BLACK,
+  subtract:   () -> mugs.RedBlack.NEGATIVE_BLACK
 }
-BLACK = {
+mugs.RedBlack.BLACK = {
   color:      "BLACK",
-  add:        () -> DOUBLE_BLACK,
-  subtract:   () -> RED
+  add:        () -> mugs.RedBlack.DOUBLE_BLACK,
+  subtract:   () -> mugs.RedBlack.RED
 }
-DOUBLE_BLACK = {
+mugs.RedBlack.DOUBLE_BLACK = {
   color:      "DOUBLE BLACK",
-  add:        () -> DOUBLE_BLACK,
-  subtract:   () -> BLACK
+  add:        () -> mugs.RedBlack.DOUBLE_BLACK,
+  subtract:   () -> mugs.RedBlack.BLACK
 }
-NEGATIVE_BLACK = {
+mugs.RedBlack.NEGATIVE_BLACK = {
   color:      "NEGATIVE BLACK"
-  add:        () -> RED
-  subtract:   () -> NEGATIVE_BLACK
+  add:        () -> mugs.RedBlack.RED
+  subtract:   () -> mugs.RedBlack.NEGATIVE_BLACK
 }
 
 mugs.RedBlackLeaf = (color) ->
@@ -58,7 +52,7 @@ mugs.RedBlackLeaf.prototype.get = (key) -> new mugs.None()
 mugs.RedBlackLeaf.prototype.keys = () -> new List()
 mugs.RedBlackLeaf.prototype.values = () -> new List()
 mugs.RedBlackLeaf.prototype.inorderTraversal = (f) -> # nothing
-mugs.RedBlackLeaf.prototype.insert = (key,value) -> new mugs.RedBlackNode(RED, new mugs.RedBlackLeaf(BLACK), key, value, new mugs.RedBlackLeaf(BLACK))
+mugs.RedBlackLeaf.prototype.insert = (key,value) -> new mugs.RedBlackNode(RED, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK), key, value, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK))
 
 mugs.RedBlackNode = (color, left, key, value, right, comparator) ->
   this.color      = color
@@ -151,16 +145,16 @@ mugs.RedBlackNode.prototype.insert = (key,value) ->
     compare = that.comparator(key, k)
 
     if (tree.isEmpty())
-      new mugs.RedBlackNode(RED, new mugs.RedBlackLeaf(BLACK), key, value, new mugs.RedBlackLeaf(BLACK))
+      new mugs.RedBlackNode(mugs.RedBlack.RED, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK), key, value, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK))
     else if (compare < 0)
       that.balance(c, __insert(l), k, v, r)
     else if (compare > 0)
       that.balance(c, l, k,v, __insert(r))
     else
-      new mugs.RedBlackNode(RED, tree.left, key, value, tree.right)
+      new mugs.RedBlackNode(mugs.RedBlack.RED, tree.left, key, value, tree.right)
 
   t = __insert(that)
-  new mugs.RedBlackNode(BLACK, t.left, t.key, t.value, t.right)
+  new mugs.RedBlackNode(mugs.RedBlack.BLACK, t.left, t.key, t.value, t.right)
 
 ###*
   Returns a new tree without the 'key'
@@ -170,26 +164,26 @@ mugs.RedBlackNode.prototype.remove = (key) ->
   __rm = (tree) =>
     isExternalNode          = () -> tree.left.isEmpty() && tree.right.isEmpty()
     isInternalNode          = () -> !tree.left.isEmpty() && !tree.right.isEmpty()
-    isNodeWithOneChildLeft  = () -> (tree.color == BLACK) &&
-                                    (tree.left.color == RED && tree.right.isEmpty() )
-    isNodeWithOneChildRight = () -> (tree.color == BLACK) &&
-                                    (tree.right.color == RED && tree.left.isEmpty())
+    isNodeWithOneChildLeft  = () -> (tree.color == mugs.RedBlack.BLACK) &&
+                                    (tree.left.color == mugs.RedBlack.RED && tree.right.isEmpty() )
+    isNodeWithOneChildRight = () -> (tree.color == mugs.RedBlack.BLACK) &&
+                                    (tree.right.color == mugs.RedBlack.RED && tree.left.isEmpty())
     # The __rm call traversed all the way to the bottom of the tree. This happens
     # when the item to remove wasn't in the tree.
     if ( tree.isEmpty() )
       tree
     # Removing an external node
     else if (isExternalNode())
-     if (tree.color == RED)
-       new mugs.RedBlackLeaf(BLACK)
-     else if (tree.color == BLACK)
-       new mugs.RedBlackLeaf(DOUBLE_BLACK)
+     if (tree.color == mugs.RedBlack.RED)
+       new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
+     else if (tree.color == mugs.RedBlack.BLACK)
+       new mugs.RedBlackLeaf(mugs.RedBlack.DOUBLE_BLACK)
 
     # Removing a node with one child
     else if (isNodeWithOneChildLeft()) # I can probably use the option here (i.e.) this.right.getOrElse(this.left.getOrElse())
-      new mugs.RedBlackNode( BLACK, tree.left.left, tree.left.key, tree.left.value, tree.left.right)
+      new mugs.RedBlackNode( mugs.RedBlack.BLACK, tree.left.left, tree.left.key, tree.left.value, tree.left.right)
     else if (isNodeWithOneChildRight())
-      new mugs.RedBlackNode( BLACK, tree.right.left, tree.right.key, tree.right.value, tree.right.right)
+      new mugs.RedBlackNode( mugs.RedBlack.BLACK, tree.right.left, tree.right.key, tree.right.value, tree.right.right)
 
     # Removing an internal node
     else if (isInternalNode())
@@ -221,7 +215,7 @@ mugs.RedBlackNode.prototype.remove = (key) ->
   A black is subtracted from the children, and added to the parent:
 ###
 mugs.RedBlackNode.prototype.bubble = (color, left, key, value, right) ->
-  if ( left.color == DOUBLE_BLACK || right.color == DOUBLE_BLACK)
+  if ( left.color == mugs.RedBlack.DOUBLE_BLACK || right.color == mugs.RedBlack.DOUBLE_BLACK)
     this.balance(
       color.add(),
       new mugs.RedBlackNode(left.color.subtract(), left.left, left.key, left.value, left.right),
@@ -268,65 +262,65 @@ mugs.RedBlackNode.prototype.bubble = (color, left, key, value, right) ->
 mugs.RedBlackNode.prototype.balance = (color, left, key, value, right) ->
   leftFollowedByLeft   = () ->
     (!left.isEmpty() && !left.left.isEmpty()) &&
-    (color == BLACK || color == DOUBLE_BLACK) and left.color == RED and left.left.color == RED
+    (color == mugs.RedBlack.BLACK || color == mugs.RedBlack.DOUBLE_BLACK) and left.color == mugs.RedBlack.RED and left.left.color == mugs.RedBlack.RED
 
   leftFollowedByRight  = () ->
     (!left.isEmpty() && !left.right.isEmpty()) &&
-    (color == BLACK || color == DOUBLE_BLACK) and left.color == RED and left.right.color == RED
+    (color == mugs.RedBlack.BLACK || color == mugs.RedBlack.DOUBLE_BLACK) and left.color == mugs.RedBlack.RED and left.right.color == mugs.RedBlack.RED
 
   rightFollowedByLeft  = () ->
     (!right.isEmpty() && !right.left.isEmpty()) &&
-    (color == BLACK || color == DOUBLE_BLACK) && right.color == RED && right.left.color  == RED
+    (color == mugs.RedBlack.BLACK || color == mugs.RedBlack.DOUBLE_BLACK) && right.color == mugs.RedBlack.RED && right.left.color  == mugs.RedBlack.RED
 
   rightFollowedByRight = () ->
     (!right.isEmpty() && !right.right.isEmpty()) &&
-    (color == BLACK || color == DOUBLE_BLACK) && right.color == RED && right.right.color == RED
+    (color == mugs.RedBlack.BLACK || color == mugs.RedBlack.DOUBLE_BLACK) && right.color == mugs.RedBlack.RED && right.right.color == mugs.RedBlack.RED
 
-  leftIsNegativeBlack  = () -> (!left.isEmpty()) && left.color == NEGATIVE_BLACK
+  leftIsNegativeBlack  = () -> (!left.isEmpty()) && left.color == mugs.RedBlack.NEGATIVE_BLACK
 
-  rightIsNegativeBlack = () -> (!right.isEmpty()) && right.color == NEGATIVE_BLACK
+  rightIsNegativeBlack = () -> (!right.isEmpty()) && right.color == mugs.RedBlack.NEGATIVE_BLACK
 
   if (leftFollowedByLeft())
     new mugs.RedBlackNode(color.subtract(), # The root color is subtracted. This takes care of double black
-      new mugs.RedBlackNode(BLACK,left.left.left,left.left.key,left.left.value,left.left.right),
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,left.left.left,left.left.key,left.left.value,left.left.right),
       left.key,
       left.value,
-      new mugs.RedBlackNode(BLACK,left.right,key, value,right))
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,left.right,key, value,right))
   else if (leftFollowedByRight())
     new mugs.RedBlackNode(color.subtract(),
-      new mugs.RedBlackNode(BLACK,left.left,left.key,left.value,left.right.left),
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,left.left,left.key,left.value,left.right.left),
       left.right.key,
       left.right.value,
-      new mugs.RedBlackNode(BLACK,right.right.right,key, value,right))
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,right.right.right,key, value,right))
   else if (rightFollowedByLeft())
     new mugs.RedBlackNode(color.subtract(),
-      new mugs.RedBlackNode(BLACK,left,key, value,right.left.left),
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,left,key, value,right.left.left),
       right.left.key,
       right.left.value,
-      new mugs.RedBlackNode(BLACK,right.left.right,right.key,right.value,right.right))
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,right.left.right,right.key,right.value,right.right))
   else if (rightFollowedByRight())
     new mugs.RedBlackNode(color.subtract(),
-      new mugs.RedBlackNode(BLACK,left,key, value,right.left),
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,left,key, value,right.left),
       right.key,
       right.value,
-      new mugs.RedBlackNode(BLACK,right.right.left,right.right.key,right.right.value,right.right.right))
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,right.right.left,right.right.key,right.right.value,right.right.right))
   else if (leftIsNegativeBlack())
-    new mugs.RedBlackNode(BLACK,
-      new mugs.RedBlackNode(BLACK,
-        this.balance( RED,left.left.left, left.left.key,left.left.value, left.left.right ),
+    new mugs.RedBlackNode(mugs.RedBlack.BLACK,
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,
+        this.balance( mugs.RedBlack.RED,left.left.left, left.left.key,left.left.value, left.left.right ),
         left.key,
         left.value,
         left.right.left
       ),
       left.right.key,
       left.right.value,
-      new mugs.RedBlackNode(BLACK,right.left.right, key,value, right)
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,right.left.right, key,value, right)
     )
   else if (rightIsNegativeBlack())
     new mugs.RedBlackNode(
-      BLACK,
+      mugs.RedBlack.BLACK,
       new mugs.RedBlackNode(
-        BLACK,
+        mugs.RedBlack.BLACK,
         left,
         right.key,
         right.value,
@@ -335,11 +329,11 @@ mugs.RedBlackNode.prototype.balance = (color, left, key, value, right) ->
       right.right.key,
       right.right.value,
       new mugs.RedBlackNode(
-        BLACK,
+        mugs.RedBlack.BLACK,
         right.left.right,
         key,
         value,
-        this.balance( RED, right.right.left, right.left.key, right.left.value, right.right.right )
+        this.balance( mugs.RedBlack.RED, right.right.left, right.left.key, right.left.value, right.right.right )
       )
     )
   else

@@ -10,12 +10,12 @@
 ###
 mugs.TreeSet = (elements,comparator) ->
   if elements instanceof Array and elements.length > 0
-    treeUnderConstruction = new mugs.RedBlackLeaf(BLACK)
+    treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
     for element in elements
       treeUnderConstruction = treeUnderConstruction.insert(element, element)
     this.tree = treeUnderConstruction
   else
-    this.tree = new mugs.RedBlackLeaf(BLACK)
+    this.tree = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
   this.tree.comparator = comparator if comparator?
   this
 

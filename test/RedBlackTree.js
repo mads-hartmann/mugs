@@ -4,6 +4,9 @@ $(document).ready(function(){
   RedBlackNode = mugs.RedBlackNode;
   RedBlackLeaf = mugs.RedBlackLeaf;
   
+  RED = mugs.RedBlack.RED;
+  BLACK = mugs.RedBlack.BLACK;
+    
   module("RedBlackTree");
   
   test("It's possible to construct a tree with one key-value pair", function() {

@@ -50,12 +50,12 @@
 mugs.TreeMap = (keyValuePairs, comparator) ->
   # Delegate tree
   if keyValuePairs instanceof Array and keyValuePairs.length > 0
-    treeUnderConstruction = new mugs.RedBlackLeaf(BLACK)
+    treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
     for kv in keyValuePairs
       treeUnderConstruction = treeUnderConstruction.insert(kv.key, kv.value)
     this.tree = treeUnderConstruction
   else
-    this.tree = new mugs.RedBlackLeaf(BLACK)
+    this.tree = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
   this.tree.comparator = comparator if comparator?
   this
 
