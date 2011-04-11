@@ -21,7 +21,7 @@
   @param  items (repeatable) The items to add to the
                 Random Access List
 ###
-RandomAccessList = (items...) ->
+mugs.RandomAccessList = (items...) ->
 
   # TODO: This is just a hack till I figure out how to do the
   # skew binary decomposition of the elements
@@ -42,27 +42,27 @@ RandomAccessList = (items...) ->
 
 ###*
   Create a new list by prepending the item
-  
+
   @param  item The item to be the new head
   @return A new list with the item as the head
 ###
-RandomAccessList.prototype.prepend = (item) ->
+mugs.RandomAccessList.prototype.prepend = (item) ->
   this.cons(item,this)
 
 ###*
   Returns the first item in the list
   @return The first item in the list
 ###
-RandomAccessList.prototype.head = () -> 
+mugs.RandomAccessList.prototype.head = () ->
   this.__trees.head().get(0)
 
 ###*
   Returns the rest of the list
   @return The rest of the list
 ###
-RandomAccessList.prototype.tail = () ->
+mugs.RandomAccessList.prototype.tail = () ->
   tree = this.__trees.head()
-  if tree.isLeaf 
+  if tree.isLeaf
     this.buildFromList(this.__trees.tail())
   else
     list = this.__trees.tail().prepend(tree.right).prepend(tree.left)
@@ -73,7 +73,7 @@ RandomAccessList.prototype.tail = () ->
 
   @return The number of items in the collection
 ###
-RandomAccessList.prototype.size = () ->
+mugs.RandomAccessList.prototype.size = () ->
   recSize = (treeList) ->
     if treeList.isEmpty()
       0
@@ -87,7 +87,7 @@ RandomAccessList.prototype.size = () ->
   @param  index  The index of the element to get
   @return        The element at location index
 ###
-RandomAccessList.prototype.get = (index) ->
+mugs.RandomAccessList.prototype.get = (index) ->
   # Recursivly searched throgu the list of trees.
   recget = (treeList, index) ->
     tree = treeList.head()
@@ -109,7 +109,7 @@ RandomAccessList.prototype.get = (index) ->
   @return        A new RandomAccessList with the element at the given
                  index replaced with the item
 ###
-RandomAccessList.prototype.update = (index, item) ->
+mugs.RandomAccessList.prototype.update = (index, item) ->
   recUpdate = (treeList, index) ->
     tree = treeList.head()
     if index < tree.size
@@ -127,26 +127,26 @@ RandomAccessList.prototype.update = (index, item) ->
   @param ral  The Random Access List to prepend the item to
   @return     A new Random Access List with the new element as the head
 ###
-RandomAccessList.prototype.cons = (item, ral) ->
+mugs.RandomAccessList.prototype.cons = (item, ral) ->
   trees = ral.__trees
   if (!trees.get(0).isEmpty() && !trees.get(1).isEmpty())
     size1 = trees.get(0).get().size
     size2 = trees.get(1).get().size
     if size1 == size2
       newList = new List().cons(
-        new CompleteBinaryTreeNode(item,trees.get(0).get(), trees.get(1).get()),
+        new mugs.CompleteBinaryTreeNode(item,trees.get(0).get(), trees.get(1).get()),
         trees.tail().tail()
       )
       this.buildFromList(newList)
     else
       newList = new List().cons(
-        new CompleteBinaryTreeLeaf(item),
+        new mugs.CompleteBinaryTreeLeaf(item),
         trees
       )
       this.buildFromList(newList)
   else
     newList = new List().cons(
-      new CompleteBinaryTreeLeaf(item),
+      new mugs.CompleteBinaryTreeLeaf(item),
       trees
     )
     this.buildFromList(newList)
@@ -159,17 +159,17 @@ RandomAccessList.prototype.cons = (item, ral) ->
   @return       A new RandomAccessList without the item stored at given
                 index
 ###
-# RandomAccessList.prototype.remove = (index) ->
+# mugs.RandomAccessList.prototype.remove = (index) ->
 #   recRemove = (tree, treeList, i) ->
 #     if index <= tree.size then else
-#   
+#
 #   # takes care of the special case where where the very first elemt is
 #   # to be removed
-#   if index == 0 
+#   if index == 0
 #     tree = this.__trees.head()
 #     if head.isLeaf
 #       this.buildFromList(this.__trees.tail())
-#     else 
+#     else
 #       rest  = this.__trees.tail()
 #       left  = this.__tree.head().left
 #       right = this.__tree.head().right
@@ -183,7 +183,7 @@ RandomAccessList.prototype.cons = (item, ral) ->
 
   @private
 ###
-RandomAccessList.prototype.buildFromList = (list) ->
-  ral = new RandomAccessList()
+mugs.RandomAccessList.prototype.buildFromList = (list) ->
+  ral = new mugs.RandomAccessList()
   ral.__trees = list
   ral

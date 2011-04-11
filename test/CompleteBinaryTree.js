@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+  CompleteBinaryTreeNode = mugs.CompleteBinaryTreeNode;
+  CompleteBinaryTreeLeaf = mugs.CompleteBinaryTreeLeaf;
   
   module("Complete Binary Tree");
   
