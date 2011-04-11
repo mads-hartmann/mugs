@@ -94,6 +94,10 @@ mugs.Option.prototype.foreach = ( f ) ->
   @augments mugs.Option
 ###
 mugs.Some = (() ->
+
+  #TODO: Why does it break so many tests if I create local variable here 
+  #      instead of this.__value 
+
   F = (value)  ->
     if (value == undefined)
       return new mugs.None()

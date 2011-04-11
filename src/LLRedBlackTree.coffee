@@ -39,6 +39,7 @@ mugs.LLRBNode = (() ->
   F.prototype.minKey       = ()         -> min(new mugs.Some(this)).get().key
   F.prototype.get          = (key)      -> get(new mugs.Some(this),key)
   F.prototype.count        = ()         -> count(new mugs.Some(this))
+  F.prototype.containsKey  = (key)      -> containsKey(new mugs.Some(this),key)
 
   ###
   # Private : ADT Operations
@@ -52,6 +53,16 @@ mugs.LLRBNode = (() ->
       else if cmp <  0 then optionNode = optionNode.get().left;
       else if cmp >  0 then optionNode = optionNode.get().right;
     return new mugs.None()
+
+  # checks if 
+  containsKey = (optionNode, key) ->
+    found = false
+    while !optionNode.isEmpty() and !found
+      cmp = optionNode.get().comparator(key,optionNode.get().key)
+      if      cmp == 0 then return true
+      else if cmp <  0 then optionNode = optionNode.get().left;
+      else if cmp >  0 then optionNode = optionNode.get().right;
+    return false
 
   # returns the node with the minimum key is tree rooted at optionNode
   min = (optionNode) ->

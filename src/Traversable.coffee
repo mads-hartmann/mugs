@@ -56,6 +56,3 @@ mugs.Traversable.prototype.isEmpty = () ->
   itIsEmpty = true
   this.forEach( (elem) -> itIsEmpty = false; return false )
   return true
-
-if exports?
-  exports.mugs.Traversable = mugs.Traversable
