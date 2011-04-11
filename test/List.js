@@ -1,5 +1,7 @@
 $(document).ready(function(){
   
+  List = mugs.List;
+  
   module("List");
   
   test("It's possible to create a list passing multiple arguments", function() {
