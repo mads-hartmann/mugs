@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+  Some = mugs.Some
+  None = mugs.None
   
   module('Some');
   

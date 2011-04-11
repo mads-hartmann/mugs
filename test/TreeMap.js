@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+  TreeMap = mugs.TreeMap;
   
   module("TreeMap");
   

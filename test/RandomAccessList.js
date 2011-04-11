@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+  RandomAccessList = mugs.RandomAccessList;
   
   module("Random Access List");
   

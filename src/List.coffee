@@ -2,11 +2,6 @@
   @fileoverview Contains the implementation of the List abstract data type.
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ### 
-if require?
-  Option   = require './option'
-  Some     = Option.Some
-  None     = Option.None
-  Traversable = (require './Traversable').Traversable
 
 ###*
   List provides the implementation of the abstract data type List based on a Singly-Linked list. The 
@@ -22,7 +17,7 @@ if require?
   get( index )                                        O(n)
   remove( index )                                     O(n)
   --------------------------------------------------------
-  Methods inherited from mahj.Traversable
+  Methods inherited from mugs.Traversable
   --------------------------------------------------------
   map( f )                                            O(n)    
   flatMap( f )                                        O(n)    
@@ -37,7 +32,7 @@ if require?
   size()                                              O(n)    TODO
   --------------------------------------------------------
   </pre>
-  @augments mahj.Traversable
+  @augments mugs.Traversable
   @class List provides the implementation of the abstract data type List based on a Singly-Linked list
   @public
 ###
@@ -58,7 +53,7 @@ List = (elements...) ->
   this
 
 
-List.prototype = new mahj.Traversable()
+List.prototype = new mugs.Traversable()
 
 # The constructor of the List prototype is the List function
 List.prototype.constructor = List
@@ -105,14 +100,14 @@ List.prototype.update = (index, element) ->
 ###*
   Return an Option containing the nth element in the list.
   @param {number} index The index of the element to get
-  @return {Some|None} Some(element) is it exists, otherwise None
+  @return {mugs.Some|mugs.None} mugs.Some(element) is it exists, otherwise mugs.None
 ###
 List.prototype.get = (index) -> 
   if index < 0 || this.isEmpty() 
-    new None() 
-    new None()
+    new mugs.None() 
+    new mugs.None()
   else if (index == 0)
-    new Some(this.head())
+    new mugs.Some(this.head())
   else 
     this.tail().get(index-1)
   
@@ -134,15 +129,15 @@ List.prototype.remove = (index) ->
       
 ###* 
   The last element in the list  
-  @return {Some|None} Some(last) if it exists, otherwise None
+  @return {mugs.Some|mugs.None} mugs.Some(last) if it exists, otherwise mugs.None
 ###
-List.prototype.last = () -> if this.tail().isEmpty() then new Some(this.head()) else this.tail().last()
+List.prototype.last = () -> if this.tail().isEmpty() then new mugs.Some(this.head()) else this.tail().last()
 
 ###*
   The first element in the list
-  @return {Some|None} Some(first) if it exists, otherwise None
+  @return {mugs.Some|mugs.None} mugs.Some(first) if it exists, otherwise mugs.None
 ###  
-List.prototype.first = () -> new Some(this.head())
+List.prototype.first = () -> new mugs.Some(this.head())
 
 ###*
   Creates a list by appending the argument list to 'this' list.
@@ -190,7 +185,7 @@ List.prototype.buildFromArray = (arr) ->
 ###*
   Applies function 'f' on each element in the list. This return nothing and is only invoked
   for the side-effects of f. 
-  @see mahj.Traversable
+  @see mugs.Traversable
 ###
 List.prototype.forEach = ( f ) -> 
   if !this.isEmpty()
@@ -263,6 +258,3 @@ List.prototype.reverse = () ->
     result = result.prepend(rest.head())
     rest = rest.tail()
   result
-
-if exports?
-  exports.List = List

@@ -1,4 +1,8 @@
 $(document).ready(function(){
+
+  RedBlackTree = mugs.RedBlackTree;
+  RedBlackNode = mugs.RedBlackNode;
+  RedBlackLeaf = mugs.RedBlackLeaf;
   
   module("RedBlackTree");
   

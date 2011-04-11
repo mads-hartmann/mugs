@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    LLRBNode = mugs.LLRBNode;
+
     module("LLRedBlackTree");
 
     test("", function() {

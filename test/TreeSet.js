@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+  TreeSet = mugs.TreeSet;
   
   module("TreeSet");
   

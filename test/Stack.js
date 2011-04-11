@@ -1,4 +1,6 @@
 $(document).ready(function(){
+
+  Stack = mugs.Stack;
   
   module("Stack");
   

@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+  Queue = mugs.Queue;
   
   module("Queue");
   

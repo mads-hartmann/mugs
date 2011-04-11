@@ -1,7 +1,7 @@
 ###*
 # @author Mads Hartmann Jensen (2011, mads379@gmail.com)
 ###
-LLRBNode = (() ->
+mugs.LLRBNode = (() ->
 
   ###
   # Immutable implementation of Left Leaning Red Black Tree as
@@ -20,8 +20,8 @@ LLRBNode = (() ->
     this.key   = key
     this.value = value
     this.color = if color? then color else RED
-    this.left  = if left?  then left  else new None()
-    this.right = if right? then right else new None()
+    this.left  = if left?  then left  else new mugs.None()
+    this.right = if right? then right else new mugs.None()
     this.comparator = standard_comparator
     return this
 
@@ -33,12 +33,12 @@ LLRBNode = (() ->
       if left?  && left   != _ then left  else this.left,
       if right? && right  != _ then right else this.right)
 
-  F.prototype.insert       = (key,item) -> insert(new Some(this),key,item).copy(_,_,BLACK,_,_)
-  F.prototype.remove       = (key)      -> remove(new Some(this),key).get().copy(_,_,BLACK,_,_)
-  F.prototype.removeMinKey = ()         -> removeMin(new Some(this)).get().copy(_,_,BLACK,_,_)
-  F.prototype.minKey       = ()         -> min(new Some(this)).get().key
-  F.prototype.get          = (key)      -> get(new Some(this),key)
-  F.prototype.count        = ()         -> count(new Some(this))
+  F.prototype.insert       = (key,item) -> insert(new mugs.Some(this),key,item).copy(_,_,BLACK,_,_)
+  F.prototype.remove       = (key)      -> remove(new mugs.Some(this),key).get().copy(_,_,BLACK,_,_)
+  F.prototype.removeMinKey = ()         -> removeMin(new mugs.Some(this)).get().copy(_,_,BLACK,_,_)
+  F.prototype.minKey       = ()         -> min(new mugs.Some(this)).get().key
+  F.prototype.get          = (key)      -> get(new mugs.Some(this),key)
+  F.prototype.count        = ()         -> count(new mugs.Some(this))
 
   ###
   # Private : ADT Operations
@@ -48,18 +48,18 @@ LLRBNode = (() ->
   get = (optionNode, key) ->
     while !optionNode.isEmpty()
       cmp = optionNode.get().comparator(key,optionNode.get().key)
-      if      cmp == 0 then return new Some(optionNode.get().value)
+      if      cmp == 0 then return new mugs.Some(optionNode.get().value)
       else if cmp <  0 then optionNode = optionNode.get().left;
       else if cmp >  0 then optionNode = optionNode.get().right;
-    return new None()
+    return new mugs.None()
 
   # returns the node with the minimum key is tree rooted at optionNode
   min = (optionNode) ->
     if (optionNode.isEmpty())
-      return new None();
+      return new mugs.None();
     n = optionNode.get() # it's okay. just checked that it wasn't empty
     if n.left.isEmpty()
-      return new Some(n)
+      return new mugs.Some(n)
     else
       min(n.left)
 
@@ -70,16 +70,16 @@ LLRBNode = (() ->
     n   = optionNode.get()
     cmp = n.comparator(key,n.key)
 
-    if (cmp < 0)     then n = n.copy(_,_,_,new Some(insert(n.left,key,item)),_)
+    if (cmp < 0)     then n = n.copy(_,_,_,new mugs.Some(insert(n.left,key,item)),_)
     else if cmp == 0 then n = n.copy(_,item,_,_,_)
-    else                  n = n.copy(_,_,_,_,new Some(insert(n.right,key,item)))
+    else                  n = n.copy(_,_,_,_,new mugs.Some(insert(n.right,key,item)))
 
     return fixUp(n)
 
   # takes option wrapper node and returns an option wrapped node
   removeMin = (optionNode) ->
     if (optionNode.isEmpty() or optionNode.get().left.isEmpty())
-      return new None()
+      return new mugs.None()
 
     n = optionNode.get()
 
@@ -87,13 +87,13 @@ LLRBNode = (() ->
       n = moveRedLeft(n)
 
     n = n.copy(_,_,_,removeMin(n.left),_)
-    return new Some(fixUp(n))
+    return new mugs.Some(fixUp(n))
 
   # takes an option wrapped node and returns an option wrapped node
   remove = (optionNode,key) ->
 
     if optionNode.isEmpty()
-      return new None()
+      return new mugs.None()
 
     n = optionNode.get() # it's okay. just checked that it wasn't empty
 
@@ -108,12 +108,12 @@ LLRBNode = (() ->
         n = moveRedRight(n)
       if n.comparator(key, n.key) == 0
         if n.right.isEmpty()
-          return new None()
+          return new mugs.None()
         else
           smallest = min(n.right).get()
           n  = n.copy(smallest.key,smallest.val,_,_,removeMin(n.right))
       n = n.copy(_,_,_,_,remove(n.right, key))
-    return new Some(fixUp(n))
+    return new mugs.Some(fixUp(n))
 
   ###
   # Misc. other relevant functions
@@ -154,7 +154,7 @@ LLRBNode = (() ->
   moveRedLeft = (node) ->
     n = colorFlip(node)
     if isRed(n.right.get().left)
-      n = n.copy(_,_,_,_,new Some(rotateRight(n.right.get())))
+      n = n.copy(_,_,_,_,new mugs.Some(rotateRight(n.right.get())))
       n = rotateLeft(n)
       n = colorFlip(n)
     return n
@@ -170,18 +170,18 @@ LLRBNode = (() ->
   # takes a plain node and returns a plain node
   rotateLeft = (node) ->
     nl = node.copy(_,_,RED,_,node.right.get().left)
-    node.right.get().copy(_,_,node.color,new Some(nl),_)
+    node.right.get().copy(_,_,node.color,new mugs.Some(nl),_)
 
   # takes a plain node and returns a plain node
   rotateRight = (node) ->
     nr = node.copy(_,_,RED,node.left.get().right,_)
-    node.left.get().copy(_,_,node.color,_,new Some(nr))
+    node.left.get().copy(_,_,node.color,_,new mugs.Some(nr))
 
   # takes a plain node and returns a plain node
   colorFlip = (node) ->
     left  = node.left.get().copy(_,_,!node.left.get().color,_,_)
     right = node.right.get().copy(_,_,!node.right.get().color,_,_)
-    node.copy(_,_,!node.color,new Some(left),new Some(right))
+    node.copy(_,_,!node.color,new mugs.Some(left),new mugs.Some(right))
 
   ###
   # These methods are only for test purposes
@@ -189,8 +189,8 @@ LLRBNode = (() ->
 
   # returns true if the depth is below the max allowed depth
   checkMaxDepth = (node) ->
-    blackDepth = check(new Some(node))
-    if Math.pow(2.0, blackDepth) <= count(new Some(node)) + 1 then true else false
+    blackDepth = check(new mugs.Some(node))
+    if Math.pow(2.0, blackDepth) <= count(new mugs.Some(node)) + 1 then true else false
 
   # returns the black-depth if three is well-formed, else throws an exception
   check = (optionNode) ->
