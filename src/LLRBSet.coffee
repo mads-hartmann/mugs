@@ -8,14 +8,12 @@
   @class mugs.LLRBSet Contains the implementation of the Set data structure based on a Left Leaning Red-Black Tree
   @public
 ###
-mugs.LLRBSet = (elements,comparator) ->
-  if elements instanceof Array and elements.length > 0
-    treeUnderConstruction = new mugs.LLRBNode(elements[0],elements[0])
-    for x in [1..elements.length]
-      treeUnderConstruction = treeUnderConstruction.insert(elements[x], elements[x])
-    this.tree = treeUnderConstruction
-  else
-    this.tree = new mugs.LLRBLeaf() 
+mugs.LLRBSet = (items,comparator) ->
+  treeUnderConstruction = new mugs.LLRBLeaf() 
+  if items instanceof Array and items.length > 0
+    for item in items
+      treeUnderConstruction = treeUnderConstruction.insert(item, item)
+  this.tree = treeUnderConstruction  
   this.tree.comparator = comparator if comparator?
   this
 

@@ -41,6 +41,7 @@ mugs.LLRBNode = (() ->
   F.prototype.count             = ()          -> count(new mugs.Some(this))
   F.prototype.containsKey       = (key)       -> containsKey(new mugs.Some(this),key)
   F.prototype.values            = ()          -> values(new mugs.Some(this))
+  F.prototype.keys              = ()          -> keys(new mugs.Some(this))
   F.prototype.inorderTraversal  = (f)         -> inorderTraversal(new mugs.Some(this), f)
 
   ###
@@ -138,6 +139,14 @@ mugs.LLRBNode = (() ->
   values = (optionNode) -> 
     arr = []
     inorderTraversal(optionNode, (node) -> arr.push(node.value) )
+    new List().buildFromArray(arr)         
+
+  ### 
+    Returns the keys in the tree in sorted order. 
+  ### 
+  keys = (optionNode) -> 
+    arr = []
+    inorderTraversal(optionNode, (node) -> arr.push(node.key) )
     new List().buildFromArray(arr)         
   
   ###
