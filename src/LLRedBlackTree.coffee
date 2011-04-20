@@ -26,7 +26,7 @@ mugs.LLRBNode = (() ->
     return this
 
   F.prototype.copy = (key,value,color,left,right) ->
-    new LLRBNode(
+    new mugs.LLRBNode(
       if key?   && key    != _ then key   else this.key,
       if value? && value  != _ then value else this.value,
       if color? && color  != _ then color else this.color,
@@ -79,7 +79,7 @@ mugs.LLRBNode = (() ->
 
   # Returns a plain node
   insert = (optionNode,key,item) ->
-    if optionNode.isEmpty() then return new LLRBNode(key,item)
+    if optionNode.isEmpty() then return new mugs.LLRBNode(key,item)
 
     n   = optionNode.get()
     cmp = n.comparator(key,n.key)

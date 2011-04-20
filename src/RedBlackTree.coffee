@@ -49,10 +49,10 @@ mugs.RedBlackLeaf = (color) ->
 mugs.RedBlackLeaf.prototype.isEmpty = () -> true
 mugs.RedBlackLeaf.prototype.containsKey = (key) -> false
 mugs.RedBlackLeaf.prototype.get = (key) -> new mugs.None()
-mugs.RedBlackLeaf.prototype.keys = () -> new List()
-mugs.RedBlackLeaf.prototype.values = () -> new List()
+mugs.RedBlackLeaf.prototype.keys = () -> new mugs.List()
+mugs.RedBlackLeaf.prototype.values = () -> new mugs.List()
 mugs.RedBlackLeaf.prototype.inorderTraversal = (f) -> # nothing
-mugs.RedBlackLeaf.prototype.insert = (key,value) -> new mugs.RedBlackNode(RED, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK), key, value, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK))
+mugs.RedBlackLeaf.prototype.insert = (key,value) -> new mugs.RedBlackNode(mugs.RedBlack.RED, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK), key, value, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK))
 
 mugs.RedBlackNode = (color, left, key, value, right, comparator) ->
   this.color      = color
@@ -106,21 +106,21 @@ mugs.RedBlackNode.prototype.containsKey = (key) ->
 
 ###*
   returns a sorted List with all of the keys stored in the tree
-  @return {List} A sorted List with all of the key stored in the tree
+  @return {mugs.List} A sorted List with all of the key stored in the tree
 ###
 mugs.RedBlackNode.prototype.keys = () ->
   elements = []
   this.inorderTraversal( (kv) -> elements.push(kv.key) )
-  new List().buildFromArray(elements)
+  new mugs.List().buildFromArray(elements)
 
 ###*
   returns a sorted List with all of the values stored in the tree
-  @return {List} A sorted List with all of the values stored in the tree
+  @return {mugs.List} A sorted List with all of the values stored in the tree
 ###
 mugs.RedBlackNode.prototype.values = () ->
   elements = []
   this.inorderTraversal( (kv) -> elements.push(kv.value) )
-  new List().buildFromArray(elements)
+  new mugs.List().buildFromArray(elements)
 
 ###*
   This will do an inorderTraversal of the tree applying the function 'f'
