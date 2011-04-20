@@ -82,7 +82,7 @@ $(document).ready(function(){
     
   };
   
-  generic_set_test("TreeSet",mugs.TreeSet);
+  generic_set_test("RBSet",mugs.TreeSet);
   generic_set_test("LLRBSet",mugs.LLRBSet);
   
 });

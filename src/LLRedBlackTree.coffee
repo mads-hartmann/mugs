@@ -1,19 +1,19 @@
 ###*
-# @author Mads Hartmann Jensen (2011, mads379@gmail.com)
+@author Mads Hartmann Jensen (2011, mads379@gmail.com)
 ###
 mugs.LLRBNode = (() ->
 
   ###
-  # Immutable implementation of Left Leaning Red Black Tree as
-  # described in this paper: http://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
-  #
-  # Invartiant 1: No red node has a red child
-  # Invartiant 2: Every leaf path has the same number of black nodes
-  # Invartiant 3: Only the left child can be red (left leaning)
+    Immutable implementation of Left Leaning Red Black Tree as
+    described in this paper: http://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
+  
+    Invartiant 1: No red node has a red child
+    Invartiant 2: Every leaf path has the same number of black nodes
+    Invartiant 3: Only the left child can be red (left leaning)
   ###
 
   ###
-  # Public interface
+    Public interface
   ###
 
   F = (key,value,color,left,right) ->
@@ -33,16 +33,18 @@ mugs.LLRBNode = (() ->
       if left?  && left   != _ then left  else this.left,
       if right? && right  != _ then right else this.right)
 
-  F.prototype.insert       = (key,item) -> insert(new mugs.Some(this),key,item).copy(_,_,BLACK,_,_)
-  F.prototype.remove       = (key)      -> remove(new mugs.Some(this),key).get().copy(_,_,BLACK,_,_)
-  F.prototype.removeMinKey = ()         -> removeMin(new mugs.Some(this)).get().copy(_,_,BLACK,_,_)
-  F.prototype.minKey       = ()         -> min(new mugs.Some(this)).get().key
-  F.prototype.get          = (key)      -> get(new mugs.Some(this),key)
-  F.prototype.count        = ()         -> count(new mugs.Some(this))
-  F.prototype.containsKey  = (key)      -> containsKey(new mugs.Some(this),key)
+  F.prototype.insert            = (key,item)  -> insert(new mugs.Some(this),key,item).copy(_,_,BLACK,_,_)
+  F.prototype.remove            = (key)       -> remove(new mugs.Some(this),key).get().copy(_,_,BLACK,_,_)
+  F.prototype.removeMinKey      = ()          -> removeMin(new mugs.Some(this)).get().copy(_,_,BLACK,_,_)
+  F.prototype.minKey            = ()          -> min(new mugs.Some(this)).get().key
+  F.prototype.get               = (key)       -> get(new mugs.Some(this),key)
+  F.prototype.count             = ()          -> count(new mugs.Some(this))
+  F.prototype.containsKey       = (key)       -> containsKey(new mugs.Some(this),key)
+  F.prototype.values            = ()          -> values(new mugs.Some(this))
+  F.prototype.inorderTraversal  = (f)         -> inorderTraversal(new mugs.Some(this), f)
 
   ###
-  # Private : ADT Operations
+    Private : ADT Operations
   ###
 
   # return the value associated with the given wrapped in an option.
@@ -52,7 +54,7 @@ mugs.LLRBNode = (() ->
       if      cmp == 0 then return new mugs.Some(optionNode.get().value)
       else if cmp <  0 then optionNode = optionNode.get().left;
       else if cmp >  0 then optionNode = optionNode.get().right;
-    return new mugs.None()
+    return new mugs.None()    
 
   # checks if 
   containsKey = (optionNode, key) ->
@@ -127,7 +129,31 @@ mugs.LLRBNode = (() ->
     return new mugs.Some(fixUp(n))
 
   ###
-  # Misc. other relevant functions
+    Methods not directly related to the ADT but very handy 
+  ###
+
+  ### 
+    Returns the values in the tree in sorted order. 
+  ### 
+  values = (optionNode) -> 
+    arr = []
+    inorderTraversal(optionNode, (node) -> arr.push(node.value) )
+    new List().buildFromArray(arr)         
+  
+  ###
+    This will do an inorderTraversal of the tree applying the function 'f'
+    on each key/value pair in the tree. This doesn't return anything and is only
+    executed for the side-effects of f.
+  ###
+  inorderTraversal = (optionNode, f) ->
+    if not optionNode.isEmpty() 
+      that = optionNode.get()
+      inorderTraversal(that.left, f)
+      f({key: that.key, value: that.value})
+      inorderTraversal(that.right, f)
+
+  ###
+    Misc. other relevant functions
   ###
 
   # returns the elements in the tree rooted at the node
@@ -139,7 +165,7 @@ mugs.LLRBNode = (() ->
       count(n.left) + 1 + count(n.right)
 
   ###
-  # Private : Bunch of small helper functions
+    Private : Bunch of small helper functions (related to comforming to the invariants) 
   ###
 
   RED       = true
@@ -195,7 +221,7 @@ mugs.LLRBNode = (() ->
     node.copy(_,_,!node.color,new mugs.Some(left),new mugs.Some(right))
 
   ###
-  # These methods are only for test purposes
+    These methods are only for test purposes
   ###
 
   # returns true if the depth is below the max allowed depth
@@ -225,3 +251,18 @@ mugs.LLRBNode = (() ->
 
   return F
 )()
+
+###* 
+   A Leaf Leaning Red Black Leaf. This isn't used in the implementation of LLRBNode
+   but is only meant as a convenience prototype for handling the empty case of LLRBSet
+   and LLRBMap.   
+###
+mugs.LLRBLeaf = () -> 
+mugs.LLRBLeaf.prototype.insert       = (key,item) -> new mugs.LLRBNode(key,item) 
+mugs.LLRBLeaf.prototype.remove       = (key)      -> throw new Error("Can't remove an item from a leaf") 
+mugs.LLRBLeaf.prototype.removeMinKey = ()         -> this 
+mugs.LLRBLeaf.prototype.minKey       = ()         -> throw new Error("Can't get the minimum key of a leaf")
+mugs.LLRBLeaf.prototype.get          = (key)      -> new mugs.None()
+mugs.LLRBLeaf.prototype.count        = ()         -> 0
+mugs.LLRBLeaf.prototype.containsKey  = (key)      -> false 
+mugs.LLRBLeaf.prototype.values       = ()         -> new mugs.List()

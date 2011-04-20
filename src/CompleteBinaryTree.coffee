@@ -15,8 +15,8 @@
   The sub-prototypes CompleteBinaryTreeNode and CompleteBinaryTreeLeaf
   are the concrete implementations.
 ###
-mugs.CompleteBinaryTree = () -> this
 
+mugs.CompleteBinaryTree = () -> this
 
 mugs.CompleteBinaryTree.prototype.get = (index) ->
   if index == 0

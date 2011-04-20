@@ -15,7 +15,7 @@ mugs.LLRBSet = (elements,comparator) ->
       treeUnderConstruction = treeUnderConstruction.insert(elements[x], elements[x])
     this.tree = treeUnderConstruction
   else
-    throw new Error("Can't create an empty set yet") #TODO Fix this
+    this.tree = new mugs.LLRBLeaf() 
   this.tree.comparator = comparator if comparator?
   this
 
