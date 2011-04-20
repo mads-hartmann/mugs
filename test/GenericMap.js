@@ -23,6 +23,14 @@ $(document).ready(function(){
       ok(map.get(2).get() == "two");
     });
 
+    test("Inserting 1000 key-value pairs",function(){
+      var map = new Map();
+      for ( var i = 0 ; i < 1000 ; i++ ) {
+        map = map.insert(i,i);
+      };
+      ok(map.values().size() == 1000); //TODO: Use size on Map
+    });
+
     test("You can remove a key-value pair from an existing map and get a new one",function() {
       var map = new Map([ {key: 1, value: "one" }, {key: 2, value: "two"}]).remove(2);
       ok(map.get(2).isEmpty() === true);
