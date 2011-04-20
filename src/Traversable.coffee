@@ -56,3 +56,8 @@ mugs.Traversable.prototype.isEmpty = () ->
   itIsEmpty = true
   this.forEach( (elem) -> itIsEmpty = false; return false )
   return true
+
+mugs.Traversable.prototype.asArray = () ->
+  arr = []
+  this.forEach( (e) -> arr.push(e) )
+  arr
