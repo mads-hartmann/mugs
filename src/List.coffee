@@ -199,9 +199,21 @@ Miscellaneous Methods
 ###
 
 ###*
+   Returns the number of elements in the list 
+### 
+mugs.List.prototype.size = () -> 
+  xs = this
+  count = 0
+  while not xs.isEmpty()
+    count += 1
+    xs = xs.tail()
+  count
+
+###*
   Helper method to construct a list from a value and another list
   @private
 ###
+
 mugs.List.prototype.cons = (head, tail) ->
   l = new mugs.List(head)
   l.tail = () -> tail
