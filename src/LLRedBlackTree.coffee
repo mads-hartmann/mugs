@@ -139,7 +139,7 @@ mugs.LLRBNode = (() ->
   values = (optionNode) -> 
     arr = []
     inorderTraversal(optionNode, (node) -> arr.push(node.value) )
-    new List().buildFromArray(arr)         
+    new mugs.List().buildFromArray(arr)         
 
   ### 
     Returns the keys in the tree in sorted order. 
@@ -147,7 +147,7 @@ mugs.LLRBNode = (() ->
   keys = (optionNode) -> 
     arr = []
     inorderTraversal(optionNode, (node) -> arr.push(node.key) )
-    new List().buildFromArray(arr)         
+    new mugs.List().buildFromArray(arr)         
   
   ###
     This will do an inorderTraversal of the tree applying the function 'f'
