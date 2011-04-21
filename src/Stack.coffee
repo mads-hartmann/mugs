@@ -24,7 +24,7 @@
   @public
 ###
 mugs.Stack = (elements...) ->
-  this.list = new List(elements).reverse()
+  this.list = new mugs.List(elements).reverse()
   this
 
 ###*

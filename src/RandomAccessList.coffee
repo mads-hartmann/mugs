@@ -32,12 +32,12 @@ mugs.RandomAccessList = (items...) ->
     reversed = []
     for item in [items.length-1..0]
       reversed.push(items[item])
-    ral = this.buildFromList(new List())
+    ral = this.buildFromList(new mugs.List())
     for item in reversed
       ral = this.cons(item, ral)
     ral
   else
-    this.__trees = new List()
+    this.__trees = new mugs.List()
     this
 
 ###*
@@ -133,19 +133,19 @@ mugs.RandomAccessList.prototype.cons = (item, ral) ->
     size1 = trees.get(0).get().size
     size2 = trees.get(1).get().size
     if size1 == size2
-      newList = new List().cons(
+      newList = new mugs.List().cons(
         new mugs.CompleteBinaryTreeNode(item,trees.get(0).get(), trees.get(1).get()),
         trees.tail().tail()
       )
       this.buildFromList(newList)
     else
-      newList = new List().cons(
+      newList = new mugs.List().cons(
         new mugs.CompleteBinaryTreeLeaf(item),
         trees
       )
       this.buildFromList(newList)
   else
-    newList = new List().cons(
+    newList = new mugs.List().cons(
       new mugs.CompleteBinaryTreeLeaf(item),
       trees
     )

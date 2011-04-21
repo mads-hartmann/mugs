@@ -30,8 +30,8 @@ mugs.Queue = (elements...) ->
   half = Math.ceil(size / 2)
   f = elements.slice(0,half)
   r = elements.slice(half,size)
-  this.front__ = new List(f)
-  this.rear__ = new List(r).reverse()
+  this.front__ = new mugs.List(f)
+  this.rear__ = new mugs.List(r).reverse()
   this
 
 ###*
