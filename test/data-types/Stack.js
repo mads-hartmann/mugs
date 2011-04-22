@@ -7,7 +7,7 @@ $(document).ready(function(){
     module(name);
 
     test("You can create a Stack using multiple arguments", function() {
-      var stack = new Stack(1,2,3,4,5),
+      var stack = new Stack([1,2,3,4,5]),
       values = stack.values(),
       shouldBe = new List([5,4,3,2,1]);
 
@@ -18,7 +18,7 @@ $(document).ready(function(){
     });
 
     test("You can pop a value from the stack" ,function() {
-      var stack = new Stack(1,2,3,4,5).pop(),
+      var stack = new Stack([1,2,3,4,5]).pop(),
       values = stack.values();
 
       ok(!values.get(0).isEmpty());
@@ -29,7 +29,7 @@ $(document).ready(function(){
     });
 
     test("You can push a value onto the stack",function() {
-      var stack = new Stack(1,2,3).push(4),
+      var stack = new Stack([1,2,3]).push(4),
       values = stack.values();
       ok(!values.get(0).isEmpty());
       ok(!values.get(1).isEmpty());
@@ -39,7 +39,7 @@ $(document).ready(function(){
     });
 
     test("You can read the top value of the stack", function() {
-      var stack = new Stack(1,2,3);
+      var stack = new Stack([1,2,3]);
       ok(stack.top() === 3);
     });
 

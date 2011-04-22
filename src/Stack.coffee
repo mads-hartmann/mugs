@@ -19,12 +19,12 @@
   </pre>
 
   @class Stack provides the implementation of the abstract data type Stack based on a List
-  @param elements A repeatable argument with the elements you want on the Stack. The last
-                  element will be on top of the stack.
+  @param items An array of the items to construct the stack from. The last element will be 
+               at the top of the stack.
   @public
 ###
-mugs.Stack = (elements...) ->
-  this.list = new mugs.List(elements).reverse()
+mugs.Stack = (items) ->
+  this.list = new mugs.List(items).reverse()
   this
 
 ###*
