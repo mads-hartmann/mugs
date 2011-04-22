@@ -18,17 +18,17 @@
   @author Mads Hartmann Jensen
 
   @class  Random Access List
-  @param  items (repeatable) The items to add to the
+  @param  items An array with the he items to add to the
                 Random Access List
 ###
-mugs.RandomAccessList = (items...) ->
+mugs.RandomAccessList = (items) ->
 
   # TODO: This is just a hack till I figure out how to do the
   # skew binary decomposition of the elements
 
   # I'm going to cons the elements onto the list so I need to reverse
   # to preserve the order
-  if items.length > 0
+  if items? && items.length > 0
     reversed = []
     for item in [items.length-1..0]
       reversed.push(items[item])

@@ -5,7 +5,7 @@ $(document).ready(function(){
   module("Random Access List");
 
   test("It is possible to create a RAL using multiple arguments (5)", function() {
-    var ral = new RandomAccessList(1,2,3,4,5);
+    var ral = new RandomAccessList([1,2,3,4,5]);
     ok(ral.get(0) == 1);
     ok(ral.get(1) == 2);
     ok(ral.get(2) == 3);
@@ -14,7 +14,7 @@ $(document).ready(function(){
   });
 
   test("It is possible to create a RAL using multiple arguments (10)", function() {
-    var ral = new RandomAccessList(1,2,3,4,5,6,7,8,9,10);
+    var ral = new RandomAccessList([1,2,3,4,5,6,7,8,9,10]);
     ok(ral.get(0) == 1);
     ok(ral.get(1) == 2);
     ok(ral.get(2) == 3);
@@ -28,7 +28,7 @@ $(document).ready(function(){
   });
 
   test("The structure of the items is valid" , function() {
-    var ral = new RandomAccessList(1,2,3,4,5,6,7,8,9,10);
+    var ral = new RandomAccessList([1,2,3,4,5,6,7,8,9,10]);
 
     var trees = ral.__trees ;
 
@@ -48,7 +48,7 @@ $(document).ready(function(){
   });
 
   test("It's possible to update an item in the collection", function() {
-    var ral = new RandomAccessList(1,2,3,4,5,6,7,8,9,10);
+    var ral = new RandomAccessList([1,2,3,4,5,6,7,8,9,10]);
     var ralReversed = ral.update(0,10)
                          .update(1,9)
                          .update(2,8)
@@ -72,24 +72,24 @@ $(document).ready(function(){
   });
 
   test("It is possible to read the size of the list", function() {
-    ral = new RandomAccessList(1,2,3,4,5,6,7,8,9,10);
+    ral = new RandomAccessList([1,2,3,4,5,6,7,8,9,10]);
     ok(ral.size() == 10);
   });
 
   test("It's possible to prepend a item to a list" , function() {
-    ral = new RandomAccessList(2).prepend(1);
+    ral = new RandomAccessList([2]).prepend(1);
     ok(ral.size() == 2);
     ok(ral.get(0) == 1);
     ok(ral.get(1) == 2);
   });
 
   test("It's possible to read the head item of a list", function() {
-    ral = new RandomAccessList(2);
+    ral = new RandomAccessList([2]);
     ok(ral.head() == 2);
   });
 
   test("It's possible to get the tail of a list", function() {
-    ral = new RandomAccessList(1,2,3,4,5,6).tail();
+    ral = new RandomAccessList([1,2,3,4,5,6]).tail();
     ok(ral.size() == 5);
     ok(ral.get(0) == 2);
   });
