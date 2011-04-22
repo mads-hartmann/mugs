@@ -9,7 +9,7 @@ $(document).ready(function(){
     test("You can create a Stack using multiple arguments", function() {
       var stack = new Stack(1,2,3,4,5),
       values = stack.values(),
-      shouldBe = new List(5,4,3,2,1);
+      shouldBe = new List([5,4,3,2,1]);
 
       ok(values.get(0).get() === shouldBe.get(0).get());
       ok(values.get(1).get() === shouldBe.get(1).get());

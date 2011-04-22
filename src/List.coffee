@@ -35,28 +35,24 @@
   @augments mugs.Traversable
   @class List provides the implementation of the abstract data type List based on a Singly-Linked list
   @public
+  @argument items An array of items to construct the List from
 ###
-mugs.List = (elements...) ->
-  [x,xs...] = elements
-  this.isEmpty = () -> false
-  if (x == undefined or (x instanceof Array and x.length == 0))
+mugs.List = (items) ->
+
+  if not items? || items.length == 0 
     this.head = () -> throw new Error("Can't get head of empty List")
     this.tail = () -> throw new Error("Can't get tail of empty List")
     this.isEmpty = () -> true
-  else if (x instanceof Array)
-    [hd, tl...] = x
-    this.head = () -> hd
-    this.tail = () -> new mugs.List(tl)
   else
+    [x, xs...] = items
     this.head = () -> x
     this.tail = () -> new mugs.List(xs)
+    this.isEmpty = () -> false
   this
-
 
 mugs.List.prototype = new mugs.Traversable()
 
-# The constructor of the List prototype is the List function
-mugs.List.prototype.constructor = mugs.List
+
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -71,7 +67,7 @@ Methods related to the List ADT
 ###
 mugs.List.prototype.append = (element) ->
   if (this.isEmpty())
-    new mugs.List(element)
+    new mugs.List([element])
   else
     this.cons(this.head(), this.tail().append(element))
 
@@ -143,7 +139,7 @@ mugs.List.prototype.first = () -> new mugs.Some(this.head())
   Creates a list by appending the argument list to 'this' list.
 
   @example
-  new mugs.List(1,2,3).appendList(new mugs.List(4,5,6));
+  new mugs.List([1,2,3]).appendList(new mugs.List([4,5,6]));
   // returns a list with the element 1,2,3,4,5,6
   @param {List} list The list to append to this list.
   @return {List} A new list containing the elements of the appended List and the elements of the original List.
@@ -159,7 +155,7 @@ mugs.List.prototype.appendList = (list) ->
   before of 'this' list
 
   @example
-  new mugs.List(4,5,6).prependList(new mugs.List(1,2,3));
+  new mugs.List([4,5,6]).prependList(new mugs.List([1,2,3]));
   // returns a list with the element 1,2,3,4,5,6
   @param {List} list The list to prepend to this list.
   @return {List} A new list containing the elements of the prepended List and the elements of the original List.
@@ -215,7 +211,7 @@ mugs.List.prototype.size = () ->
 ###
 
 mugs.List.prototype.cons = (head, tail) ->
-  l = new mugs.List(head)
+  l = new mugs.List([head])
   l.tail = () -> tail
   return l
 
@@ -225,7 +221,7 @@ mugs.List.prototype.cons = (head, tail) ->
   takes a function which will then be applied to the elements
 
   @example
-  new mugs.List(1,2,3,4,5).foldLeft(0)(function(acc,current){ acc+current })
+  new mugs.List([1,2,3,4,5]).foldLeft(0)(function(acc,current){ acc+current })
   // returns 15 (the sum of the elements in the list)
 
   @param {*} seed The value to use when the list is empty
@@ -245,7 +241,7 @@ mugs.List.prototype.foldLeft = (seed) -> (f) =>
   takes a function which will then be applied to the elements.
 
   @example
-  new mugs.List(1,2,3,4,5).foldRight(0)(function(acc,current){ acc+current })
+  new mugs.List([1,2,3,4,5]).foldRight(0)(function(acc,current){ acc+current })
   // returns 15 (the sum of the elements in the list)
 
   @param {*} seed The value to use when the list is empty
