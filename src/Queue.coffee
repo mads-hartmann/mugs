@@ -4,8 +4,6 @@
 
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
-if require?
-  List = require './list'
 
 ###*
   Queue provides the implementation of the abstract data type Queue based on two Lists as
@@ -25,13 +23,17 @@ if require?
   @class Queue provides an implementation of the Queue ADT based on two Lists.
   @public
 ###
-mugs.Queue = (elements...) ->
-  size = elements.length
-  half = Math.ceil(size / 2)
-  f = elements.slice(0,half)
-  r = elements.slice(half,size)
-  this.front__ = new mugs.List(f)
-  this.rear__ = new mugs.List(r).reverse()
+mugs.Queue = (items) ->
+  if not items? || items.length == 0 
+    this.front__ = new mugs.List()
+    this.rear__ = new mugs.List()
+  else 
+    size = items.length
+    half = Math.ceil(size / 2)
+    f = items.slice(0,half)
+    r = items.slice(half,size)
+    this.front__ = new mugs.List(f)
+    this.rear__ = new mugs.List(r).reverse()
   this
 
 ###*
