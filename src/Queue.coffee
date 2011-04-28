@@ -36,6 +36,8 @@ mugs.Queue = (items) ->
     this.rear__ = new mugs.List(r).reverse()
   this
 
+mugs.Queue.prototype = new mugs.Traversable() 
+
 ###*
   Removes the front element from the queue
 
@@ -86,3 +88,14 @@ mugs.Queue.prototype.buildFromLists = (front, rear) ->
     queue.rear__ = rear
     queue.front__ = front
   queue
+
+###
+# Methods that traversable requires
+### 
+
+mugs.Queue.prototype.forEach = ( f ) -> 
+  this.front__.forEach(f)
+  this.rear__.reverse().forEach(f)
+
+mugs.Queue.prototype.buildFromArray = ( arr ) ->
+  new mugs.Queue(arr)  

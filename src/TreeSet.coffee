@@ -73,11 +73,15 @@ mugs.TreeSet.prototype.buildFromArray = (arr) ->
   new mugs.TreeSet(arr, this.comparator)
 
 ###*
-  Applies function 'f' on each value in the map. This return nothing and is only invoked
+  Applies function 'f' on each value in the set. This return nothing and is only invoked
   for the side-effects of f.
   @param f The unary function to apply on each element in the set.
   @see mugs.Traversable
 ###
 mugs.TreeSet.prototype.forEach = ( f ) ->
-  q = (kv) -> { key: f(kv.key), value: f(kv.value) }
+  # the tree that the set is based on stores key-value pair on each node so we only
+  # have to apply the function on the key and then just return that value. 
+  q = (kv) -> 
+    newValue = f(kv.key)
+    { key: newValue, value: newValue }
   this.tree.inorderTraversal( q )

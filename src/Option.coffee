@@ -84,6 +84,9 @@ mugs.Option.prototype.foreach = ( f ) ->
   if (!this.isEmpty())
     f(this.get())
 
+mugs.Option.prototype.asArray = () -> 
+  if (this.isEmpty()) then [] else [this.get()]
+
 ###*
   Some(x) represents an existing value x. It's part of the {@link Option} monad.
 

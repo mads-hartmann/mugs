@@ -42,6 +42,13 @@ mugs.CompleteBinaryTree.prototype.update = (index, item) ->
     else
       new mugs.CompleteBinaryTreeNode(this.item, this.left, this.right.update(index - 1 - this.left.size, item))
 
+mugs.CompleteBinaryTree.prototype.preorderTraversal = (f) -> 
+  if !this.isLeaf
+    f(this.item) 
+    this.left.preorderTraversal(f)
+    this.right.preorderTraversal(f) 
+  else 
+    f(this.item)
 
 ###*
   @class A leaf in a complete binary tree.

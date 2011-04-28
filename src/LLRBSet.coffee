@@ -77,5 +77,9 @@ mugs.LLRBSet.prototype.buildFromArray = (arr) ->
   @see mugs.Traversable
 ###
 mugs.LLRBSet.prototype.forEach = ( f ) ->
-  q = (kv) -> { key: f(kv.key), value: f(kv.value) }
+  # the tree that the set is based on stores key-value pair on each node so we only
+  # have to apply the function on the key and then just return that value. 
+  q = (kv) -> 
+    newValue = f(kv.key)
+    { key: newValue, value: newValue }
   this.tree.inorderTraversal( q )

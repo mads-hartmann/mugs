@@ -99,47 +99,4 @@ $(document).ready(function(){
   generic_list_test("List" , mugs.List);
 
 
-  // module("List - Traversable methods");
-
-  // test("You can map a list to another list", function() {
-  //   var list = new List(1,2,3,4).map( function(elem){ return elem*2; });
-  //   var shouldbe = new List(2,4,6,8);
-
-  //   ok( list.get(0).get() == shouldbe.get(0).get() );
-  //   ok( list.get(1).get() == shouldbe.get(1).get() );
-  //   ok( list.get(2).get() == shouldbe.get(2).get() );
-  //   ok( list.get(3).get() == shouldbe.get(3).get() );
-  // });
-
-  // test("You can flatMap a list to another list", function() {
-  //   var list = new List(1,2,3).flatMap( function(elem){
-  //     return new List(1,2,3);
-  //   });
-  //   var shouldbe = new List(1,2,3,1,2,3,1,2,3);
-  //   ok( list.get(0).get() == shouldbe.get(0).get() );
-  //   ok( list.get(1).get() == shouldbe.get(1).get() );
-  //   ok( list.get(2).get() == shouldbe.get(2).get() );
-
-  //   ok( list.get(3).get() == shouldbe.get(3).get() );
-  //   ok( list.get(4).get() == shouldbe.get(4).get() );
-  //   ok( list.get(5).get() == shouldbe.get(5).get() );
-
-  //   ok( list.get(6).get() == shouldbe.get(6).get() );
-  //   ok( list.get(7).get() == shouldbe.get(7).get() );
-  //   ok( list.get(8).get() == shouldbe.get(8).get() );
-  // });
-
-  // test("You can filter a list", function() {
-  //   var list = new List(1,2,3,4,5,6,7,8,9,10).filter( function(elem){
-  //     return elem >= 5;
-  //   });
-
-  //   ok( list.get(0).get() == 5 );
-  //   ok( list.get(1).get() == 6 );
-  //   ok( list.get(2).get() == 7 );
-  //   ok( list.get(3).get() == 8 );
-  //   ok( list.get(4).get() == 9 );
-  //   ok( list.get(5).get() == 10 );
-  // });
-
 });
