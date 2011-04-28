@@ -1,6 +1,4 @@
-### Extremely annoying hack to force the vars of the compiled  
-    code to appear before the documentation ###
-if true then true
+mugs.provide("mugs.Traversable")
 
 ###*
   This is base prototype for all collections. It implements a set of methods for all collections 

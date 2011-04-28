@@ -3,6 +3,11 @@
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
 
+mugs.provide('mugs.TreeSet')
+
+mugs.require('mugs.RedBlackLeaf')
+mugs.require('mugs.RedBlackNode')
+
 ###*
   @augments mugs.Traversable
   @class mugs.TreeSet provides the implementation of the abstract data type Set based on a Red Black Tree

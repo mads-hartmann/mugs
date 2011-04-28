@@ -1,7 +1,13 @@
 ###*
   @fileoverview Contains the implementation of the Map data structure based on a Red-Black Tree
   @author Mads Hartmann Jensen (mads379@gmail.com)
-###
+### 
+
+mugs.provide('mugs.TreeMap')
+
+mugs.require('mugs.RedBlack')
+mugs.require('mugs.RedBlackLeaf')
+mugs.require('mugs.RedBlackNode')
 
 ###*
   mugs.TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. The

@@ -1,6 +1,12 @@
 ###*
 @author Mads Hartmann Jensen (2011, mads379@gmail.com)
 ###
+
+mugs.provide("mugs.LLRBNode")
+mugs.provide("mugs.LLRBLeaf")
+ 
+mugs.require("mugs.List")
+
 mugs.LLRBNode = (() ->
 
   ###
@@ -10,11 +16,11 @@ mugs.LLRBNode = (() ->
     Invartiant 1: No red node has a red child
     Invartiant 2: Every leaf path has the same number of black nodes
     Invartiant 3: Only the left child can be red (left leaning)
-  ###
+  ### 
 
   ###
     Public interface
-  ###
+  ### 
 
   F = (key,value,color,left,right) ->
     this.key   = key

@@ -1,7 +1,12 @@
 ###*
   @fileoverview Contains the implementation of the List abstract data type.
   @author Mads Hartmann Jensen (mads379@gmail.com)
-###
+### 
+
+mugs.provide('mugs.List')
+
+mugs.require("mugs.Some")
+mugs.require("mugs.None")
 
 ###*
   List provides the implementation of the abstract data type List based on a Singly-Linked list. The
@@ -36,7 +41,7 @@
   @class List provides the implementation of the abstract data type List based on a Singly-Linked list
   @public
   @argument items An array of items to construct the List from
-###
+### 
 mugs.List = (items) ->
 
   if not items? || items.length == 0 

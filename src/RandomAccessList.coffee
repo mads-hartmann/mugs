@@ -1,3 +1,8 @@
+mugs.provide("mugs.RandomAccessList")
+
+mugs.require("mugs.CompleteBinaryTreeNode")
+mugs.require("mugs.List")
+
 ###*
   Random Access List
 

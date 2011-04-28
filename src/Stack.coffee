@@ -2,7 +2,11 @@
   @fileoverview Contains the implementation of the Stack data structure based on a List <br />
 
   @author Mads Hartmann Jensen (mads379@gmail.com)
-###
+### 
+
+mugs.provide("mugs.Stack")
+
+mugs.require("mugs.List")
 
 ###*
   Stack provides the implementation of the abstract data type Stack based on a List. The

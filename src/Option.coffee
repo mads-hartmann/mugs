@@ -2,11 +2,13 @@
   @fileoverview Contains the implementation of the Option monad which consists
                 of two prototypes: Some and mugs.None.
   @author Mads Hartmann Jensen (mads379@gmail.com)
-###
+### 
 
 ### Extremely annoying hack to force the vars of the compiled
-    code to appear before the documentation of Some ###
-if true then true
+    code to appear before the documentation of Some ### 
+
+mugs.provide('mugs.Some')
+mugs.provide('mugs.None') 
 
 ###*
   Don't use the Option prototype directly, use the {@link Some} or {@link mugs.None}. An option represents
@@ -15,7 +17,7 @@ if true then true
   @see mugs.Some
   @see mugs.None
   @constructor
-###
+### 
 mugs.Option = () -> this
 
 ###*

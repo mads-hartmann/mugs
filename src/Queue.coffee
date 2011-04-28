@@ -3,7 +3,10 @@
                 described in Chris Okasaki's book Purely Functional Data Structures. <br />
 
   @author Mads Hartmann Jensen (mads379@gmail.com)
-###
+### 
+
+mugs.provide("mugs.Queue")
+mugs.require("mugs.List")
 
 ###*
   Queue provides the implementation of the abstract data type Queue based on two Lists as

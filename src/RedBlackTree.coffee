@@ -13,7 +13,13 @@
   implemented following this blog: http://matt.might.net/articles/red-black-delete/
 
   @author Mads Hartmann Jensen (mads379@gmail.com)
-###
+### 
+
+mugs.provide('mugs.RedBlack')
+mugs.provide('mugs.RedBlackLeaf')
+mugs.provide('mugs.RedBlackNode')
+
+mugs.require("mugs.List")
 
 # Constants used to color the trees. The proprty 'color' is only for debugging.
 mugs.RedBlack = {}

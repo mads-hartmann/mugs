@@ -3,6 +3,11 @@
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
 
+mugs.provide("mugs.LLRBMap")
+
+mugs.require("mugs.LLRBNode")
+mugs.require("mugs.LLRBLeaf") 
+
 ###*
   mugs.LLRBMap provides the implementation of the abstract data type 'Map' based on a Left Leaning Red Black Tree. The
   map contains the following operations

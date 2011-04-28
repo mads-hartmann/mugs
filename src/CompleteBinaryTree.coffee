@@ -16,6 +16,10 @@
   are the concrete implementations.
 ###
 
+mugs.provide('mugs.CompleteBinaryTree')
+mugs.provide('mugs.CompleteBinaryTreeNode')
+mugs.provide('mugs.CompleteBinaryTreeLeaf')
+
 mugs.CompleteBinaryTree = () -> this
 
 mugs.CompleteBinaryTree.prototype.get = (index) ->

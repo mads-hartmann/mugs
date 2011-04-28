@@ -3,6 +3,11 @@
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
 
+mugs.provide("mugs.LLRBSet")
+
+mugs.require("mugs.LLRBNode")
+mugs.require("mugs.LLRBLeaf") 
+
 ###*
   @augments mugs.Traversable
   @class mugs.LLRBSet Contains the implementation of the Set data structure based on a Left Leaning Red-Black Tree
