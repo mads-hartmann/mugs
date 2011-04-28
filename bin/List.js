@@ -1,14 +1,10 @@
 /**
   @fileoverview Contains the implementation of the List abstract data type.
   @author Mads Hartmann Jensen (mads379@gmail.com)
-*/var List, None, Option, Some, Traversable;
-var __slice = Array.prototype.slice, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-if (typeof require != "undefined" && require !== null) {
-  Option = require('./option');
-  Some = Option.Some;
-  None = Option.None;
-  Traversable = (require('./Traversable')).Traversable;
-}
+*/var __slice = Array.prototype.slice, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+mugs.provide('mugs.List');
+mugs.require("mugs.Some");
+mugs.require("mugs.None");
 /**
   List provides the implementation of the abstract data type List based on a Singly-Linked list. The
   list contains the following operations:
@@ -23,7 +19,7 @@ if (typeof require != "undefined" && require !== null) {
   get( index )                                        O(n)
   remove( index )                                     O(n)
   --------------------------------------------------------
-  Methods inherited from mahj.Traversable
+  Methods inherited from mugs.Traversable
   --------------------------------------------------------
   map( f )                                            O(n)
   flatMap( f )                                        O(n)
@@ -38,18 +34,14 @@ if (typeof require != "undefined" && require !== null) {
   size()                                              O(n)    TODO
   --------------------------------------------------------
   </pre>
-  @augments mahj.Traversable
+  @augments mugs.Traversable
   @class List provides the implementation of the abstract data type List based on a Singly-Linked list
   @public
+  @argument items An array of items to construct the List from
 */
-List = function() {
-  var elements, hd, tl, x, xs;
-  elements = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  x = elements[0], xs = 2 <= elements.length ? __slice.call(elements, 1) : [];
-  this.isEmpty = function() {
-    return false;
-  };
-  if (x === void 0 || (x instanceof Array && x.length === 0)) {
+mugs.List = function(items) {
+  var x, xs;
+  if (!(items != null) || items.length === 0) {
     this.head = function() {
       throw new Error("Can't get head of empty List");
     };
@@ -59,26 +51,21 @@ List = function() {
     this.isEmpty = function() {
       return true;
     };
-  } else if (x instanceof Array) {
-    hd = x[0], tl = 2 <= x.length ? __slice.call(x, 1) : [];
-    this.head = function() {
-      return hd;
-    };
-    this.tail = function() {
-      return new List(tl);
-    };
   } else {
+    x = items[0], xs = 2 <= items.length ? __slice.call(items, 1) : [];
     this.head = function() {
       return x;
     };
     this.tail = function() {
-      return new List(xs);
+      return new mugs.List(xs);
+    };
+    this.isEmpty = function() {
+      return false;
     };
   }
   return this;
 };
-List.prototype = new mahj.Traversable();
-List.prototype.constructor = List;
+mugs.List.prototype = new mugs.Traversable();
 /*
 ---------------------------------------------------------------------------------------------
 Methods related to the List ADT
@@ -89,9 +76,9 @@ Methods related to the List ADT
   @param {*} element The element to append to the List
   @return {List} A new list containing all the elements of the old with followed by the element
 */
-List.prototype.append = function(element) {
+mugs.List.prototype.append = function(element) {
   if (this.isEmpty()) {
-    return new List(element);
+    return new mugs.List([element]);
   } else {
     return this.cons(this.head(), this.tail().append(element));
   }
@@ -101,7 +88,7 @@ List.prototype.append = function(element) {
   @param {*} element The element to prepend to the List
   @return {List} A new list containing all the elements of the old list prepended with the element
 */
-List.prototype.prepend = function(element) {
+mugs.List.prototype.prepend = function(element) {
   return this.cons(element, this);
 };
 /**
@@ -110,7 +97,7 @@ List.prototype.prepend = function(element) {
   @param {*} element The element to replace with the current element
   @return {List} A new list with the updated value.
 */
-List.prototype.update = function(index, element) {
+mugs.List.prototype.update = function(index, element) {
   if (index < 0) {
     throw new Error("Index out of bounds by " + index);
   } else if (index === 0) {
@@ -122,14 +109,14 @@ List.prototype.update = function(index, element) {
 /**
   Return an Option containing the nth element in the list.
   @param {number} index The index of the element to get
-  @return {Some|None} Some(element) is it exists, otherwise None
+  @return {mugs.Some|mugs.None} mugs.Some(element) is it exists, otherwise mugs.None
 */
-List.prototype.get = function(index) {
+mugs.List.prototype.get = function(index) {
   if (index < 0 || this.isEmpty()) {
-    new None();
-    return new None();
+    new mugs.None();
+    return new mugs.None();
   } else if (index === 0) {
-    return new Some(this.head());
+    return new mugs.Some(this.head());
   } else {
     return this.tail().get(index - 1);
   }
@@ -139,12 +126,12 @@ List.prototype.get = function(index) {
   @param {number} index The index of the element to remove
   @return {List} A new list without the element at the given index
 */
-List.prototype.remove = function(index) {
+mugs.List.prototype.remove = function(index) {
   if (index === 0) {
     if (!this.tail().isEmpty()) {
       return this.cons(this.tail().first().get(), this.tail().tail);
     } else {
-      return new List();
+      return new mugs.List();
     }
   } else {
     return this.cons(this.head(), this.tail().remove(index - 1));
@@ -152,32 +139,32 @@ List.prototype.remove = function(index) {
 };
 /**
   The last element in the list
-  @return {Some|None} Some(last) if it exists, otherwise None
+  @return {mugs.Some|mugs.None} mugs.Some(last) if it exists, otherwise mugs.None
 */
-List.prototype.last = function() {
+mugs.List.prototype.last = function() {
   if (this.tail().isEmpty()) {
-    return new Some(this.head());
+    return new mugs.Some(this.head());
   } else {
     return this.tail().last();
   }
 };
 /**
   The first element in the list
-  @return {Some|None} Some(first) if it exists, otherwise None
+  @return {mugs.Some|mugs.None} mugs.Some(first) if it exists, otherwise mugs.None
 */
-List.prototype.first = function() {
-  return new Some(this.head());
+mugs.List.prototype.first = function() {
+  return new mugs.Some(this.head());
 };
 /**
   Creates a list by appending the argument list to 'this' list.
 
   @example
-  new List(1,2,3).appendList(new List(4,5,6));
+  new mugs.List([1,2,3]).appendList(new mugs.List([4,5,6]));
   // returns a list with the element 1,2,3,4,5,6
   @param {List} list The list to append to this list.
   @return {List} A new list containing the elements of the appended List and the elements of the original List.
 */
-List.prototype.appendList = function(list) {
+mugs.List.prototype.appendList = function(list) {
   if (this.isEmpty()) {
     return list;
   } else {
@@ -189,12 +176,12 @@ List.prototype.appendList = function(list) {
   before of 'this' list
 
   @example
-  new List(4,5,6).prependList(new List(1,2,3));
+  new mugs.List([4,5,6]).prependList(new mugs.List([1,2,3]));
   // returns a list with the element 1,2,3,4,5,6
   @param {List} list The list to prepend to this list.
   @return {List} A new list containing the elements of the prepended List and the elements of the original List.
 */
-List.prototype.prependList = function(list) {
+mugs.List.prototype.prependList = function(list) {
   if (this.isEmpty()) {
     return list;
   } else {
@@ -213,15 +200,15 @@ Methods related to Traversable prototype
 /**
   @private
 */
-List.prototype.buildFromArray = function(arr) {
-  return new List(arr);
+mugs.List.prototype.buildFromArray = function(arr) {
+  return new mugs.List(arr);
 };
 /**
   Applies function 'f' on each element in the list. This return nothing and is only invoked
   for the side-effects of f.
-  @see mahj.Traversable
+  @see mugs.Traversable
 */
-List.prototype.forEach = function(f) {
+mugs.List.prototype.forEach = function(f) {
   if (!this.isEmpty()) {
     f(this.head());
     return this.tail().forEach(f);
@@ -233,12 +220,25 @@ Miscellaneous Methods
 ---------------------------------------------------------------------------------------------
 */
 /**
+   Returns the number of elements in the list
+*/
+mugs.List.prototype.size = function() {
+  var count, xs;
+  xs = this;
+  count = 0;
+  while (!xs.isEmpty()) {
+    count += 1;
+    xs = xs.tail();
+  }
+  return count;
+};
+/**
   Helper method to construct a list from a value and another list
   @private
 */
-List.prototype.cons = function(head, tail) {
+mugs.List.prototype.cons = function(head, tail) {
   var l;
-  l = new List(head);
+  l = new mugs.List([head]);
   l.tail = function() {
     return tail;
   };
@@ -250,13 +250,13 @@ List.prototype.cons = function(head, tail) {
   takes a function which will then be applied to the elements
 
   @example
-  new List(1,2,3,4,5).foldLeft(0)(function(acc,current){ acc+current })
+  new mugs.List([1,2,3,4,5]).foldLeft(0)(function(acc,current){ acc+current })
   // returns 15 (the sum of the elements in the list)
 
   @param {*} seed The value to use when the list is empty
   @return {function(function(*, *):*):*} A function which takes a binary function
 */
-List.prototype.foldLeft = function(seed) {
+mugs.List.prototype.foldLeft = function(seed) {
   return __bind(function(f) {
     var __foldLeft;
     __foldLeft = function(acc, xs) {
@@ -275,13 +275,13 @@ List.prototype.foldLeft = function(seed) {
   takes a function which will then be applied to the elements.
 
   @example
-  new List(1,2,3,4,5).foldRight(0)(function(acc,current){ acc+current })
+  new mugs.List([1,2,3,4,5]).foldRight(0)(function(acc,current){ acc+current })
   // returns 15 (the sum of the elements in the list)
 
   @param {*} seed The value to use when the list is empty
   @return {function(function(*, *):*):*} A function which takes a binary function
 */
-List.prototype.foldRight = function(seed) {
+mugs.List.prototype.foldRight = function(seed) {
   return __bind(function(f) {
     var __foldRight;
     __foldRight = function(xs) {
@@ -298,9 +298,9 @@ List.prototype.foldRight = function(seed) {
   Returns a new list with the elements in reversed order.
   @return A new list with the elements in reversed order
 */
-List.prototype.reverse = function() {
+mugs.List.prototype.reverse = function() {
   var rest, result;
-  result = new List();
+  result = new mugs.List();
   rest = this;
   while (!rest.isEmpty()) {
     result = result.prepend(rest.head());
@@ -308,6 +308,3 @@ List.prototype.reverse = function() {
   }
   return result;
 };
-if (typeof exports != "undefined" && exports !== null) {
-  exports.List = List;
-}

@@ -1,12 +1,11 @@
 /**
-  @fileoverview Contains the implementation of the Map data structure based on a Red-Black Tree
+  @fileoverview Contains the implementation of the Map data structure based on a Left Leaning Red-Black Tree
   @author Mads Hartmann Jensen (mads379@gmail.com)
-*/mugs.provide('mugs.TreeMap');
-mugs.require('mugs.RedBlack');
-mugs.require('mugs.RedBlackLeaf');
-mugs.require('mugs.RedBlackNode');
+*/mugs.provide("mugs.LLRBMap");
+mugs.require("mugs.LLRBNode");
+mugs.require("mugs.LLRBLeaf");
 /**
-  mugs.TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree. The
+  mugs.LLRBMap provides the implementation of the abstract data type 'Map' based on a Left Leaning Red Black Tree. The
   map contains the following operations
 
   <pre>
@@ -34,10 +33,10 @@ mugs.require('mugs.RedBlackNode');
   --------------------------------------------------------
   </pre>
 
-  @class mugs.TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.
+  @class mugs.LLRBMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.
   @constructor
   @example
-  var map = new mugs.TreeMap([
+  var map = new mugs.LLRBMap([
     {key: 1, value: "one"},
     {key: 4, value: "four"},
     {key: 3, value: "three"},
@@ -49,9 +48,9 @@ mugs.require('mugs.RedBlackNode');
   @public
   @augments mugs.Traversable
 */
-mugs.TreeMap = function(keyValuePairs, comparator) {
+mugs.LLRBMap = function(keyValuePairs, comparator) {
   var kv, treeUnderConstruction, _i, _len;
-  treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK);
+  treeUnderConstruction = new mugs.LLRBLeaf();
   if (keyValuePairs instanceof Array && keyValuePairs.length > 0) {
     for (_i = 0, _len = keyValuePairs.length; _i < _len; _i++) {
       kv = keyValuePairs[_i];
@@ -64,19 +63,19 @@ mugs.TreeMap = function(keyValuePairs, comparator) {
   }
   return this;
 };
-mugs.TreeMap.prototype = new mugs.Traversable();
+mugs.LLRBMap.prototype = new mugs.Traversable();
 /*
 ---------------------------------------------------------------------------------------------
 Methods related to the MAP ADT
 ---------------------------------------------------------------------------------------------
 */
 /**
-  Return a new mugs.TreeMap containing the given (key,value) pair.
+  Return a new mugs.LLRBMap containing the given (key,value) pair.
   @param {*} key The key to store the value by
   @param {*} value The value to store in the map
-  @return {mugs.TreeMap} A new mugs.TreeMap that also contains the new key-value pair
+  @return {mugs.LLRBMap} A new mugs.LLRBMap that also contains the new key-value pair
 */
-mugs.TreeMap.prototype.insert = function(key, value) {
+mugs.LLRBMap.prototype.insert = function(key, value) {
   return this.buildFromTree(this.tree.insert(key, value));
 };
 /**
@@ -84,39 +83,39 @@ mugs.TreeMap.prototype.insert = function(key, value) {
   @param {*} key The key of the value you want to read.
   @return {mugs.Some|mugs.None} mugs.Some(value) if it exists in the map. Otherwise mugs.None
 */
-mugs.TreeMap.prototype.get = function(key) {
+mugs.LLRBMap.prototype.get = function(key) {
   return this.tree.get(key);
 };
 /**
-  Returns a new mugs.TreeMap without the given key-value pair.
+  Returns a new mugs.LLRBMap without the given key-value pair.
   @param {*} key The key of the value you want to remove
-  @return {mugs.TreeMap} A new mugs.TreeMap that doesn't contain the key-value pair
+  @return {mugs.LLRBMap} A new mugs.LLRBMap that doesn't contain the key-value pair
 */
-mugs.TreeMap.prototype.remove = function(key) {
+mugs.LLRBMap.prototype.remove = function(key) {
   return this.buildFromTree(this.tree.remove(key));
 };
 /**
-  Returns a sorted list containing all of the keys in the mugs.TreeMap
-  @return {List} A sorted list containing all of the keys in the mugs.TreeMap
+  Returns a sorted list containing all of the keys in the mugs.LLRBMap
+  @return {List} A sorted list containing all of the keys in the mugs.LLRBMap
 */
-mugs.TreeMap.prototype.keys = function() {
+mugs.LLRBMap.prototype.keys = function() {
   return this.tree.keys();
 };
 /**
-  Returns a sorted list containing all of the values in the mugs.TreeMap
-  @return {List} sorted list containing all of the values in the mugs.TreeMap
+  Returns a sorted list containing all of the values in the mugs.LLRBMap
+  @return {List} sorted list containing all of the values in the mugs.LLRBMap
 */
-mugs.TreeMap.prototype.values = function() {
+mugs.LLRBMap.prototype.values = function() {
   return this.tree.values();
 };
 /**
-  Used to construct a mugs.TreeMap from mugs.RedBlackTree. This is intended
+  Used to construct a mugs.LLRBMap from mugs.RedBlackTree. This is intended
   for internal use only. Would've marked it private if I could.
   @private
 */
-mugs.TreeMap.prototype.buildFromTree = function(tree) {
+mugs.LLRBMap.prototype.buildFromTree = function(tree) {
   var map;
-  map = new mugs.TreeMap(this.comparator);
+  map = new mugs.LLRBMap(this.comparator);
   map.tree = tree;
   return map;
 };
@@ -128,14 +127,14 @@ Methods related to Traversable prototype
 /**
   @private
 */
-mugs.TreeMap.prototype.buildFromArray = function(arr) {
-  return new mugs.TreeMap(arr, this.comparator);
+mugs.LLRBMap.prototype.buildFromArray = function(arr) {
+  return new mugs.LLRBMap(arr, this.comparator);
 };
 /**
   Applies function 'f' on each value in the map. This return nothing and is only invoked
   for the side-effects of f.
   @see mugs.Traversable
 */
-mugs.TreeMap.prototype.forEach = function(f) {
+mugs.LLRBMap.prototype.forEach = function(f) {
   return this.tree.inorderTraversal(f);
 };

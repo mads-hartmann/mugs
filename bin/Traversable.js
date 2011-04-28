@@ -1,35 +1,32 @@
-/* Extremely annoying hack to force the vars of the compiled
-    code to appear before the documentation */if (true) {
-  true;
-}
+mugs.provide("mugs.Traversable");
 /**
   This is base prototype for all collections. It implements a set of methods for all collections
   in terms of the forEach method.
 
-  This is to be considered a partial prototype. Prototypes which inherit from mahj.Traversable will have
+  This is to be considered a partial prototype. Prototypes which inherit from mugs.Traversable will have
   to implement two methods: forEach and buildFromArray
 
   The forEach method should be implemented as efficiently as possible as this is used to implement
-  all the methods in the mahj.Traversable prototype. The buildFromArray method should simply be a constructor
+  all the methods in the mugs.Traversable prototype. The buildFromArray method should simply be a constructor
   for the prototype which takes a plain old javascript array.
 */
-mahj.Traversable = function() {
+mugs.Traversable = function() {
   return this;
 };
 /**
   @private
 */
-mahj.Traversable.prototype.buildFromArray = function() {
+mugs.Traversable.prototype.buildFromArray = function() {
   throw new Error("Should be implemented in subclass");
 };
-mahj.Traversable.prototype.forEach = function() {
+mugs.Traversable.prototype.forEach = function() {
   throw new Error("Should be implemented in subclass");
 };
 /**
   Returns a new collection with the values of applying the function 'f' on each element in 'this'
   collection.
 */
-mahj.Traversable.prototype.map = function(f) {
+mugs.Traversable.prototype.map = function(f) {
   var elements;
   elements = [];
   this.forEach(function(elem) {
@@ -42,7 +39,7 @@ mahj.Traversable.prototype.map = function(f) {
   in 'this' collection. The function 'f' is expected to return an object that implements the forEach
   method itself.
 */
-mahj.Traversable.prototype.flatMap = function(f) {
+mugs.Traversable.prototype.flatMap = function(f) {
   var elements;
   elements = [];
   this.forEach(function(x) {
@@ -55,7 +52,7 @@ mahj.Traversable.prototype.flatMap = function(f) {
 /**
 
 */
-mahj.Traversable.prototype.filter = function(f) {
+mugs.Traversable.prototype.filter = function(f) {
   var elements;
   elements = [];
   this.forEach(function(elem) {
@@ -68,7 +65,7 @@ mahj.Traversable.prototype.filter = function(f) {
 /**
 
 */
-mahj.Traversable.prototype.isEmpty = function() {
+mugs.Traversable.prototype.isEmpty = function() {
   var itIsEmpty;
   itIsEmpty = true;
   this.forEach(function(elem) {
@@ -77,6 +74,11 @@ mahj.Traversable.prototype.isEmpty = function() {
   });
   return true;
 };
-if (typeof exports != "undefined" && exports !== null) {
-  exports.mahj.Traversable = mahj.Traversable;
-}
+mugs.Traversable.prototype.asArray = function() {
+  var arr;
+  arr = [];
+  this.forEach(function(e) {
+    return arr.push(e);
+  });
+  return arr;
+};

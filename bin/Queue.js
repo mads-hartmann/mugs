@@ -3,11 +3,8 @@
                 described in Chris Okasaki's book Purely Functional Data Structures. <br />
 
   @author Mads Hartmann Jensen (mads379@gmail.com)
-*/var List, Queue;
-var __slice = Array.prototype.slice;
-if (typeof require != "undefined" && require !== null) {
-  List = require('./list');
-}
+*/mugs.provide("mugs.Queue");
+mugs.require("mugs.List");
 /**
   Queue provides the implementation of the abstract data type Queue based on two Lists as
   described in Chris Okasaki's book Purely Functional Data Structures. The Queue contains
@@ -26,23 +23,28 @@ if (typeof require != "undefined" && require !== null) {
   @class Queue provides an implementation of the Queue ADT based on two Lists.
   @public
 */
-Queue = function() {
-  var elements, f, half, r, size;
-  elements = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  size = elements.length;
-  half = Math.ceil(size / 2);
-  f = elements.slice(0, half);
-  r = elements.slice(half, size);
-  this.front__ = new List(f);
-  this.rear__ = new List(r).reverse();
+mugs.Queue = function(items) {
+  var f, half, r, size;
+  if (!(items != null) || items.length === 0) {
+    this.front__ = new mugs.List();
+    this.rear__ = new mugs.List();
+  } else {
+    size = items.length;
+    half = Math.ceil(size / 2);
+    f = items.slice(0, half);
+    r = items.slice(half, size);
+    this.front__ = new mugs.List(f);
+    this.rear__ = new mugs.List(r).reverse();
+  }
   return this;
 };
+mugs.Queue.prototype = new mugs.Traversable();
 /**
   Removes the front element from the queue
 
   @return A new queue without the former front element
 */
-Queue.prototype.dequeue = function() {
+mugs.Queue.prototype.dequeue = function() {
   return this.buildFromLists(this.front__.tail(), this.rear__);
 };
 /**
@@ -51,7 +53,7 @@ Queue.prototype.dequeue = function() {
   @param elem The element to add to the queue
   @return A new queue with the element in the back of the queue
 */
-Queue.prototype.enqueue = function(elem) {
+mugs.Queue.prototype.enqueue = function(elem) {
   return this.buildFromLists(this.front__, this.rear__.prepend(elem));
 };
 /**
@@ -59,7 +61,7 @@ Queue.prototype.enqueue = function(elem) {
 
   @return The front element in the queue
 */
-Queue.prototype.front = function() {
+mugs.Queue.prototype.front = function() {
   return this.front__.head();
 };
 /**
@@ -67,7 +69,7 @@ Queue.prototype.front = function() {
 
   @return A List with all of the elements in the queue.
 */
-Queue.prototype.values = function() {
+mugs.Queue.prototype.values = function() {
   return this.front__.appendList(this.rear__.reverse());
 };
 /**
@@ -78,9 +80,9 @@ Queue.prototype.values = function() {
   @param rear The list that's going to be the rear of the queue
   @private
 */
-Queue.prototype.buildFromLists = function(front, rear) {
+mugs.Queue.prototype.buildFromLists = function(front, rear) {
   var queue;
-  queue = new Queue();
+  queue = new mugs.Queue();
   if (front.isEmpty()) {
     queue.front__ = rear.reverse();
     queue.rear__ = front;
@@ -89,4 +91,14 @@ Queue.prototype.buildFromLists = function(front, rear) {
     queue.front__ = front;
   }
   return queue;
+};
+/*
+# Methods that traversable requires
+*/
+mugs.Queue.prototype.forEach = function(f) {
+  this.front__.forEach(f);
+  return this.rear__.reverse().forEach(f);
+};
+mugs.Queue.prototype.buildFromArray = function(arr) {
+  return new mugs.Queue(arr);
 };

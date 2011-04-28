@@ -13,91 +13,89 @@
   implemented following this blog: http://matt.might.net/articles/red-black-delete/
 
   @author Mads Hartmann Jensen (mads379@gmail.com)
-*/var BLACK, DOUBLE_BLACK, List, NEGATIVE_BLACK, None, Option, RED, RedBlackLeaf, RedBlackNode, Some;
-var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-if (typeof require != "undefined" && require !== null) {
-  Option = require('./option');
-  Some = Option.Some;
-  None = Option.None;
-  List = require('./list').List;
-}
-RED = {
+*/var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+mugs.provide('mugs.RedBlack');
+mugs.provide('mugs.RedBlackLeaf');
+mugs.provide('mugs.RedBlackNode');
+mugs.require("mugs.List");
+mugs.RedBlack = {};
+mugs.RedBlack.RED = {
   color: "RED",
   add: function() {
-    return BLACK;
+    return mugs.RedBlack.BLACK;
   },
   subtract: function() {
-    return NEGATIVE_BLACK;
+    return mugs.RedBlack.NEGATIVE_BLACK;
   }
 };
-BLACK = {
+mugs.RedBlack.BLACK = {
   color: "BLACK",
   add: function() {
-    return DOUBLE_BLACK;
+    return mugs.RedBlack.DOUBLE_BLACK;
   },
   subtract: function() {
-    return RED;
+    return mugs.RedBlack.RED;
   }
 };
-DOUBLE_BLACK = {
+mugs.RedBlack.DOUBLE_BLACK = {
   color: "DOUBLE BLACK",
   add: function() {
-    return DOUBLE_BLACK;
+    return mugs.RedBlack.DOUBLE_BLACK;
   },
   subtract: function() {
-    return BLACK;
+    return mugs.RedBlack.BLACK;
   }
 };
-NEGATIVE_BLACK = {
+mugs.RedBlack.NEGATIVE_BLACK = {
   color: "NEGATIVE BLACK",
   add: function() {
-    return RED;
+    return mugs.RedBlack.RED;
   },
   subtract: function() {
-    return NEGATIVE_BLACK;
+    return mugs.RedBlack.NEGATIVE_BLACK;
   }
 };
-RedBlackLeaf = function(color) {
+mugs.RedBlackLeaf = function(color) {
   this.color = color;
-  this.left = new None();
-  this.right = new None();
-  this.key = new None();
-  this.value = new None();
+  this.left = new mugs.None();
+  this.right = new mugs.None();
+  this.key = new mugs.None();
+  this.value = new mugs.None();
   return this;
 };
-RedBlackLeaf.prototype.isEmpty = function() {
+mugs.RedBlackLeaf.prototype.isEmpty = function() {
   return true;
 };
-RedBlackLeaf.prototype.containsKey = function(key) {
+mugs.RedBlackLeaf.prototype.containsKey = function(key) {
   return false;
 };
-RedBlackLeaf.prototype.get = function(key) {
-  return new None();
+mugs.RedBlackLeaf.prototype.get = function(key) {
+  return new mugs.None();
 };
-RedBlackLeaf.prototype.keys = function() {
-  return new List();
+mugs.RedBlackLeaf.prototype.keys = function() {
+  return new mugs.List();
 };
-RedBlackLeaf.prototype.values = function() {
-  return new List();
+mugs.RedBlackLeaf.prototype.values = function() {
+  return new mugs.List();
 };
-RedBlackLeaf.prototype.inorderTraversal = function(f) {};
-RedBlackLeaf.prototype.insert = function(key, value) {
-  return new RedBlackNode(RED, new RedBlackLeaf(BLACK), key, value, new RedBlackLeaf(BLACK));
+mugs.RedBlackLeaf.prototype.inorderTraversal = function(f) {};
+mugs.RedBlackLeaf.prototype.insert = function(key, value) {
+  return new mugs.RedBlackNode(mugs.RedBlack.RED, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK), key, value, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK));
 };
-RedBlackNode = function(color, left, key, value, right, comparator) {
+mugs.RedBlackNode = function(color, left, key, value, right, comparator) {
   this.color = color;
   this.left = left;
   this.key = key;
   this.value = value;
   this.right = right;
-  this.comparator = comparator ? void 0 : RedBlackNode.prototype.standard_comparator;
+  this.comparator = comparator ? void 0 : mugs.RedBlackNode.prototype.standard_comparator;
   return this;
 };
 /**
   The standard compare function. It's used if the user doesn't
   supply one when creating the tree
 */
-RedBlackNode.prototype.standard_comparator = function(elem1, elem2) {
+mugs.RedBlackNode.prototype.standard_comparator = function(elem1, elem2) {
   if (elem1 < elem2) {
     return -1;
   } else if (elem1 > elem2) {
@@ -109,7 +107,7 @@ RedBlackNode.prototype.standard_comparator = function(elem1, elem2) {
 /**
   Given a key it finds the value, if any.
 */
-RedBlackNode.prototype.get = function(key) {
+mugs.RedBlackNode.prototype.get = function(key) {
   var comp;
   comp = this.comparator(key, this.key);
   if (comp < 0) {
@@ -117,14 +115,14 @@ RedBlackNode.prototype.get = function(key) {
   } else if (comp > 0) {
     return this.right.get(key);
   } else {
-    return new Some(this.value);
+    return new mugs.Some(this.value);
   }
 };
 /**
   Finds the smallest key in the tree
   Complexity of O ( log n )
 */
-RedBlackNode.prototype.minKey = function() {
+mugs.RedBlackNode.prototype.minKey = function() {
   if (this.left.isEmpty()) {
     return this.key;
   } else {
@@ -135,7 +133,7 @@ RedBlackNode.prototype.minKey = function() {
   Finds the largest key in the tree
   Complexity of O ( log n )
 */
-RedBlackNode.prototype.maxKey = function() {
+mugs.RedBlackNode.prototype.maxKey = function() {
   if (this.right.isEmpty()) {
     return this.key;
   } else {
@@ -145,7 +143,7 @@ RedBlackNode.prototype.maxKey = function() {
 /**
   Checks if the given key exists in the tree
 */
-RedBlackNode.prototype.containsKey = function(key) {
+mugs.RedBlackNode.prototype.containsKey = function(key) {
   var comp;
   comp = this.comparator(key, this.key);
   if (comp < 0) {
@@ -158,27 +156,27 @@ RedBlackNode.prototype.containsKey = function(key) {
 };
 /**
   returns a sorted List with all of the keys stored in the tree
-  @return {List} A sorted List with all of the key stored in the tree
+  @return {mugs.List} A sorted List with all of the key stored in the tree
 */
-RedBlackNode.prototype.keys = function() {
+mugs.RedBlackNode.prototype.keys = function() {
   var elements;
   elements = [];
   this.inorderTraversal(function(kv) {
     return elements.push(kv.key);
   });
-  return new List().buildFromArray(elements);
+  return new mugs.List().buildFromArray(elements);
 };
 /**
   returns a sorted List with all of the values stored in the tree
-  @return {List} A sorted List with all of the values stored in the tree
+  @return {mugs.List} A sorted List with all of the values stored in the tree
 */
-RedBlackNode.prototype.values = function() {
+mugs.RedBlackNode.prototype.values = function() {
   var elements;
   elements = [];
   this.inorderTraversal(function(kv) {
     return elements.push(kv.value);
   });
-  return new List().buildFromArray(elements);
+  return new mugs.List().buildFromArray(elements);
 };
 /**
   This will do an inorderTraversal of the tree applying the function 'f'
@@ -187,7 +185,7 @@ RedBlackNode.prototype.values = function() {
 
   @param {Function} f A function taking one arguments with properties key and value
 */
-RedBlackNode.prototype.inorderTraversal = function(f) {
+mugs.RedBlackNode.prototype.inorderTraversal = function(f) {
   var bigger, smaller;
   smaller = !this.left.isEmpty() ? this.left.inorderTraversal(f) : void 0;
   f({
@@ -200,7 +198,7 @@ RedBlackNode.prototype.inorderTraversal = function(f) {
   Returns a new tree with the inserted element.  If the Tree already contains that key
   the old value is replaced with the new value
 */
-RedBlackNode.prototype.insert = function(key, value) {
+mugs.RedBlackNode.prototype.insert = function(key, value) {
   var t, that, __insert;
   that = this;
   __insert = function(tree) {
@@ -208,23 +206,23 @@ RedBlackNode.prototype.insert = function(key, value) {
     c = tree.color, l = tree.left, k = tree.key, v = tree.value, r = tree.right;
     compare = that.comparator(key, k);
     if (tree.isEmpty()) {
-      return new RedBlackNode(RED, new RedBlackLeaf(BLACK), key, value, new RedBlackLeaf(BLACK));
+      return new mugs.RedBlackNode(mugs.RedBlack.RED, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK), key, value, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK));
     } else if (compare < 0) {
       return that.balance(c, __insert(l), k, v, r);
     } else if (compare > 0) {
       return that.balance(c, l, k, v, __insert(r));
     } else {
-      return new RedBlackNode(RED, tree.left, key, value, tree.right);
+      return new mugs.RedBlackNode(mugs.RedBlack.RED, tree.left, key, value, tree.right);
     }
   };
   t = __insert(that);
-  return new RedBlackNode(BLACK, t.left, t.key, t.value, t.right);
+  return new mugs.RedBlackNode(mugs.RedBlack.BLACK, t.left, t.key, t.value, t.right);
 };
 /**
   Returns a new tree without the 'key'
   Port from this racket example: http://matt.might.net/articles/red-black-delete/
 */
-RedBlackNode.prototype.remove = function(key) {
+mugs.RedBlackNode.prototype.remove = function(key) {
   var compare, __rm;
   __rm = __bind(function(tree) {
     var isExternalNode, isInternalNode, isNodeWithOneChildLeft, isNodeWithOneChildRight, max, newLeftTree, value;
@@ -235,37 +233,37 @@ RedBlackNode.prototype.remove = function(key) {
       return !tree.left.isEmpty() && !tree.right.isEmpty();
     };
     isNodeWithOneChildLeft = function() {
-      return (tree.color === BLACK) && (tree.left.color === RED && tree.right.isEmpty());
+      return (tree.color === mugs.RedBlack.BLACK) && (tree.left.color === mugs.RedBlack.RED && tree.right.isEmpty());
     };
     isNodeWithOneChildRight = function() {
-      return (tree.color === BLACK) && (tree.right.color === RED && tree.left.isEmpty());
+      return (tree.color === mugs.RedBlack.BLACK) && (tree.right.color === mugs.RedBlack.RED && tree.left.isEmpty());
     };
     if (tree.isEmpty()) {
       return tree;
     } else if (isExternalNode()) {
-      if (tree.color === RED) {
-        return new RedBlackLeaf(BLACK);
-      } else if (tree.color === BLACK) {
-        return new RedBlackLeaf(DOUBLE_BLACK);
+      if (tree.color === mugs.RedBlack.RED) {
+        return new mugs.RedBlackLeaf(mugs.RedBlack.BLACK);
+      } else if (tree.color === mugs.RedBlack.BLACK) {
+        return new mugs.RedBlackLeaf(mugs.RedBlack.DOUBLE_BLACK);
       }
     } else if (isNodeWithOneChildLeft()) {
-      return new RedBlackNode(BLACK, tree.left.left, tree.left.key, tree.left.value, tree.left.right);
+      return new mugs.RedBlackNode(mugs.RedBlack.BLACK, tree.left.left, tree.left.key, tree.left.value, tree.left.right);
     } else if (isNodeWithOneChildRight()) {
-      return new RedBlackNode(BLACK, tree.right.left, tree.right.key, tree.right.value, tree.right.right);
+      return new mugs.RedBlackNode(mugs.RedBlack.BLACK, tree.right.left, tree.right.key, tree.right.value, tree.right.right);
     } else if (isInternalNode()) {
       max = tree.left.maxKey();
       value = tree.get(max).get;
       newLeftTree = tree.left.remove(max);
       return this.bubble(tree.color, newLeftTree, max, value, tree.right);
     } else {
-      return new RedBlackNode(tree.color, tree.left, tree.key, tree.value, tree.right);
+      return new mugs.RedBlackNode(tree.color, tree.left, tree.key, tree.value, tree.right);
     }
   }, this);
   compare = this.comparator(key, this.key);
   if (compare < 0) {
-    return new RedBlackNode(this.color, this.left.remove(key), this.key, this.value, this.right);
+    return new mugs.RedBlackNode(this.color, this.left.remove(key), this.key, this.value, this.right);
   } else if (compare > 0) {
-    return new RedBlackNode(this.color, this.left, this.key, this.value, this.right.remove(key));
+    return new mugs.RedBlackNode(this.color, this.left, this.key, this.value, this.right.remove(key));
   } else {
     return __rm(this);
   }
@@ -275,11 +273,11 @@ RedBlackNode.prototype.remove = function(key) {
   or eliminates them entirely if possible.
   A black is subtracted from the children, and added to the parent:
 */
-RedBlackNode.prototype.bubble = function(color, left, key, value, right) {
-  if (left.color === DOUBLE_BLACK || right.color === DOUBLE_BLACK) {
-    return this.balance(color.add(), new RedBlackNode(left.color.subtract(), left.left, left.key, left.value, left.right), key, value, new RedBlackNode(right.color.subtract(), right.left, right.key, right.value, right.right));
+mugs.RedBlackNode.prototype.bubble = function(color, left, key, value, right) {
+  if (left.color === mugs.RedBlack.DOUBLE_BLACK || right.color === mugs.RedBlack.DOUBLE_BLACK) {
+    return this.balance(color.add(), new mugs.RedBlackNode(left.color.subtract(), left.left, left.key, left.value, left.right), key, value, new mugs.RedBlackNode(right.color.subtract(), right.left, right.key, right.value, right.right));
   } else {
-    return new RedBlackNode(color, left, key, value, right);
+    return new mugs.RedBlackNode(color, left, key, value, right);
   }
 };
 /**
@@ -316,51 +314,45 @@ RedBlackNode.prototype.bubble = function(color, left, key, value, right) {
   The solution is to transform it into a node with two black children and a left (or right
   depending on the initial configuration) red node.
 */
-RedBlackNode.prototype.balance = function(color, left, key, value, right) {
+mugs.RedBlackNode.prototype.balance = function(color, left, key, value, right) {
   var leftFollowedByLeft, leftFollowedByRight, leftIsNegativeBlack, rightFollowedByLeft, rightFollowedByRight, rightIsNegativeBlack;
   leftFollowedByLeft = function() {
-    return (!left.isEmpty() && !left.left.isEmpty()) && (color === BLACK || color === DOUBLE_BLACK) && left.color === RED && left.left.color === RED;
+    return (!left.isEmpty() && !left.left.isEmpty()) && (color === mugs.RedBlack.BLACK || color === mugs.RedBlack.DOUBLE_BLACK) && left.color === mugs.RedBlack.RED && left.left.color === mugs.RedBlack.RED;
   };
   leftFollowedByRight = function() {
-    return (!left.isEmpty() && !left.right.isEmpty()) && (color === BLACK || color === DOUBLE_BLACK) && left.color === RED && left.right.color === RED;
+    return (!left.isEmpty() && !left.right.isEmpty()) && (color === mugs.RedBlack.BLACK || color === mugs.RedBlack.DOUBLE_BLACK) && left.color === mugs.RedBlack.RED && left.right.color === mugs.RedBlack.RED;
   };
   rightFollowedByLeft = function() {
-    return (!right.isEmpty() && !right.left.isEmpty()) && (color === BLACK || color === DOUBLE_BLACK) && right.color === RED && right.left.color === RED;
+    return (!right.isEmpty() && !right.left.isEmpty()) && (color === mugs.RedBlack.BLACK || color === mugs.RedBlack.DOUBLE_BLACK) && right.color === mugs.RedBlack.RED && right.left.color === mugs.RedBlack.RED;
   };
   rightFollowedByRight = function() {
-    return (!right.isEmpty() && !right.right.isEmpty()) && (color === BLACK || color === DOUBLE_BLACK) && right.color === RED && right.right.color === RED;
+    return (!right.isEmpty() && !right.right.isEmpty()) && (color === mugs.RedBlack.BLACK || color === mugs.RedBlack.DOUBLE_BLACK) && right.color === mugs.RedBlack.RED && right.right.color === mugs.RedBlack.RED;
   };
   leftIsNegativeBlack = function() {
-    return (!left.isEmpty()) && left.color === NEGATIVE_BLACK;
+    return (!left.isEmpty()) && left.color === mugs.RedBlack.NEGATIVE_BLACK;
   };
   rightIsNegativeBlack = function() {
-    return (!right.isEmpty()) && right.color === NEGATIVE_BLACK;
+    return (!right.isEmpty()) && right.color === mugs.RedBlack.NEGATIVE_BLACK;
   };
   if (leftFollowedByLeft()) {
-    return new RedBlackNode(color.subtract(), new RedBlackNode(BLACK, left.left.left, left.left.key, left.left.value, left.left.right), left.key, left.value, new RedBlackNode(BLACK, left.right, key, value, right));
+    return new mugs.RedBlackNode(color.subtract(), new mugs.RedBlackNode(mugs.RedBlack.BLACK, left.left.left, left.left.key, left.left.value, left.left.right), left.key, left.value, new mugs.RedBlackNode(mugs.RedBlack.BLACK, left.right, key, value, right));
   } else if (leftFollowedByRight()) {
-    return new RedBlackNode(color.subtract(), new RedBlackNode(BLACK, left.left, left.key, left.value, left.right.left), left.right.key, left.right.value, new RedBlackNode(BLACK, right.right.right, key, value, right));
+    return new mugs.RedBlackNode(color.subtract(), new mugs.RedBlackNode(mugs.RedBlack.BLACK, left.left, left.key, left.value, left.right.left), left.right.key, left.right.value, new mugs.RedBlackNode(mugs.RedBlack.BLACK, right.right.right, key, value, right));
   } else if (rightFollowedByLeft()) {
-    return new RedBlackNode(color.subtract(), new RedBlackNode(BLACK, left, key, value, right.left.left), right.left.key, right.left.value, new RedBlackNode(BLACK, right.left.right, right.key, right.value, right.right));
+    return new mugs.RedBlackNode(color.subtract(), new mugs.RedBlackNode(mugs.RedBlack.BLACK, left, key, value, right.left.left), right.left.key, right.left.value, new mugs.RedBlackNode(mugs.RedBlack.BLACK, right.left.right, right.key, right.value, right.right));
   } else if (rightFollowedByRight()) {
-    return new RedBlackNode(color.subtract(), new RedBlackNode(BLACK, left, key, value, right.left), right.key, right.value, new RedBlackNode(BLACK, right.right.left, right.right.key, right.right.value, right.right.right));
+    return new mugs.RedBlackNode(color.subtract(), new mugs.RedBlackNode(mugs.RedBlack.BLACK, left, key, value, right.left), right.key, right.value, new mugs.RedBlackNode(mugs.RedBlack.BLACK, right.right.left, right.right.key, right.right.value, right.right.right));
   } else if (leftIsNegativeBlack()) {
-    return new RedBlackNode(BLACK, new RedBlackNode(BLACK, this.balance(RED, left.left.left, left.left.key, left.left.value, left.left.right), left.key, left.value, left.right.left), left.right.key, left.right.value, new RedBlackNode(BLACK, right.left.right, key, value, right));
+    return new mugs.RedBlackNode(mugs.RedBlack.BLACK, new mugs.RedBlackNode(mugs.RedBlack.BLACK, this.balance(mugs.RedBlack.RED, left.left.left, left.left.key, left.left.value, left.left.right), left.key, left.value, left.right.left), left.right.key, left.right.value, new mugs.RedBlackNode(mugs.RedBlack.BLACK, right.left.right, key, value, right));
   } else if (rightIsNegativeBlack()) {
-    return new RedBlackNode(BLACK, new RedBlackNode(BLACK, left, right.key, right.value, right.left.left), right.right.key, right.right.value, new RedBlackNode(BLACK, right.left.right, key, value, this.balance(RED, right.right.left, right.left.key, right.left.value, right.right.right)));
+    return new mugs.RedBlackNode(mugs.RedBlack.BLACK, new mugs.RedBlackNode(mugs.RedBlack.BLACK, left, right.key, right.value, right.left.left), right.right.key, right.right.value, new mugs.RedBlackNode(mugs.RedBlack.BLACK, right.left.right, key, value, this.balance(mugs.RedBlack.RED, right.right.left, right.left.key, right.left.value, right.right.right)));
   } else {
-    return new RedBlackNode(color, left, key, value, right);
+    return new mugs.RedBlackNode(color, left, key, value, right);
   }
 };
 /**
   A node is never empty
 */
-RedBlackNode.prototype.isEmpty = function() {
+mugs.RedBlackNode.prototype.isEmpty = function() {
   return false;
 };
-if (typeof exports != "undefined" && exports !== null) {
-  exports.Leaf = RedBlackLeaf;
-  exports.RedBlackNode = RedBlackNode;
-  exports.RED = RED;
-  exports.BLACK = BLACK;
-}
