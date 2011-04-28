@@ -12,7 +12,7 @@ table { font: normal normal normal 13px/1.231 arial, helvetica, clean, sans-seri
 }
 
 #editor {
-  width: 818px;
+  width: 100%;
   height: 200px;
   font-size: 14px;
   padding: 15px;
@@ -60,7 +60,8 @@ td {
 }
 
 #content {
-  padding: 20px 40px 20px 40px;
+  width: 94%;
+  padding: 3%;
   background: #F5F5F5;
   border-bottom: 10px solid #666;
   border-top: 10px solid #666;
