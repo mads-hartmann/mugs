@@ -11,20 +11,15 @@ table { font: normal normal normal 13px/1.231 arial, helvetica, clean, sans-seri
   border: 5px solid #666;
 }
 
-.ace_scroller {
-  overflow-x: hidden !important;
-}
-
 #editor {
   width: 818px;
   height: 200px;
+  font-size: 14px;
+  padding: 15px;
 }
 
 pre { margin: 0px;}
 
-textarea {
-  margin: 20px 0px;
-}
 
 button#evaluate {
   float: right;
@@ -37,7 +32,7 @@ button#evaluate:hover {
 }
 
 thead td {
-  font-size: 13px;  
+  font-size: 13px;
 }
 
 thead tr {
@@ -52,7 +47,7 @@ table {
 table,th, td {
   border: 1px solid black;
 }
-td { 
+td {
   padding: 5px ;
   vertical-align:top;
 }
@@ -61,36 +56,19 @@ td {
   text-align: left;
   width: 75%;
   margin: 0px auto;
-  background: #F5F5F5;
   color: #333;
-  padding: 20px 40px 20px 40px;
-  border-bottom: 10px solid #666;
 }
 
-#menu {
-  text-align: left;
-  width: 75%;
-  margin: 0px auto;
-  border-top: 10px solid #666;
-  border-bottom: 10px solid #666;
-  list-style: none;
+#content {
   padding: 20px 40px 20px 40px;
-  background: #dee1e1;
-  overflow: hidden;
-  display: inline-block;
-  display: block;
-  font-size: 14px;
   background: #F5F5F5;
+  border-bottom: 10px solid #666;
+  border-top: 10px solid #666;
 }
 
-#menu li {
-  float: left;
-  padding-right: 10px;
-}
-
-#content ul {
-  list-style: none;
-  padding-left: 0px;
+#footer {
+  text-align: center;
+  color: #7d7d7d;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -105,10 +83,16 @@ h4, h5 {
   text-transform: uppercase;
 }
 
-h1 {  font-size: 28px;
-      letter-spacing: 1px;}
-h2 {  font-size: 22px;
-      margin-top: 0px; }
+h1 {
+  font-size: 28px;
+  letter-spacing: 1px;
+  text-align: left;
+}
+h2 {
+  font-size: 22px;
+  margin-top: 0px;
+  text-align: left;
+}
 h3 {  font-size: 18px; }
 h4 {  font-size: 16px; }
 h5 {  font-size: 12px; }
@@ -120,7 +104,7 @@ a {
 .header
 {
 	clear: both;
-	margin: 50px 0px;
+	margin: 0px 0px;
 }
 
 /*
@@ -135,15 +119,15 @@ a {
 	line-height: 0;
 	height: 0;
 }
- 
+
 .clearfix {
 	display: inline-block;
 }
- 
+
 html[xmlns] .clearfix {
 	display: block;
 }
- 
+
 * html .clearfix {
 	height: 1%;
 }
