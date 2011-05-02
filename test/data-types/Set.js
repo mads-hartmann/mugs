@@ -84,5 +84,6 @@ $(document).ready(function(){
   
   generic_set_test("RBSet",mugs.TreeSet);
   generic_set_test("LLRBSet",mugs.LLRBSet);
+  generic_set_test("HashSet",mugs.HashSet);
   
 });

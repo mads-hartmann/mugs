@@ -40,6 +40,7 @@ mugs.require("mugs.List")
   </pre>
 
   @class HashMap
+  @augments mugs.Traversable
   @param {Array} keyValuePairs An array containing objects with the properties key & value.
   @param {Bool} initialize This is only used internally. It's true if the bucket array should be initialize
 ###

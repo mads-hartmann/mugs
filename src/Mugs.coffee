@@ -347,6 +347,10 @@ mugs.addDependency("TreeMap.js",
 mugs.addDependency("HashMap.js",
                    ["mugs.HashMap"],
                    ["mugs.List"])
+                   
+mugs.addDependency("HashSet.js",
+                   ["mugs.HashSet"],
+                   ["mugs.HashMap"])
 
 mugs.addDependency("LLRedBlackTree.js", 
                    ["mugs.LLRBNode", "mugs.LLRBLeaf"], 
