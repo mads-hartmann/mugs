@@ -200,6 +200,21 @@ Miscellaneous Methods
 ###
 
 ###*
+  Returns index of the first element satisfying a predicate, or -1
+  @parem p The predicate to apply to each object
+  @return The index of the first element satisfying a predicate, or -1
+###
+mugs.List.prototype.findIndexOf = ( p ) -> 
+  xs = this 
+  index = 0
+  while not xs.isEmpty() and not p(xs.head())
+    index++
+    xs = xs.tail()
+    if xs.isEmpty() then index = -1
+  index  
+  
+
+###*
    Returns the number of elements in the list 
 ### 
 mugs.List.prototype.size = () -> 

@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   var generic_list_test = function(name, List){
 
-    module(name)
+    module(name);
 
     test("It's possible to create a list passing an array", function() {
       var list = new List([1,2,3]);
@@ -94,7 +94,15 @@ $(document).ready(function(){
       ok(list.get(2).get() == shouldBe.get(2).get());
     });
 
-  }
+    test("findIndexOf", function() {
+      var list = new mugs.List([1,2,3,4,5]);
+      ok(list.findIndexOf(function(item){ return (item > 3); }) == 3);
+      ok(list.findIndexOf(function(item){ return (item > 1); }) == 1);
+      ok(list.findIndexOf(function(item){ return (item > 0); }) === 0);
+      ok(list.findIndexOf(function(item){ return (item > 10); }) == -1); 
+    });
+
+  };
 
   generic_list_test("List" , mugs.List);
 
