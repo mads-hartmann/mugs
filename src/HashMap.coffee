@@ -24,13 +24,19 @@ mugs.require("mugs.List")
   JS_Cols (http://jscols.com/).
   
   <pre>
-  --------------------------------------------------------
+  -----------------------------------------------------------
   Core operations of the Map ADT
-  --------------------------------------------------------
-  get(key)                                        O(log N)
-  insert(key,item)                                O(log N)
-  remove(key)                                     O(log N)
-  contains(key)                                   O(log N)
+  -----------------------------------------------------------
+  B is the number of items in the bucket array (101 by default)
+  b is the number of items in the current bucket
+  -----------------------------------------------------------
+  get(key)          O(log B + b) 
+  insert(key,item)  O(log B + b)
+  remove(key)       O(log B + b)
+  contains(key)     O(log B + b)
+  forEach( f )      O(B * b * O(f))
+  values()          O(B * b)
+  keys()            O(B * b)
   </pre>
 
   @class HashMap
