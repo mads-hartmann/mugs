@@ -15,19 +15,23 @@
 
 	<!-- Library classes -->
 	<script src="../bin/Mugs.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/Option.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/Traversable.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/List.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/RedBlackTree.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/TreeMap.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../bin/TreeSet.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/Stack.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/Queue.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/CompleteBinaryTree.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/RandomAccessList.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/LLRedBlackTree.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/LLRBSet.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../bin/LLRBMap.js" type="text/javascript" charset="utf-8"></script>
+
+    <script>
+        mugs.basePath = "../bin/";
+        mugs.require("mugs.Traversable")
+        mugs.require("mugs.Some");
+        mugs.require("mugs.None");
+        mugs.require("mugs.List");
+        mugs.require("mugs.TreeMap");
+        mugs.require("mugs.TreeSet");
+        mugs.require("mugs.Stack");
+        mugs.require("mugs.Queue");
+        mugs.require("mugs.RandomAccessList")
+        mugs.require("mugs.LLRBSet");
+        mugs.require("mugs.LLRBMap");
+        mugs.require("mugs.HashMap");
+        
+    </script>
 
 	<!-- Test classes (data structures) -->
 	<script src="data-structures/RedBlackTree.js" type="text/javascript" charset="utf-8"></script>
@@ -37,7 +41,7 @@
 
 	<!-- Test classes (data types) -->
 	<script src="data-types/Traversable.js" type="text/javascript" charset="utf-8"></script>
-  <script src="data-types/Option.js" type="text/javascript" charset="utf-8"></script>
+    <script src="data-types/Option.js" type="text/javascript" charset="utf-8"></script>
 	<script src="data-types/List.js" type="text/javascript" charset="utf-8"></script>
 	<script src="data-types/Stack.js" type="text/javascript" charset="utf-8"></script>
 	<script src="data-types/Queue.js" type="text/javascript" charset="utf-8"></script>

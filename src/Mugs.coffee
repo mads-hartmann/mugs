@@ -2,7 +2,7 @@
 
   This is the base file of the mugs library. It declares the mugs namespace and 
   includes support for dynamic dependency management. It is largely inspired by 
-  the base.js in both js_cols and google closure javascript libraries 
+  the base.js in both js_cols (jscols.com) and google closure javascript libraries 
 
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ### 
@@ -250,26 +250,119 @@ mugs.getPathFromDeps_ = (rule) ->
     return null
 
 
-# 
-# Adding all of the dependencies so it knows which files to 
-# include
-# 
+###
+  --------------------------------------------------------------------------
+  Methods related to creating a UID on objects. This is used to deal 
+  with hashing due to the lack of a standard hashCode function on 
+  objects. 
+  --------------------------------------------------------------------------
+###
+
+###
+  Gets a unique ID for an object. This mutates the object so that further
+  calls with the same object as a parameter returns the same value. The unique
+  ID is guaranteed to be unique across the current session amongst objects that
+  are passed into {@code getUid}. There is no guarantee that the ID is unique
+  or consistent across sessions. It is unsafe to generate unique ID for
+  function prototypes.
+  
+  @param {Object} obj The object to get the unique ID for.
+  @return {number} The unique ID for the object.
+  @public
+###
+mugs.getUid = (obj) ->
+  return obj[mugs.UID_PROPERTY_] ||
+      (obj[mugs.UID_PROPERTY_] = ++mugs.uidCounter_);
+
+###
+  Removes the unique ID from an object. This is useful if the object was
+  previously mutated using {@code mugs.getUid} in which case the mutation is
+  undone.
+  @param {Object} obj The object to remove the unique ID field from.
+  @public
+###
+mugs.removeUid = (obj) ->
+  if 'removeAttribute' of obj
+    obj.removeAttribute(mugs.UID_PROPERTY_);
+  
+  try 
+    delete obj[mugs.UID_PROPERTY_];
+  catch ex
+
+###
+  Name for unique ID property. Initialized in a way to help avoid collisions
+  with other closure javascript on the same page.
+  @type {string}
+  @private
+### 
+mugs.UID_PROPERTY_ = 'mugs_uid_' +
+    Math.floor(Math.random() * 2147483648).toString(36)
+
+###
+  Counter for UID.
+  @type {number}
+  @private
+###
+mugs.uidCounter_ = 0;
 
 
-mugs.addDependency("Traversable.js", ["mugs.Traversable"], [])
-mugs.addDependency("Option.js", ["mugs.Some", "mugs.None"], [])
+###
+  --------------------------------------------------------------------------
+  Adding all of the dependencies so it knows which files to include
+  --------------------------------------------------------------------------
+###
 
-mugs.addDependency("List.js", ["mugs.List"],["mugs.Traversable"])
-mugs.addDependency("Queue.js", ["mugs.Queue"], ["mugs.List"]) 
-mugs.addDependency("Stack.js", ["mugs.Stack"], ["mugs.List"]) 
+mugs.addDependency("Traversable.js", 
+                   ["mugs.Traversable"], 
+                   [])
 
-mugs.addDependency("RedBlackTree.js", ["mugs.RedBlack", "mugs.RedBlackLeaf", "mugs.RedBlackNode"], ["mugs.List"])
-mugs.addDependency("TreeSet.js", ["mugs.TreeSet"], ["mugs.RedBlackLeaf", "mugs.RedBlackNode"])
-mugs.addDependency("TreeMap.js", ["mugs.TreeMap"], ["mugs.RedBlackLeaf", "mugs.RedBlackNode"])
+mugs.addDependency("Option.js", 
+                   ["mugs.Some", "mugs.None"],
+                   [])
 
-mugs.addDependency("LLRedBlackTree.js", ["mugs.LLRBNode", "mugs.LLRBLeaf"], ["mugs.List"])
-mugs.addDependency("LLRBMap.js", ["mugs.LLRBMap"], ["mugs.LLRBNode", "mugs.LLRBLeaf"])
-mugs.addDependency("LLRBSet.js", ["mugs.LLRBSet"], ["mugs.LLRBNode", "mugs.LLRBLeaf"])
+mugs.addDependency("List.js", 
+                   ["mugs.List"],
+                   ["mugs.Traversable"])
 
-mugs.addDependency("CompleteBinaryTree.js", ["mugs.CompleteBinaryTree", "mugs.CompleteBinaryTreeNode", "mugs.CompleteBinaryTreeLeaf"], [])
-mugs.addDependency("RandomAccessList.js", ["mugs.RandomAccessList"], ["mugs.CompleteBinaryTreeNode", "mugs.CompleteBinaryTreeLeaf", "mugs.List"])
+mugs.addDependency("Queue.js", 
+                   ["mugs.Queue"], 
+                   ["mugs.List"]) 
+
+mugs.addDependency("Stack.js", 
+                   ["mugs.Stack"], 
+                   ["mugs.List"]) 
+
+mugs.addDependency("RedBlackTree.js", 
+                   ["mugs.RedBlack", "mugs.RedBlackLeaf", "mugs.RedBlackNode"], 
+                   ["mugs.List"])
+                   
+mugs.addDependency("TreeSet.js", 
+                   ["mugs.TreeSet"], 
+                   ["mugs.RedBlackLeaf", "mugs.RedBlackNode"])
+                   
+mugs.addDependency("TreeMap.js", 
+                   ["mugs.TreeMap"], 
+                   ["mugs.RedBlackLeaf", "mugs.RedBlackNode"])
+
+mugs.addDependency("HashMap.js",
+                   ["mugs.HashMap"],
+                   ["mugs.List"])
+
+mugs.addDependency("LLRedBlackTree.js", 
+                   ["mugs.LLRBNode", "mugs.LLRBLeaf"], 
+                   ["mugs.List"])
+                   
+mugs.addDependency("LLRBMap.js", 
+                   ["mugs.LLRBMap"], 
+                   ["mugs.LLRBNode", "mugs.LLRBLeaf"])
+                   
+mugs.addDependency("LLRBSet.js", 
+                   ["mugs.LLRBSet"], 
+                   ["mugs.LLRBNode", "mugs.LLRBLeaf"])
+
+mugs.addDependency("CompleteBinaryTree.js", 
+                   ["mugs.CompleteBinaryTree", "mugs.CompleteBinaryTreeNode", "mugs.CompleteBinaryTreeLeaf"], 
+                   [])
+mugs.addDependency("RandomAccessList.js", 
+                   ["mugs.RandomAccessList"], 
+                   ["mugs.CompleteBinaryTreeNode", "mugs.CompleteBinaryTreeLeaf", "mugs.List"])

@@ -27,7 +27,7 @@ $(document).ready(function(){
       var map = new Map();
       for ( var i = 0 ; i < 1000 ; i++ ) {
         map = map.insert(i,i);
-      };
+      }
       ok(map.values().size() == 1000); //TODO: Use size on Map
     });
 
@@ -135,9 +135,10 @@ $(document).ready(function(){
       ok( map.get(5).get() == shouldbe.get(5).get() );
       ok( map.get(6).get() == shouldbe.get(6).get() );
     });
-  }
+  };
 
   generic_map_test("TreeMap", mugs.TreeMap);
   generic_map_test("LLRBMap", mugs.LLRBMap);
+  generic_map_test("HashMap", mugs.HashMap);
 
 });
