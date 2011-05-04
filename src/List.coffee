@@ -122,7 +122,7 @@ mugs.List.prototype.remove = (index) ->
     # can remove the following if/else with this.tail().getOrElse(new List()) once
     # tail and head are functions that return an option instead.
     if !this.tail().isEmpty()
-      this.cons(this.tail().first().get(), this.tail().tail)
+      this.cons(this.tail().first().get(), this.tail().tail())
     else
       new mugs.List()
   else
