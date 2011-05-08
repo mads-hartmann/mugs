@@ -31,7 +31,40 @@
         mugs.require("mugs.LLRBMap");
         mugs.require("mugs.HashMap");
         mugs.require("mugs.HashSet");
+        mugs.require("mugs.Multimap");        
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
         
+        var equalsKVObj = function(kv1, kv2) {
+            if (kv1.key == kv2.key && kv1.value == kv2.value ) {
+              return true;
+            } else {
+              return false;
+            }
+        };
+        
+        /* 
+          Function that checks if two arrays are equal. It can compare
+          arrays with numbers or objects with key & value properties
+        */
+        var equalsArr = function(xs,ys) {
+            if (xs.length != ys.length) {
+                return false;
+            }
+
+            var i;
+            for ( i = 0 ; i < xs.length ; i++) {
+                if (typeof xs[i] == "number" && xs[i] != ys[i]) {
+                    return false;
+                }
+                if (typeof xs[i] == "object" && !equalsKVObj(xs[i], ys[i])) {
+                    return false;
+                }
+            }
+            return true;
+        };
+                
     </script>
 
 	<!-- Test classes (data structures) -->
@@ -48,6 +81,7 @@
 	<script src="data-types/Queue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="data-types/Set.js" type="text/javascript" charset="utf-8"></script>
 	<script src="data-types/Map.js" type="text/javascript" charset="utf-8"></script>
+    <script src="data-types/Multimap.js" type="text/javascript" charset="utf-8"></script>
 </head>
 	<body>
 		<h1 id="qunit-header">QUnit tests of all collection classes</h1>

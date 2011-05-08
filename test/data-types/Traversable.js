@@ -6,34 +6,6 @@
 
 $(document).ready(function(){
 
-  var equalsKVObj = function(kv1, kv2) {
-    if (kv1.key == kv2.key && kv1.value == kv2.value ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  /* Function that checks if two arrays are equal.
-     TODO: Move to some place where other tests can use it as well
-  */
-  var equals = function(xs,ys) {
-    if (xs.length != ys.length) {
-      return false;
-    }
-
-    var i;
-    for ( i = 0 ; i < xs.length ; i++) {
-      if (typeof xs[i] == "number" && xs[i] != ys[i]) {
-          return false;
-      }
-      if (typeof xs[i] == "object" && !equalsKVObj(xs[i], ys[i])) {
-        return false;
-      }
-    }
-    return true;
-  };
-
   var generic_traversable_test = function(name, Constructor, support){
 
     module("Traversable of " + name);
@@ -45,10 +17,7 @@ $(document).ready(function(){
 
       var list = new Constructor(support.map.input).map( mapFunction ).asArray();
 
-      console.log(name);
-      console.log(list);
-
-      ok(equals(list, support.map.expected));
+      ok(equalsArr(list, support.map.expected));
     });
 
     test("flatMap", function() {
@@ -56,7 +25,7 @@ $(document).ready(function(){
         return new Constructor(support.flatMap.input);
       }).asArray();
 
-      ok(equals(list, support.flatMap.expected));
+      ok(equalsArr(list, support.flatMap.expected));
     });
 
     test("filter", function() {
@@ -66,7 +35,7 @@ $(document).ready(function(){
 
       var list = new Constructor(support.filter.input).filter(filterFunction).asArray();
 
-      ok(equals(list, support.filter.expected));
+      ok(equalsArr(list, support.filter.expected));
     });
 
   };

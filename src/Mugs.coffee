@@ -370,3 +370,7 @@ mugs.addDependency("CompleteBinaryTree.js",
 mugs.addDependency("RandomAccessList.js", 
                    ["mugs.RandomAccessList"], 
                    ["mugs.CompleteBinaryTreeNode", "mugs.CompleteBinaryTreeLeaf", "mugs.List"])
+
+mugs.addDependency("Multimap.js",
+                   ["mugs.Multimap"],
+                   ["mugs.RedBlackLeaf", "mugs.RedBlackNode"])
