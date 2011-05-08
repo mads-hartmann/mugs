@@ -22,6 +22,8 @@ task 'jscoverage', 'instruments the source code for JSCoverage and start the JSC
   exec('jscoverage-server --no-instrument=/test/ --verbose --ip-address=0.0.0.0 --port=8080')
   
 task 'api-doc', 'Create API documentation', () -> 
-  exec("""java -jar /Users/Mads/dev/tools/jsdoc-toolkit/jsrun.jar /Users/Mads/dev/tools/jsdoc-toolkit/app/run.js -a -t=jsdoc-templates -d=api/ bin""")
+  exec("""java -jar /Users/Mads/dev/tools/jsdoc-toolkit/jsrun.jar /Users/Mads/dev/tools/jsdoc-toolkit/app/run.js -a -t=jsdoc-templates -d=api/ bin""", (err, stdout, stderr) ->
+    throw Error(err) if err
+    console.log stdout + stderr)
   
   
