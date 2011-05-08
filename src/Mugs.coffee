@@ -374,3 +374,8 @@ mugs.addDependency("RandomAccessList.js",
 mugs.addDependency("Multimap.js",
                    ["mugs.Multimap"],
                    ["mugs.RedBlackLeaf", "mugs.RedBlackNode"])
+
+
+mugs.addDependency("parallelSet.js",
+                   ["mugs.parallel.Set"], 
+                   ["mugs.RedBlackLeaf", "mugs.RedBlackNode"])
