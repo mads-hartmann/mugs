@@ -1,45 +1,50 @@
 $(document).ready(function(){
 
-  var List = mugs.List;
+    var List = mugs.List;
 
-  var generic_stack_test = function(name, Stack){
+    var implements_Stack = function(name, Stack){
 
-    module(name);
+        module(name);
 
-    test("You can create a Stack using multiple arguments", function() {
-      var stack = new Stack([1,2,3,4,5]);      
-      ok( equalsArr( stack.asArray(), [1,2,3,4,5]));
-      
-    });
+        test("constructor", function() {
+            var stack = new Stack([1,2,3,4,5]);      
+            ok( equalsArr( stack.asArray(), [1,2,3,4,5]));
 
-    test("You can pop a value from the stack" ,function() {
-      var stack = new Stack([1,2,3,4,5]).pop(),
-      values = stack.values();
+        });
 
-      ok(!values.get(0).isEmpty());
-      ok(!values.get(1).isEmpty());
-      ok(!values.get(2).isEmpty());
-      ok(!values.get(3).isEmpty());
-      ok(values.get(4).isEmpty());
-    });
+        test("pop" ,function() {
+            var stack = new Stack([1,2,3,4,5]).pop(),
+            values = stack.values();
 
-    test("You can push a value onto the stack",function() {
-      var stack = new Stack([1,2,3]).push(4),
-      values = stack.values();
-      ok(!values.get(0).isEmpty());
-      ok(!values.get(1).isEmpty());
-      ok(!values.get(2).isEmpty());
-      ok(!values.get(3).isEmpty());
-      ok(values.get(4).isEmpty());
-    });
+            ok(!values.get(0).isEmpty());
+            ok(!values.get(1).isEmpty());
+            ok(!values.get(2).isEmpty());
+            ok(!values.get(3).isEmpty());
+            ok(values.get(4).isEmpty());
+        });
 
-    test("You can read the top value of the stack", function() {
-      var stack = new Stack([1,2,3]);
-      ok(stack.top() === 1);
-    });
+        test("push",function() {
+            var stack = new Stack([1,2,3]).push(4),
+            values = stack.values();
+            ok(!values.get(0).isEmpty());
+            ok(!values.get(1).isEmpty());
+            ok(!values.get(2).isEmpty());
+            ok(!values.get(3).isEmpty());
+            ok(values.get(4).isEmpty());
+        });
 
-  };
+        test("top", function() {
+            var stack = new Stack([1,2,3]);
+            ok(stack.top() === 1);
+        });
+        
+        test("pushAll", function() {
+            var stack = new Stack([1,2,3]).pushAll([4,5]);
+            ok( equalsArr( stack.asArray(), [4,5,1,2,3]));
+            
+        });
+    };
 
-  generic_stack_test("Stack", mugs.Stack);
+    implements_Stack("Stack", mugs.Stack);
 
 });
