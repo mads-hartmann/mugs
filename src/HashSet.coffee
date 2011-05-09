@@ -29,14 +29,14 @@ mugs.require("mugs.HashMap")
   </pre>
   
   @class HashSet
-  @augments mugs.Traversable
+  @augments mugs.Collection
 ###
 mugs.HashSet = (items, initialize) ->  
   kvs = ( {key: i, value: i} for i in items )
   this.hashMap_ = new mugs.HashMap(kvs) if initialize != false
   this
 
-mugs.HashSet.prototype = new mugs.Traversable()
+mugs.HashSet.prototype = new mugs.Collection()
 
 ###*
   Returns a new HashSet with the item inserted 
@@ -79,7 +79,7 @@ mugs.HashSet.prototype.buildFromHashMap = (hashMap) ->
 
 ###
 ---------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
+Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 ###
 

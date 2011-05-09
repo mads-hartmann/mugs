@@ -312,8 +312,8 @@ mugs.uidCounter_ = 0;
   --------------------------------------------------------------------------
 ###
 
-mugs.addDependency("Traversable.js", 
-                   ["mugs.Traversable"], 
+mugs.addDependency("Collection.js", 
+                   ["mugs.Collection"], 
                    [])
 
 mugs.addDependency("Option.js", 
@@ -322,7 +322,7 @@ mugs.addDependency("Option.js",
 
 mugs.addDependency("List.js", 
                    ["mugs.List"],
-                   ["mugs.Traversable"])
+                   ["mugs.Collection"])
 
 mugs.addDependency("Queue.js", 
                    ["mugs.Queue"], 

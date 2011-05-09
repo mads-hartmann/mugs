@@ -1,30 +1,30 @@
-mugs.provide("mugs.Traversable")
+mugs.provide("mugs.Collection")
 
 ###*
   This is base prototype for all collections. It implements a set of methods for all collections 
   in terms of the forEach method. 
   
-  This is to be considered a partial prototype. Prototypes which inherit from mugs.Traversable will have
+  This is to be considered a partial prototype. Prototypes which inherit from mugs.Collection will have
   to implement two methods: forEach and buildFromArray
   
   The forEach method should be implemented as efficiently as possible as this is used to implement
-  all the methods in the mugs.Traversable prototype. The buildFromArray method should simply be a constructor 
+  all the methods in the mugs.Collection prototype. The buildFromArray method should simply be a constructor 
   for the prototype which takes a plain old javascript array. 
 ###
-mugs.Traversable = () -> this
+mugs.Collection = () -> this
 
 ###*
   @private
 ###
-mugs.Traversable.prototype.buildFromArray = () -> throw new Error("Should be implemented in subclass")  
+mugs.Collection.prototype.buildFromArray = () -> throw new Error("Should be implemented in subclass")  
   
-mugs.Traversable.prototype.forEach = () -> throw new Error("Should be implemented in subclass")  
+mugs.Collection.prototype.forEach = () -> throw new Error("Should be implemented in subclass")  
   
 ###*
   Returns a new collection with the values of applying the function 'f' on each element in 'this'
   collection. 
 ###
-mugs.Traversable.prototype.map = ( f ) -> 
+mugs.Collection.prototype.map = ( f ) -> 
   elements = []
   this.forEach( (elem) -> elements.push( f(elem) ) )
   new this.buildFromArray(elements)
@@ -34,7 +34,7 @@ mugs.Traversable.prototype.map = ( f ) ->
   in 'this' collection. The function 'f' is expected to return an object that implements the forEach
   method itself. 
 ###
-mugs.Traversable.prototype.flatMap = ( f ) -> 
+mugs.Collection.prototype.flatMap = ( f ) -> 
   elements = []
   this.forEach( (x) -> f(x).forEach( (y) -> elements.push(y) ))
   new this.buildFromArray(elements)
@@ -42,7 +42,7 @@ mugs.Traversable.prototype.flatMap = ( f ) ->
 ###*
 
 ###
-mugs.Traversable.prototype.filter = ( f ) -> 
+mugs.Collection.prototype.filter = ( f ) -> 
   elements = []
   this.forEach( (elem) -> if f(elem) then elements.push(elem))
   new this.buildFromArray(elements)
@@ -50,7 +50,7 @@ mugs.Traversable.prototype.filter = ( f ) ->
 ###*
   contains
 ###
-mugs.Traversable.prototype.contains = (item) -> 
+mugs.Collection.prototype.contains = (item) -> 
   containsItem = false
   contains = (i) -> 
     if (i.value != undefined && i.value == item) || i == item
@@ -63,12 +63,12 @@ mugs.Traversable.prototype.contains = (item) ->
   
   @return The number of items in the collection
 ###
-mugs.Traversable.prototype.size = () ->
+mugs.Collection.prototype.size = () ->
   count = 0
   this.forEach( (i) -> count++ )
   return count
 
-mugs.Traversable.prototype.asArray = () ->
+mugs.Collection.prototype.asArray = () ->
   arr = []
   this.forEach( (e) -> arr.push(e) )
   arr

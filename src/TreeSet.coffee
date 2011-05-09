@@ -9,7 +9,7 @@ mugs.require('mugs.RedBlackLeaf')
 mugs.require('mugs.RedBlackNode')
 
 ###*
-  @augments mugs.Traversable
+  @augments mugs.Collection
   @class mugs.TreeSet provides the implementation of the abstract data type Set based on a Red Black Tree
   @public
 ###
@@ -24,7 +24,7 @@ mugs.TreeSet = (elements,comparator) ->
   this.tree.comparator = comparator if comparator?
   this
 
-mugs.TreeSet.prototype = new mugs.Traversable()
+mugs.TreeSet.prototype = new mugs.Collection()
 
 ###*
   Insert an element in the set. If the set already contains an element equal to the given value,
@@ -75,7 +75,7 @@ mugs.TreeSet.prototype.isEmpty = () ->
 
 ###
 ---------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
+Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 ###
 
@@ -89,7 +89,7 @@ mugs.TreeSet.prototype.buildFromArray = (arr) ->
   Applies function 'f' on each value in the set. This return nothing and is only invoked
   for the side-effects of f.
   @param f The unary function to apply on each element in the set.
-  @see mugs.Traversable
+  @see mugs.Collection
 ###
 mugs.TreeSet.prototype.forEach = ( f ) ->
   # the tree that the set is based on stores key-value pair on each node so we only

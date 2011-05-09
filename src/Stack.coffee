@@ -31,7 +31,7 @@ mugs.Stack = (items) ->
   this.list = new mugs.List(items).reverse()
   this
 
-mugs.Stack.prototype = new mugs.Traversable() 
+mugs.Stack.prototype = new mugs.Collection() 
 
 ###*
   Removes the top element from the stack.
@@ -90,7 +90,7 @@ mugs.Stack.prototype.buildFromList = (list) ->
   stack
 
 ###
-# Methods that traversable requires
+# Methods that Collection requires
 ### 
 
 mugs.Stack.prototype.forEach = ( f ) -> 

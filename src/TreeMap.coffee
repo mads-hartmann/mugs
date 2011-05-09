@@ -51,7 +51,7 @@ mugs.require('mugs.RedBlackNode')
   @param {Function=} comparator A comparator function that can compare the keys (optional). Will use a
                                 default comparator for integers if no comparator is given
   @public
-  @augments mugs.Traversable
+  @augments mugs.Collection
 ###
 mugs.TreeMap = (keyValuePairs, comparator) ->
   treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
@@ -62,7 +62,7 @@ mugs.TreeMap = (keyValuePairs, comparator) ->
   this.tree.comparator = comparator if comparator?
   this
 
-mugs.TreeMap.prototype = new mugs.Traversable()
+mugs.TreeMap.prototype = new mugs.Collection()
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ mugs.TreeMap.prototype.buildFromTree = (tree) ->
 
 ###
 ---------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
+Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 ###
 
@@ -139,7 +139,7 @@ mugs.TreeMap.prototype.buildFromArray = (arr) ->
   Applies function 'f' on each value in the map. This return nothing and is only invoked
   for the side-effects of f.
   
-  @see mugs.Traversable
+  @see mugs.Collection
 ###
 mugs.TreeMap.prototype.forEach = ( f ) ->
   this.tree.inorderTraversal( f )

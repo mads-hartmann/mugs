@@ -45,7 +45,7 @@ mugs.RandomAccessList = (items) ->
     this.__trees = new mugs.List()
     this
 
-mugs.RandomAccessList.prototype = new mugs.Traversable()
+mugs.RandomAccessList.prototype = new mugs.Collection()
 
 ###*
   Create a new list by prepending the item
@@ -204,7 +204,7 @@ mugs.RandomAccessList.prototype.buildFromList = (list) ->
   ral
 
 ### 
-  Related to Traversable 
+  Related to Collection 
 ###
 
 mugs.RandomAccessList.prototype.buildFromArray = (items) -> 

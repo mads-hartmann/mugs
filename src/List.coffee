@@ -22,7 +22,7 @@ mugs.require("mugs.None")
   get( index )                                        O(n)
   remove( index )                                     O(n)
   --------------------------------------------------------
-  Methods inherited from mugs.Traversable
+  Methods inherited from mugs.Collection
   --------------------------------------------------------
   map( f )                                            O(n)
   flatMap( f )                                        O(n)
@@ -37,7 +37,7 @@ mugs.require("mugs.None")
   size()                                              O(n)    TODO
   --------------------------------------------------------
   </pre>
-  @augments mugs.Traversable
+  @augments mugs.Collection
   @class List provides the implementation of the abstract data type List based on a Singly-Linked list
   @public
   @argument items An array of items to construct the List from
@@ -55,7 +55,7 @@ mugs.List = (items) ->
     this.isEmpty = () -> false
   this
 
-mugs.List.prototype = new mugs.Traversable()
+mugs.List.prototype = new mugs.Collection()
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ mugs.List.prototype.buildFromArray = (arr) ->
 ###*
   Applies function 'f' on each element in the list. This return nothing and is only invoked
   for the side-effects of f.
-  @see mugs.Traversable
+  @see mugs.Collection
 ###
 mugs.List.prototype.forEach = ( f ) ->
   if !this.isEmpty()

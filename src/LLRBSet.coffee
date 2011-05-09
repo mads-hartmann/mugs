@@ -9,7 +9,7 @@ mugs.require("mugs.LLRBNode")
 mugs.require("mugs.LLRBLeaf") 
 
 ###*
-  @augments mugs.Traversable
+  @augments mugs.Collection
   @class mugs.LLRBSet Contains the implementation of the Set data structure based on a Left Leaning Red-Black Tree
   @public
 ###
@@ -22,7 +22,7 @@ mugs.LLRBSet = (items,comparator) ->
   this.tree.comparator = comparator if comparator?
   this
 
-mugs.LLRBSet.prototype = new mugs.Traversable()
+mugs.LLRBSet.prototype = new mugs.Collection()
 
 ###*
   Insert an element in the set. If the set already contains an element equal to the given value,
@@ -73,7 +73,7 @@ mugs.LLRBSet.prototype.isEmpty = () ->
 
 ###
 ---------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
+Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 ###
 
@@ -87,7 +87,7 @@ mugs.LLRBSet.prototype.buildFromArray = (arr) ->
   Applies function 'f' on each value in the map. This return nothing and is only invoked
   for the side-effects of f.
   @param f The unary function to apply on each element in the set.
-  @see mugs.Traversable
+  @see mugs.Collection
 ###
 mugs.LLRBSet.prototype.forEach = ( f ) ->
   # the tree that the set is based on stores key-value pair on each node so we only

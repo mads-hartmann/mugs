@@ -50,7 +50,7 @@ mugs.require("mugs.LLRBLeaf")
   @param {Function=} comparator A comparator function that can compare the keys (optional). Will use a
                                 default comparator for integers if no comparator is given
   @public
-  @augments mugs.Traversable
+  @augments mugs.Collection
 ###
 mugs.LLRBMap = (keyValuePairs, comparator) ->
   treeUnderConstruction = new mugs.LLRBLeaf() 
@@ -61,7 +61,7 @@ mugs.LLRBMap = (keyValuePairs, comparator) ->
   this.tree.comparator = comparator if comparator?
   this
 
-mugs.LLRBMap.prototype = new mugs.Traversable()
+mugs.LLRBMap.prototype = new mugs.Collection()
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ mugs.LLRBMap.prototype.buildFromTree = (tree) ->
 
 ###
 ---------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
+Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 ###
 
@@ -136,7 +136,7 @@ mugs.LLRBMap.prototype.buildFromArray = (arr) ->
 ###*
   Applies function 'f' on each value in the map. This return nothing and is only invoked
   for the side-effects of f.
-  @see mugs.Traversable
+  @see mugs.Collection
 ###
 mugs.LLRBMap.prototype.forEach = ( f ) ->
   this.tree.inorderTraversal( f )

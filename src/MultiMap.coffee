@@ -35,7 +35,7 @@ mugs.Multimap = (keyValuePairs, collectionConstructor, comparator) ->
   this.tree_.comparator = comparator if comparator?
   this
 
-mugs.Multimap.prototype = new mugs.Traversable()
+mugs.Multimap.prototype = new mugs.Collection()
 
 ###
   Stores a key-value pair in the multimap.  

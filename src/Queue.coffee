@@ -39,7 +39,7 @@ mugs.Queue = (items) ->
     this.rear__ = new mugs.List(r).reverse()
   this
 
-mugs.Queue.prototype = new mugs.Traversable() 
+mugs.Queue.prototype = new mugs.Collection() 
 
 ###*
   Removes the front element from the queue
@@ -102,7 +102,7 @@ mugs.Queue.prototype.buildFromLists = (front, rear) ->
   queue
 
 ###
-# Methods that traversable requires
+# Methods that Collection requires
 ### 
 
 mugs.Queue.prototype.forEach = ( f ) -> 

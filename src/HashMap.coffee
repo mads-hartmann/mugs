@@ -7,7 +7,7 @@ mugs.provide("mugs.HashMap")
 
 mugs.require("mugs.Some")
 mugs.require("mugs.None")
-mugs.require("mugs.Traversable")
+mugs.require("mugs.Collection")
 mugs.require("mugs.List")
 
 ###
@@ -40,7 +40,7 @@ mugs.require("mugs.List")
   </pre>
 
   @class HashMap
-  @augments mugs.Traversable
+  @augments mugs.Collection
   @param {Array} keyValuePairs An array containing objects with the properties key & value.
   @param {Bool} initialize This is only used internally. It's true if the bucket array should be initialize
 ###
@@ -54,7 +54,7 @@ mugs.HashMap = (keyValuePairs, initialize) ->
       mapUnderConstruction = mapUnderConstruction.insert(kv.key, kv.value)
   mapUnderConstruction
 
-mugs.HashMap.prototype = new mugs.Traversable()
+mugs.HashMap.prototype = new mugs.Collection()
 
 ###
   @param key The key of the item to retrieve
@@ -174,7 +174,7 @@ mugs.HashMap.prototype.compress_ = (key) ->
 
 ###
 ---------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
+Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 ###
 
