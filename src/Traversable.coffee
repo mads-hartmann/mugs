@@ -48,12 +48,25 @@ mugs.Traversable.prototype.filter = ( f ) ->
   new this.buildFromArray(elements)
 
 ###*
-
+  contains
 ###
-mugs.Traversable.prototype.isEmpty = () -> 
-  itIsEmpty = true
-  this.forEach( (elem) -> itIsEmpty = false; return false )
-  return true
+mugs.Traversable.prototype.contains = (item) -> 
+  containsItem = false
+  contains = (i) -> 
+    if (i.value != undefined && i.value == item) || i == item
+      containsItem = true
+  this.forEach( contains ) 
+  return containsItem
+  
+###*
+  Returns the number of items in the collection
+  
+  @return The number of items in the collection
+###
+mugs.Traversable.prototype.size = () ->
+  count = 0
+  this.forEach( (i) -> count++ )
+  return count
 
 mugs.Traversable.prototype.asArray = () ->
   arr = []

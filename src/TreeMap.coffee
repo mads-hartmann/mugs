@@ -105,6 +105,15 @@ mugs.TreeMap.prototype.keys = () -> this.tree.keys()
 mugs.TreeMap.prototype.values = () -> this.tree.values()
 
 ###*
+  Return true if the collection is empty, otherwise false
+  
+  @return True if the collection is empty, otherwise false
+###
+mugs.TreeMap.prototype.isEmpty = () ->
+  this.tree.isEmpty()
+
+
+###*
   Used to construct a mugs.TreeMap from mugs.RedBlackTree. This is intended
   for internal use only. Would've marked it private if I could.
   @private
@@ -129,6 +138,7 @@ mugs.TreeMap.prototype.buildFromArray = (arr) ->
 ###*
   Applies function 'f' on each value in the map. This return nothing and is only invoked
   for the side-effects of f.
+  
   @see mugs.Traversable
 ###
 mugs.TreeMap.prototype.forEach = ( f ) ->

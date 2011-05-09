@@ -27,7 +27,7 @@ $(document).ready(function(){
     });
 
     test("It's possible to create a new list by appending a list to an existing list", function() {
-      var list = new List([1,2]).appendList(new List([3,4]));
+      var list = new List([1,2]).appendAll([3,4]);
       ok(list.head() == 1, "First element is 1");
       ok(list.tail().head() == 2, "Second element is 2");
       ok(list.tail().tail().head() == 3, "Third element is 3");
@@ -42,7 +42,7 @@ $(document).ready(function(){
     });
 
     test("You can create a new list by prepending a list to an existing list", function() {
-      var list = new List([1,2]).prependList(new List([3,4]));
+      var list = new List([1,2]).prependAll([3,4]);
       ok(list.head() == 3, "First element is 3");
       ok(list.tail().head() == 4, "Second element is 4");
       ok(list.tail().tail().head() == 1, "Third element is 1");
@@ -68,8 +68,8 @@ $(document).ready(function(){
       ok(list.get(5).get() == 6);
     });
 
-    test("You can remove elements with a given index from the list", function() {
-      var list = new List([1,2,3,4,5]).remove(2);
+    test("removeAt", function() {
+      var list = new List([1,2,3,4,5]).removeAt(2);
       ok(list.get(2).get() == 4);
     });
 

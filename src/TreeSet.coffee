@@ -61,9 +61,17 @@ mugs.TreeSet.prototype.values = () ->
   @private
 ###
 mugs.TreeSet.prototype.buildFromTree = (tree) ->
-  set = new mugs.TreeSet(this.comparator)
+  set = new mugs.TreeSet([], this.comparator)
   set.tree = tree
   set
+
+###*
+  Checks if the collection is empty
+  
+  @return true if the collection is empty, otherwise false
+###
+mugs.TreeSet.prototype.isEmpty = () ->
+  this.tree.isEmpty()
 
 ###
 ---------------------------------------------------------------------------------------------

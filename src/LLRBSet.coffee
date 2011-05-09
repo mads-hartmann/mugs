@@ -63,6 +63,14 @@ mugs.LLRBSet.prototype.buildFromTree = (tree) ->
   set.tree = tree
   set
 
+###*
+  Checks if the collection is empty
+  
+  @return true if the collection is empty, otherwise false
+###
+mugs.LLRBSet.prototype.isEmpty = () ->
+  this.tree.isEmpty()
+
 ###
 ---------------------------------------------------------------------------------------------
 Methods related to Traversable prototype

@@ -57,125 +57,24 @@ mugs.List = (items) ->
 
 mugs.List.prototype = new mugs.Traversable()
 
-
-
 ###
 ---------------------------------------------------------------------------------------------
-Methods related to the List ADT
+Collection interface
+Note: head(), tail(), and isEmpty() are defined in the constructor 
+Note: map(), flatMap(), filter() are inherited from mugs.Collection by implementing forEach  
 ---------------------------------------------------------------------------------------------
 ###
 
 ###*
-  Create a new list by appending this value
-  @param {*} element The element to append to the List
-  @return {List} A new list containing all the elements of the old with followed by the element
-###
-mugs.List.prototype.append = (element) ->
-  if (this.isEmpty())
-    new mugs.List([element])
-  else
-    this.cons(this.head(), this.tail().append(element))
-
-###*
-  Create a new list by prepending this value
-  @param {*} element The element to prepend to the List
-  @return {List} A new list containing all the elements of the old list prepended with the element
-###
-mugs.List.prototype.prepend = (element) ->
-  this.cons(element,this)
-
-###*
-  Update the value with the given index.
-  @param {number} index The index of the element to update
-  @param {*} element The element to replace with the current element
-  @return {List} A new list with the updated value.
-###
-mugs.List.prototype.update = (index, element) ->
-  if index < 0
-    throw new Error("Index out of bounds by #{index}")
-  else if (index == 0)
-    this.cons(element, this.tail())
-  else
-    this.cons(this.head(), this.tail().update(index-1,element))
-
-###*
-  Return an Option containing the nth element in the list.
-  @param {number} index The index of the element to get
-  @return {mugs.Some|mugs.None} mugs.Some(element) is it exists, otherwise mugs.None
-###
-mugs.List.prototype.get = (index) ->
-  if index < 0 || this.isEmpty()
-    new mugs.None()
-    new mugs.None()
-  else if (index == 0)
-    new mugs.Some(this.head())
-  else
-    this.tail().get(index-1)
-
-###*
-  Removes the element at the given index. Runs in O(n) time.
-  @param {number} index The index of the element to remove
-  @return {List} A new list without the element at the given index
-###
-mugs.List.prototype.remove = (index) ->
-  if index == 0
-    # can remove the following if/else with this.tail().getOrElse(new List()) once
-    # tail and head are functions that return an option instead.
-    if !this.tail().isEmpty()
-      this.cons(this.tail().first().get(), this.tail().tail())
-    else
-      new mugs.List()
-  else
-    this.cons(this.head(), this.tail().remove(index-1))
-
-###*
-  The last element in the list
-  @return {mugs.Some|mugs.None} mugs.Some(last) if it exists, otherwise mugs.None
-###
-mugs.List.prototype.last = () -> if this.tail().isEmpty() then new mugs.Some(this.head()) else this.tail().last()
-
-###*
-  The first element in the list
-  @return {mugs.Some|mugs.None} mugs.Some(first) if it exists, otherwise mugs.None
-###
-mugs.List.prototype.first = () -> new mugs.Some(this.head())
-
-###*
-  Creates a list by appending the argument list to 'this' list.
-
-  @example
-  new mugs.List([1,2,3]).appendList(new mugs.List([4,5,6]));
-  // returns a list with the element 1,2,3,4,5,6
-  @param {List} list The list to append to this list.
-  @return {List} A new list containing the elements of the appended List and the elements of the original List.
-###
-mugs.List.prototype.appendList = (list) ->
-  if (this.isEmpty())
-    list
-  else
-    this.cons(this.head(), this.tail().appendList(list))
-
-###*
-  Creates a new list by copying all of the items in the argument 'list'
-  before of 'this' list
-
-  @example
-  new mugs.List([4,5,6]).prependList(new mugs.List([1,2,3]));
-  // returns a list with the element 1,2,3,4,5,6
-  @param {List} list The list to prepend to this list.
-  @return {List} A new list containing the elements of the prepended List and the elements of the original List.
-###
-mugs.List.prototype.prependList = (list) ->
-  if this.isEmpty()
-    list
-  else
-    if list.isEmpty() then this else this.cons(list.head(), this.prependList(list.tail()))
-
-###
----------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
----------------------------------------------------------------------------------------------
-###
+   Returns the number of elements in the list 
+### 
+mugs.List.prototype.size = () -> 
+  xs = this
+  count = 0
+  while not xs.isEmpty()
+    count += 1
+    xs = xs.tail()
+  count
 
 ###*
   @private
@@ -195,14 +94,60 @@ mugs.List.prototype.forEach = ( f ) ->
 
 ###
 ---------------------------------------------------------------------------------------------
-Miscellaneous Methods
+Indexed interface
 ---------------------------------------------------------------------------------------------
 ###
 
 ###*
+  Update the value with the given index.
+  
+  @param  {number}  index   The index of the element to update
+  @param  {*}       element The element to replace with the current element
+  @return {List}            A new list with the updated value.
+###
+mugs.List.prototype.update = (index, element) ->
+  if index < 0
+    throw new Error("Index out of bounds by #{index}")
+  else if (index == 0)
+    this.cons(element, this.tail())
+  else
+    this.cons(this.head(), this.tail().update(index-1,element))
+
+###*
+  Return an Option containing the nth element in the list.
+  
+  @param  {number}              index The index of the element to get
+  @return {mugs.Some|mugs.None}       mugs.Some(element) is it exists, otherwise mugs.None
+###
+mugs.List.prototype.get = (index) ->
+  if index < 0 || this.isEmpty()
+    new mugs.None()
+    new mugs.None()
+  else if (index == 0)
+    new mugs.Some(this.head())
+  else
+    this.tail().get(index-1)
+
+###*
+  Removes the element at the given index. Runs in O(n) time.
+
+  @param  {number} index  The index of the element to remove
+  @return {List}          A new list without the element at the given index
+###
+mugs.List.prototype.removeAt = (index) ->
+  if index == 0
+    if !this.tail().isEmpty()
+      this.cons(this.tail().first().get(), this.tail().tail())
+    else
+      new mugs.List()
+  else
+    this.cons(this.head(), this.tail().removeAt(index-1))
+
+###*
   Returns index of the first element satisfying a predicate, or -1
-  @parem p The predicate to apply to each object
-  @return The index of the first element satisfying a predicate, or -1
+
+  @parem  p The predicate to apply to each object
+  @return   The index of the first element satisfying a predicate, or -1
 ###
 mugs.List.prototype.findIndexOf = ( p ) -> 
   xs = this 
@@ -211,20 +156,143 @@ mugs.List.prototype.findIndexOf = ( p ) ->
     index++
     xs = xs.tail()
     if xs.isEmpty() then index = -1
-  index  
-  
+  index
+
+###
+---------------------------------------------------------------------------------------------
+Extensible interface
+---------------------------------------------------------------------------------------------
+###
 
 ###*
-   Returns the number of elements in the list 
-### 
-mugs.List.prototype.size = () -> 
-  xs = this
-  count = 0
-  while not xs.isEmpty()
-    count += 1
-    xs = xs.tail()
-  count
+  Inserts a new item to the end of the List. This is simply calling append. The method is needed
+  so a List can be treated as an Extensible collection. runs in O(mugs.List.append)
+  
+  @param item The item to add to the end of the List
+###
+mugs.List.prototype.insert = (item) ->
+  this.append(item)
 
+###
+  Removes an item from the List. Runs in O(n).
+  
+  @param item The item to remove from the List.
+###
+mugs.List.prototype.remove = (item) -> 
+  if this.isEmpty() 
+    this
+  else if this.head() == item
+    if this.tail().isEmpty() 
+      new mugs.List([])
+    else 
+      this.cons(this.tail().head(), this.tail().tail())
+  else
+    this.cons(this.head(), this.tail().remove(item))
+
+###
+---------------------------------------------------------------------------------------------
+Sequenced interface 
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  The last element in the list
+  
+  @return {mugs.Some|mugs.None} mugs.Some(last) if it exists, otherwise mugs.None
+###
+mugs.List.prototype.last = () -> 
+  if this.tail().isEmpty() 
+    new mugs.Some(this.head()) 
+  else 
+    this.tail().last()
+
+###*
+  The first element in the list
+  
+  @return {mugs.Some|mugs.None} mugs.Some(first) if it exists, otherwise mugs.None
+###
+mugs.List.prototype.first = () -> new mugs.Some(this.head())
+
+###*
+  Create a new list by appending this value
+  
+  @param  {*}     element   The element to append to the List
+  @return {List}            A new list containing all the elements of the old with 
+                            followed by the element
+###
+mugs.List.prototype.append = (element) ->
+  if (this.isEmpty())
+    new mugs.List([element])
+  else
+    this.cons(this.head(), this.tail().append(element))
+
+###*
+  Create a new list by prepending this value
+  
+  @param  {*}     element   The element to prepend to the List
+  @return {List}            A new list containing all the elements of the old list 
+                            prepended with the element
+###
+mugs.List.prototype.prepend = (element) ->
+  this.cons(element,this)
+
+###*
+  Returns a new list with the elements in reversed order.
+  
+  @return A new list with the elements in reversed order
+###
+mugs.List.prototype.reverse = () ->
+  result = new mugs.List()
+  rest = this
+  while (!rest.isEmpty())
+    result = result.prepend(rest.head())
+    rest = rest.tail()
+  result
+
+###*
+  Creates a list by appending the argument list to 'this' list.
+
+  @example
+  new mugs.List([1,2,3]).appendAll(new mugs.List([4,5,6]));
+  // returns a list with the element 1,2,3,4,5,6
+  @param  {List} list The list to append to this list.
+  @return {List}      A new list containing the elements of the appended List and 
+                      the elements of the original List.
+###
+mugs.List.prototype.appendAll = (items) ->
+  if (this.isEmpty())
+    new mugs.List(items)
+  else
+    this.cons(this.head(), this.tail().appendAll(items))
+
+###*
+  Creates a new list by copying all of the items in the argument 'list'
+  before of 'this' list
+
+  @example
+  new mugs.List([4,5,6]).prependAll(new mugs.List([1,2,3]));
+  // returns a list with the element 1,2,3,4,5,6
+  @param  {List} list The list to prepend to this list.
+  @return {List}      A new list containing the elements of the prepended List 
+                      and the elements of the original List.
+###
+mugs.List.prototype.prependAll = (items) ->
+  if this.isEmpty()
+    new mugs.List(items)
+  else
+    if items.length == 0 
+      this 
+    else
+      head = items.shift()
+      this.cons(head, this.prependAll(items))
+
+
+###
+---------------------------------------------------------------------------------------------
+Miscellaneous Methods
+---------------------------------------------------------------------------------------------
+###
+  
 ###*
   Helper method to construct a list from a value and another list
   @private
@@ -274,15 +342,3 @@ mugs.List.prototype.foldRight = (seed) -> (f) =>
     else
       f(__foldRight(xs.tail()), xs.head())
   __foldRight(this)
-
-###*
-  Returns a new list with the elements in reversed order.
-  @return A new list with the elements in reversed order
-###
-mugs.List.prototype.reverse = () ->
-  result = new mugs.List()
-  rest = this
-  while (!rest.isEmpty())
-    result = result.prepend(rest.head())
-    rest = rest.tail()
-  result

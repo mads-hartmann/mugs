@@ -67,12 +67,21 @@ mugs.Queue.prototype.front = () ->
   this.front__.head()
 
 ###*
+  Return true if the collection is empty, otherwise false
+  
+  @return True if the collection is empty, otherwise false
+###
+mugs.Queue.prototype.isEmpty = () ->
+  this.front__.isEmpty() && this.rear__.isEmpty()
+
+
+###*
   Returns a List with all of the elements in the queue.
 
   @return A List with all of the elements in the queue.
 ###
 mugs.Queue.prototype.values = () ->
-  this.front__.appendList(this.rear__.reverse())
+  this.front__.appendAll(this.rear__.reverse().asArray())
 
 ###*
   Given two lists this will create a new queue. This is the method that makes sure the

@@ -126,6 +126,14 @@ mugs.RandomAccessList.prototype.update = (index, item) ->
   this.buildFromList(recUpdate(this.__trees, index))
 
 ###*
+  Checks if the collection is empty
+  
+  @return true if the collection is empty, otherwise false
+###
+mugs.RandomAccessList.prototype.isEmpty = () ->
+  this.__trees.isEmpty()
+
+###*
   Creates a Random Access List from an item and another Random
   Access List Trees.
 

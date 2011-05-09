@@ -71,6 +71,14 @@ mugs.Stack.prototype.values = () ->
   this.list
 
 ###*
+  Return true if the collection is empty, otherwise false
+  
+  @return True if the collection is empty, otherwise false
+###
+mugs.Stack.prototype.isEmpty = () ->
+  this.list.isEmpty()
+
+###*
   This will build a new Stack from a List. This is used internally.
 
   @complexity O(1)

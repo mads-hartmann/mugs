@@ -104,6 +104,14 @@ mugs.LLRBMap.prototype.keys = () -> this.tree.keys()
 mugs.LLRBMap.prototype.values = () -> this.tree.values()
 
 ###*
+  Return true if the collection is empty, otherwise false
+  
+  @return True if the collection is empty, otherwise false
+###
+mugs.LLRBMap.prototype.isEmpty = () ->
+  this.tree.isEmpty()
+
+###*
   Used to construct a mugs.LLRBMap from mugs.RedBlackTree. This is intended
   for internal use only. Would've marked it private if I could.
   @private

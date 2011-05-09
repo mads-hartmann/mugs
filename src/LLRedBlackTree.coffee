@@ -13,9 +13,9 @@ mugs.LLRBNode = (() ->
     Immutable implementation of Left Leaning Red Black Tree as
     described in this paper: http://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
   
-    Invartiant 1: No red node has a red child
-    Invartiant 2: Every leaf path has the same number of black nodes
-    Invartiant 3: Only the left child can be red (left leaning)
+    Invariant 1: No red node has a red child
+    Invariant 2: Every leaf path has the same number of black nodes
+    Invariant 3: Only the left child can be red (left leaning)
   ### 
 
   ###
@@ -45,6 +45,7 @@ mugs.LLRBNode = (() ->
   F.prototype.minKey            = ()          -> min(new mugs.Some(this)).get().key
   F.prototype.get               = (key)       -> get(new mugs.Some(this),key)
   F.prototype.count             = ()          -> count(new mugs.Some(this))
+  F.prototype.isEmpty           = ()          -> false
   F.prototype.containsKey       = (key)       -> containsKey(new mugs.Some(this),key)
   F.prototype.values            = ()          -> values(new mugs.Some(this))
   F.prototype.keys              = ()          -> keys(new mugs.Some(this))
@@ -273,11 +274,13 @@ mugs.LLRBNode = (() ->
    and LLRBMap.   
 ###
 mugs.LLRBLeaf = () -> 
-mugs.LLRBLeaf.prototype.insert       = (key,item) -> new mugs.LLRBNode(key,item) 
-mugs.LLRBLeaf.prototype.remove       = (key)      -> throw new Error("Can't remove an item from a leaf") 
-mugs.LLRBLeaf.prototype.removeMinKey = ()         -> this 
-mugs.LLRBLeaf.prototype.minKey       = ()         -> throw new Error("Can't get the minimum key of a leaf")
-mugs.LLRBLeaf.prototype.get          = (key)      -> new mugs.None()
-mugs.LLRBLeaf.prototype.count        = ()         -> 0
-mugs.LLRBLeaf.prototype.containsKey  = (key)      -> false 
-mugs.LLRBLeaf.prototype.values       = ()         -> new mugs.List()
+mugs.LLRBLeaf.prototype.insert            = (key,item) -> new mugs.LLRBNode(key,item) 
+mugs.LLRBLeaf.prototype.remove            = (key)      -> throw new Error("Can't remove an item from a leaf") 
+mugs.LLRBLeaf.prototype.removeMinKey      = ()         -> this 
+mugs.LLRBLeaf.prototype.minKey            = ()         -> throw new Error("Can't get the minimum key of a leaf")
+mugs.LLRBLeaf.prototype.get               = (key)      -> new mugs.None()
+mugs.LLRBLeaf.prototype.count             = ()         -> 0
+mugs.LLRBLeaf.prototype.isEmpty           = ()         -> true
+mugs.LLRBLeaf.prototype.containsKey       = (key)      -> false 
+mugs.LLRBLeaf.prototype.values            = ()         -> new mugs.List()
+mugs.LLRBLeaf.prototype.inorderTraversal  = (f)        -> return

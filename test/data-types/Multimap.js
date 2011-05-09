@@ -23,7 +23,6 @@ $(document).ready(function(){
     
     test("remove", function() {
       var mm2 = mm.remove(1,2);
-      console.log("test " + mm2.get(1).asArray());
       ok ( equalsArr( mm2.get(1).asArray(), [1,3] ));
     });
     
