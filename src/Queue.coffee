@@ -50,13 +50,23 @@ mugs.Queue.prototype.dequeue = () ->
   this.buildFromLists(this.front__.tail(), this.rear__)
 
 ###*
-  Adds a new element to the queue
+  Adds a new element to the Queue
 
   @param elem The element to add to the queue
   @return A new queue with the element in the back of the queue
 ###
 mugs.Queue.prototype.enqueue = (elem) ->
   this.buildFromLists(this.front__, this.rear__.prepend(elem))
+  
+###*
+  Adds all the items of an array to the Queue
+  
+  @param items An array with the items to enqueue
+  @return      A new queue with all of the items enqueued
+###
+mugs.Queue.prototype.enqueueAll = (items) -> 
+  reversed = reversed = (items[i] for i in [items.length-1..0])
+  this.buildFromLists(this.front__, this.rear__.prependAll(reversed))
 
 ###*
   Reads the front element in the queue
@@ -103,6 +113,19 @@ mugs.Queue.prototype.buildFromLists = (front, rear) ->
 
 ###
 ---------------------------------------------------------------------------------------------
+Collection interface
+---------------------------------------------------------------------------------------------
+###
+
+mugs.Queue.prototype.forEach = ( f ) -> 
+  this.front__.forEach(f)
+  this.rear__.reverse().forEach(f)
+
+mugs.Queue.prototype.buildFromArray = ( arr ) ->
+  new mugs.Queue(arr)
+
+###
+---------------------------------------------------------------------------------------------
 Extensible interface
 ---------------------------------------------------------------------------------------------
 ###
@@ -128,17 +151,94 @@ mugs.Queue.prototype.remove = (item) ->
     this.buildFromLists(this.front__,this.rear__.remove(item))
   else 
     this
+
+###
+---------------------------------------------------------------------------------------------
+Sequenced interface 
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  Returns a mugs.Some with the last item in the collection if it's non-empty. 
+  otherwise, mugs.None
+
+  @return a mugs.Some with the last item in the collection if it's non-empty. 
+          otherwise, mugs.None
+###
+mugs.Queue.prototype.last = () -> 
+  if this.rear__.isEmpty() 
+    this.front__.last()
+  else
+    this.rear__.last()
+
+###*
+  Returns a mugs.Some with the first item in the collection if it's non-empty. 
+  otherwise, mugs.None
+
+  @return a mugs.Some with the first item in the collection if it's non-empty. 
+          otherwise, mugs.None
+###
+mugs.Queue.prototype.first = () -> 
+  this.front__.first()
+
+###*
+  Returns the first item in the collection. Throws an exception if the collection 
+  is empty. 
   
-
+  @return The first item in the collection. Throws an exception if the collection 
+          is empty.
 ###
----------------------------------------------------------------------------------------------
-Collection interface
----------------------------------------------------------------------------------------------
+mugs.Queue.prototype.head = () ->
+  this.front__.head()
+
+###*
+  Return the remainder of the queue after removing the front-most item
+  
+  @return The remainder of the queue after removing the front-most item
 ###
+mugs.Queue.prototype.tail = () -> 
+  this.dequeue()
 
-mugs.Queue.prototype.forEach = ( f ) -> 
-  this.front__.forEach(f)
-  this.rear__.reverse().forEach(f)
+###*
+  Appends an item to the end of the Queue. 
+  
+  @return A new Queue with item at the end of the Queue
+###
+mugs.Queue.prototype.append = (item) ->
+  this.enqueue(item)
 
-mugs.Queue.prototype.buildFromArray = ( arr ) ->
-  new mugs.Queue(arr)  
+###*
+  Creates a new Stack with the items appended
+
+  @example
+  new mugs.Stack([1,2,3]).appendAll([4,5,6]);
+  // returns a Stack with the element 1,2,3,4,5,6
+  @param  items An array with the items to append to this Stack.
+  @return       A new Stack with the items appended
+###
+mugs.Queue.prototype.appendAll = (items) ->
+  this.enqueueAll(items)
+
+###*
+  Creates a new Queue with the item prepended
+
+  @return A new Queue with the items prepended
+###
+mugs.Queue.prototype.prepend = (item) -> 
+  this.buildFromLists(this.front__.prepend(item), this.rear__)
+  
+###*
+  Creates a new Queue with the items prepended
+
+  @return A new Queue with the items prepended
+###
+mugs.Queue.prototype.prependAll = (items) -> 
+  this.buildFromLists(this.front__.prependAll(items), this.rear__)
+
+###*
+  Creates a new Queue with the items in reversed order
+  
+  @return A new Queue with the items in reversed order
+###
+mugs.Queue.prototype.reverse = () ->
+  this.buildFromLists(this.rear__ , this.front__)

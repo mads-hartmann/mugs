@@ -30,7 +30,7 @@ mugs.require("mugs.None")
   forEach( f )                                        O(n)
   foldLeft(s)(f)                                      O(n)
   isEmpty()                                           O(1)
-  contains( element )                                 O(n)    TODO
+  contains( element )                                 O(n)    
   forAll( f )                                         O(n)    TODO
   take( x )                                           O(n)    TODO
   takeWhile( f )                                      O(n)    TODO
@@ -57,24 +57,63 @@ mugs.List = (items) ->
 
 mugs.List.prototype = new mugs.Collection()
 
+###*
+  Helper method to construct a list from a value and another list
+  
+  @private
+###
+
+mugs.List.prototype.cons = (head, tail) ->
+  l = new mugs.List([head])
+  l.tail = () -> tail
+  return l
+
+###*
+  Applies a binary operator on all elements of this list going left to right and ending with the
+  seed value. This is a curried function that takes a seed value which returns a function that
+  takes a function which will then be applied to the elements
+
+  @example
+  new mugs.List([1,2,3,4,5]).foldLeft(0)(function(acc,current){ acc+current })
+  // returns 15 (the sum of the elements in the list)
+
+  @param {*} seed The value to use when the list is empty
+  @return {function(function(*, *):*):*} A function which takes a binary function
+###
+mugs.List.prototype.foldLeft = (seed) -> (f) =>
+  __foldLeft = (acc, xs) ->
+    if (xs.isEmpty())
+      acc
+    else
+      __foldLeft( f(acc, xs.head()), xs.tail())
+  __foldLeft(seed,this)
+
+###*
+  Applies a binary operator on all elements of this list going right to left and ending with the
+  seed value. This is a curried function that takes a seed value which returns a function that
+  takes a function which will then be applied to the elements.
+
+  @example
+  new mugs.List([1,2,3,4,5]).foldRight(0)(function(acc,current){ acc+current })
+  // returns 15 (the sum of the elements in the list)
+
+  @param {*} seed The value to use when the list is empty
+  @return {function(function(*, *):*):*} A function which takes a binary function
+###
+mugs.List.prototype.foldRight = (seed) -> (f) =>
+  __foldRight = (xs) ->
+    if (xs.isEmpty())
+      seed
+    else
+      f(__foldRight(xs.tail()), xs.head())
+  __foldRight(this)
+
 ###
 ---------------------------------------------------------------------------------------------
 Collection interface
-Note: head(), tail(), and isEmpty() are defined in the constructor 
-Note: map(), flatMap(), filter() are inherited from mugs.Collection by implementing forEach  
+head(), tail(), and isEmpty() are defined in the constructor 
 ---------------------------------------------------------------------------------------------
 ###
-
-###*
-   Returns the number of elements in the list 
-### 
-mugs.List.prototype.size = () -> 
-  xs = this
-  count = 0
-  while not xs.isEmpty()
-    count += 1
-    xs = xs.tail()
-  count
 
 ###*
   @private
@@ -137,7 +176,7 @@ mugs.List.prototype.get = (index) ->
 mugs.List.prototype.removeAt = (index) ->
   if index == 0
     if !this.tail().isEmpty()
-      this.cons(this.tail().first().get(), this.tail().tail())
+      this.cons(this.tail().head(), this.tail().tail())
     else
       new mugs.List()
   else
@@ -196,22 +235,33 @@ Sequenced interface
 ###
 
 ###*
-  The last element in the list
-  
-  @return {mugs.Some|mugs.None} mugs.Some(last) if it exists, otherwise mugs.None
+  Returns a mugs.Some with the last item in the collection if it's non-empty. 
+  otherwise, mugs.None
+
+  @return a mugs.Some with the last item in the collection if it's non-empty. 
+          otherwise, mugs.None
 ###
 mugs.List.prototype.last = () -> 
-  if this.tail().isEmpty() 
-    new mugs.Some(this.head()) 
-  else 
-    this.tail().last()
+  current = this
+  if current.isEmpty() 
+    return new mugs.None
+  while !current.isEmpty()
+    item = current.head() 
+    current = current.tail()
+  return new mugs.Some(item)
 
 ###*
-  The first element in the list
-  
-  @return {mugs.Some|mugs.None} mugs.Some(first) if it exists, otherwise mugs.None
+  Returns a mugs.Some with the first item in the collection if it's non-empty. 
+  otherwise, mugs.None
+
+  @return a mugs.Some with the first item in the collection if it's non-empty. 
+          otherwise, mugs.None
 ###
-mugs.List.prototype.first = () -> new mugs.Some(this.head())
+mugs.List.prototype.first = () -> 
+  if this.isEmpty() 
+    new mugs.None()
+  else
+    new mugs.Some(this.head())
 
 ###*
   Create a new list by appending this value
@@ -250,14 +300,13 @@ mugs.List.prototype.reverse = () ->
   result
 
 ###*
-  Creates a list by appending the argument list to 'this' list.
+  Creates a new list with the items appended
 
   @example
-  new mugs.List([1,2,3]).appendAll(new mugs.List([4,5,6]));
+  new mugs.List([1,2,3]).appendAll([4,5,6]);
   // returns a list with the element 1,2,3,4,5,6
-  @param  {List} list The list to append to this list.
-  @return {List}      A new list containing the elements of the appended List and 
-                      the elements of the original List.
+  @param  items An array with the items to append to this list.
+  @return       A new list with the items appended
 ###
 mugs.List.prototype.appendAll = (items) ->
   if (this.isEmpty())
@@ -285,60 +334,3 @@ mugs.List.prototype.prependAll = (items) ->
     else
       head = items.shift()
       this.cons(head, this.prependAll(items))
-
-
-###
----------------------------------------------------------------------------------------------
-Miscellaneous Methods
----------------------------------------------------------------------------------------------
-###
-  
-###*
-  Helper method to construct a list from a value and another list
-  @private
-###
-
-mugs.List.prototype.cons = (head, tail) ->
-  l = new mugs.List([head])
-  l.tail = () -> tail
-  return l
-
-###*
-  Applies a binary operator on all elements of this list going left to right and ending with the
-  seed value. This is a curried function that takes a seed value which returns a function that
-  takes a function which will then be applied to the elements
-
-  @example
-  new mugs.List([1,2,3,4,5]).foldLeft(0)(function(acc,current){ acc+current })
-  // returns 15 (the sum of the elements in the list)
-
-  @param {*} seed The value to use when the list is empty
-  @return {function(function(*, *):*):*} A function which takes a binary function
-###
-mugs.List.prototype.foldLeft = (seed) -> (f) =>
-  __foldLeft = (acc, xs) ->
-    if (xs.isEmpty())
-      acc
-    else
-      __foldLeft( f(acc, xs.head()), xs.tail())
-  __foldLeft(seed,this)
-
-###*
-  Applies a binary operator on all elements of this list going right to left and ending with the
-  seed value. This is a curried function that takes a seed value which returns a function that
-  takes a function which will then be applied to the elements.
-
-  @example
-  new mugs.List([1,2,3,4,5]).foldRight(0)(function(acc,current){ acc+current })
-  // returns 15 (the sum of the elements in the list)
-
-  @param {*} seed The value to use when the list is empty
-  @return {function(function(*, *):*):*} A function which takes a binary function
-###
-mugs.List.prototype.foldRight = (seed) -> (f) =>
-  __foldRight = (xs) ->
-    if (xs.isEmpty())
-      seed
-    else
-      f(__foldRight(xs.tail()), xs.head())
-  __foldRight(this)

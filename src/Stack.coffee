@@ -51,6 +51,12 @@ mugs.Stack.prototype.pop = () ->
 ###
 mugs.Stack.prototype.push = (elem) ->
   this.buildFromList(this.list.prepend(elem))
+  
+###*
+  
+###
+mugs.Stack.prototype.pushAll = (items) -> 
+  this.buildFromList(this.list.prependAll(items))
 
 ###*
   Returns the top element of the stack.
@@ -71,14 +77,6 @@ mugs.Stack.prototype.values = () ->
   this.list
 
 ###*
-  Return true if the collection is empty, otherwise false
-  
-  @return True if the collection is empty, otherwise false
-###
-mugs.Stack.prototype.isEmpty = () ->
-  this.list.isEmpty()
-
-###*
   This will build a new Stack from a List. This is used internally.
 
   @complexity O(1)
@@ -88,6 +86,27 @@ mugs.Stack.prototype.buildFromList = (list) ->
   stack = new mugs.Stack()
   stack.list = list
   stack
+
+###
+---------------------------------------------------------------------------------------------
+Collection interface
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  Return true if the collection is empty, otherwise false
+  
+  @return True if the collection is empty, otherwise false
+###
+mugs.Stack.prototype.isEmpty = () ->
+  this.list.isEmpty()
+
+mugs.Stack.prototype.forEach = ( f ) -> 
+  this.list.forEach(f)
+
+mugs.Stack.prototype.buildFromArray = ( arr ) -> 
+  new mugs.Stack(arr)
+
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -114,14 +133,89 @@ mugs.Stack.prototype.remove = (item) ->
 
 ###
 ---------------------------------------------------------------------------------------------
-Collection interface
+Sequenced interface 
 ---------------------------------------------------------------------------------------------
 ###
 
-mugs.Stack.prototype.forEach = ( f ) -> 
-  this.list.forEach(f)
+###*
+  Returns a mugs.Some with the last item in the collection if it's non-empty. 
+  otherwise, mugs.None
 
-mugs.Stack.prototype.buildFromArray = ( arr ) -> 
-  new mugs.Stack(arr)
+  @return a mugs.Some with the last item in the collection if it's non-empty. 
+          otherwise, mugs.None
+###
+mugs.Stack.prototype.last = () -> 
+  this.list.last()
 
+###*
+  Returns a mugs.Some with the first item in the collection if it's non-empty. 
+  otherwise, mugs.None
 
+  @return a mugs.Some with the first item in the collection if it's non-empty. 
+          otherwise, mugs.None
+###
+mugs.Stack.prototype.first = () -> 
+  this.list.first()
+
+###*
+  Returns the remainder of the list after removing the top item
+
+  @return The remainder of the list after removing the top item
+  @complexity O(1)
+###
+mugs.Stack.prototype.tail = () ->
+  this.buildFromList(this.list.tail())
+
+###*
+  Returns the first item in the collection. Throws an exception if the collection 
+  is empty. 
+  
+  @return The first item in the collection. Throws an exception if the collection 
+          is empty.
+###
+mugs.Stack.prototype.head = () ->
+  this.list.head()
+  
+###*
+  Appends an item to the end (bottom) of the Stack. 
+  
+  @return A new Stack with item at the bottom of the Stack
+###
+mugs.Stack.prototype.append = (item) ->
+  this.buildFromList(this.list.append(item))
+  
+###*
+  Creates a new Stack with the items appended
+
+  @example
+  new mugs.Stack([1,2,3]).appendAll([4,5,6]);
+  // returns a Stack with the element 1,2,3,4,5,6
+  @param  items An array with the items to append to this Stack.
+  @return       A new Stack with the items appended
+###
+mugs.Stack.prototype.appendAll = (items) ->
+  this.buildFromList(this.list.appendAll(items))
+  
+###*
+  Prepends a new item to the top of the Stack. Equivalent to push(). 
+  
+  @return A new stack with the item on top  
+###
+mugs.Stack.prototype.prepend = (item) -> 
+  this.push(item)
+
+###*
+  Creates a new Stack with all of the items prepended
+  
+  @return A new Stack with all of the items prepended
+###
+mugs.Stack.prototype.prependAll = (items) -> 
+  this.pushAll(items)
+
+###*
+  Returns a new Stack with the elements in reversed order
+  
+  @return A new Stack with the elements in reversed order
+###
+mugs.Stack.prototype.reverse = () ->
+  this.buildFromList(this.list.reverse())
