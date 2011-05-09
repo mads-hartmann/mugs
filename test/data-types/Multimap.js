@@ -1,10 +1,10 @@
 $(document).ready(function(){
   
-  var generic_multimap_test = function(name, Constructor) {
+  var generic_multimap_test = function(name, Constructor, Collection) {
     
     module(name);
     
-    var mm = new Constructor([ { key: 1, value: [1,2,3] }, { key: 2, value: 4 } ]);
+    var mm = new Constructor([ { key: 1, value: [1,2,3] }, { key: 2, value: 4 } ], Collection);
     
     test("Constructor", function() {
       ok( mm.contains(1) && mm.contains(2) );
@@ -13,7 +13,7 @@ $(document).ready(function(){
 
     test("insert", function() {
       var mm2 = mm.insert(1,10);
-      ok ( equalsArr(mm2.get(1).asArray(), [10, 1,2,3]) );
+      ok ( equalsArr(mm2.get(1).asArray(), [1,2,3,10]) );
     });
     
     test("get", function() {
@@ -23,6 +23,7 @@ $(document).ready(function(){
     
     test("remove", function() {
       var mm2 = mm.remove(1,2);
+      console.log("test " + mm2.get(1).asArray());
       ok ( equalsArr( mm2.get(1).asArray(), [1,3] ));
     });
     
@@ -39,8 +40,16 @@ $(document).ready(function(){
       ok( equalsArr( mm.keys().asArray(), [1,2] ));
     });
     
+    test("multimap with a set doens't allow duplicates", function() {
+      var mmSet = new Constructor([ { key: 1, value: [1,2,3,3] }, { key: 2, value: 4 } ], mugs.TreeSet);
+      ok ( equalsArr( mmSet.values().asArray(), [1,2,3,4]));
+      var mmSet2 = mmSet.insert(2,4);
+      ok ( equalsArr( mmSet.values().asArray(), [1,2,3,4]));
+    });
+    
   };
     
-  generic_multimap_test("Multimap", mugs.Multimap);
+  generic_multimap_test("Multimap (List)", mugs.Multimap, mugs.List);
+  generic_multimap_test("Multimap (Set)", mugs.Multimap, mugs.TreeSet);
   
 });

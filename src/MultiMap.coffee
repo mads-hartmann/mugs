@@ -13,17 +13,24 @@ mugs.require('mugs.RedBlackNode')
 ###
   Multimap
   
-  A Multimap is a Map where many values can be associated with one key i.e key -> List(values) rather
-  than key -> value. 
+  A Multimap is a Map where a key can be associated with many values. The values will be stored in a collection
+  chosen by the user. The collection has to implement mugs.Extensible. Multimap is a higher-kinded collection. 
   
-  @class mugs.Multimap provides the implementation of the Multimap ADT based on a Red Black Tree
+  @class mugs.Multimap  provides the implementation of the Multimap ADT based on a Red Black Tree
+  @param keyValuePairs  An array containing objects with key and value properties. 
+  @param constructor    The Constructor function for the collection to associate with each key. The collection has
+                        to implement the mugs.Extensible interface. 
+  @param comparator     The comparator function used to compare the keys in the Map. 
+                      
 ###
-mugs.Multimap = (keyValuePairs, comparator) -> 
+mugs.Multimap = (keyValuePairs, collectionConstructor, comparator) -> 
   treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
   if keyValuePairs instanceof Array and keyValuePairs.length > 0
     for kv in keyValuePairs
-      val = (if kv.value instanceof Array then new mugs.List(kv.value) else new mugs.List([kv.value]))
+      val = (if kv.value instanceof Array then new collectionConstructor(kv.value) else new collectionConstructor([kv.value]))
       treeUnderConstruction = treeUnderConstruction.insert(kv.key, val)
+
+  this.collectionConstructor_ = collectionConstructor
   this.tree_ = treeUnderConstruction  
   this.tree_.comparator = comparator if comparator?
   this
@@ -37,8 +44,8 @@ mugs.Multimap.prototype = new mugs.Traversable()
   @param value value to store in the multimap
 ###
 mugs.Multimap.prototype.insert = (key, value) -> 
-  current_list = this.tree_.get(key).getOrElse(new mugs.List())
-  new_tree     = this.tree_.insert(key, current_list.prepend(value))
+  current_list = this.tree_.get(key).getOrElse(new this.collectionConstructor_())
+  new_tree     = this.tree_.insert(key, current_list.insert(value))
   this.buildFromTree(new_tree)
   
 ###
@@ -49,7 +56,7 @@ mugs.Multimap.prototype.insert = (key, value) ->
           Empty List if the key isn't in map
 ###
 mugs.Multimap.prototype.get = (key) -> 
-  this.tree_.get(key).getOrElse(new mugs.List())
+  this.tree_.get(key).getOrElse(new this.collectionConstructor_())
 
 ###
   Removes a key-value pair from the multimap.
@@ -58,9 +65,8 @@ mugs.Multimap.prototype.get = (key) ->
   @param value value of entry to remove the multimap
 ###
 mugs.Multimap.prototype.remove = (key, value) -> 
-  currentList = this.tree_.get(key).getOrElse(new mugs.List())
-  indexOfObjInList = currentList.findIndexOf( (item) -> item == value )
-  newList = currentList.remove(indexOfObjInList)
+  currentList = this.tree_.get(key).getOrElse(new this.collectionConstructor_())
+  newList = currentList.remove(value)
   new_tree     = this.tree_.insert(key, newList)
   this.buildFromTree(new_tree)
 
@@ -101,6 +107,6 @@ mugs.Multimap.prototype.keys = () ->
   @private
 ###
 mugs.Multimap.prototype.buildFromTree = (tree) ->
-  map = new mugs.Multimap([], this.comparator)
+  map = new mugs.Multimap([], this.collectionConstructor_)
   map.tree_ = tree
   map
