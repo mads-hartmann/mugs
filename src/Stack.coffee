@@ -31,7 +31,7 @@ mugs.Stack = (items) ->
   this.list = new mugs.List(items)
   this
 
-mugs.Stack.prototype = new mugs.Collection() 
+mugs.Stack.prototype = new mugs.Extensible() 
 
 ###*
   Removes the top element from the stack.
@@ -56,7 +56,10 @@ mugs.Stack.prototype.push = (elem) ->
   
 ###
 mugs.Stack.prototype.pushAll = (items) -> 
-  this.buildFromList(this.list.prependAll(items))
+  newStack = this
+  for item in items
+    newStack = newStack.push(item)
+  newStack
 
 ###*
   Returns the top element of the stack.
@@ -115,8 +118,8 @@ Extensible interface
 ###
 
 ###*
-  Inserts a new item to the top of the Stack. This is simply calling push. The method is needed
-  so a Stack can be treated as an Extensible collection. runs in O(mugs.Stack.push)
+  Inserts the new item at the top of the Stack. This is equivalent to push(). This is needed so a 
+  Stack can be treated as an Extensible collection. runs in O(mugs.Stack.push)
   
   @param item The item to add to the top of the Stack
 ###
@@ -210,7 +213,7 @@ mugs.Stack.prototype.prepend = (item) ->
   @return A new Stack with all of the items prepended
 ###
 mugs.Stack.prototype.prependAll = (items) -> 
-  this.pushAll(items)
+  this.buildFromList(this.list.prependAll(items))
 
 ###*
   Returns a new Stack with the elements in reversed order

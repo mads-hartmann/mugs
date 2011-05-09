@@ -55,7 +55,7 @@ mugs.List = (items) ->
     this.isEmpty = () -> false
   this
 
-mugs.List.prototype = new mugs.Collection()
+mugs.List.prototype = new mugs.Extensible()
 
 ###*
   Helper method to construct a list from a value and another list
@@ -204,14 +204,15 @@ Extensible interface
 ###
 
 ###*
-  Inserts a new item to the end of the List. This is simply calling append. The method is needed
-  so a List can be treated as an Extensible collection. runs in O(mugs.List.append)
+  Inserts a new item to the end of the List. Equivalent to append. This is needed so a List can be treated 
+  as an Extensible collection. runs in O(mugs.List.append)
   
   @param item The item to add to the end of the List
+  @return     A new list with the item appended to the end
 ###
 mugs.List.prototype.insert = (item) ->
   this.append(item)
-
+  
 ###
   Removes an item from the List. Runs in O(n).
   

@@ -14,24 +14,39 @@ $(document).ready(function() {
             ok( equalsArr(col2.asArray(), support.insert.expected));
         });
         
+        test("insertAll", function() {
+            var col = new Constructor([1,2,3]).insertAll([4,5,6]);
+            ok( equalsArr( col.asArray(), support.insertAll.expected));
+        });
+        
         test("remove", function() {
             var col = new Constructor([1,2,3,4,5]);
             
             ok( equalsArr( col.remove(3).asArray(), [1,2,4,5]));
-            ok( equalsArr( col.remove(2).asArray(), [1,3,4,5]));
-            
+            ok( equalsArr( col.remove(2).asArray(), [1,3,4,5]));            
+        });
+        
+        test("removeAll", function() {
+            var col = new Constructor([1,2,3,4]).removeAll([1,2,3]);
+            ok( equalsArr( col.asArray(), [4]));
         });
     };
 
     support = {
         'insert' : {
             'expected' : [1,2,3,4]
+        },
+        'insertAll' : {
+            'expected' : [1,2,3,4,5,6]
         }
     };
     
     stack = {
         'insert' : {
             'expected' : [4,1,2,3]
+        },
+        'insertAll' : {
+            'expected' : [6,5,4,1,2,3]
         }
     };
 

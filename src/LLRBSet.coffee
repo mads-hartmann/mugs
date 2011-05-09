@@ -22,29 +22,7 @@ mugs.LLRBSet = (items,comparator) ->
   this.tree.comparator = comparator if comparator?
   this
 
-mugs.LLRBSet.prototype = new mugs.Collection()
-
-###*
-  Insert an element in the set. If the set already contains an element equal to the given value,
-  it is replaced with the new value.
-  @param element The element to insert into the set
-###
-mugs.LLRBSet.prototype.insert = ( element ) ->
-  this.buildFromTree(this.tree.insert(element,element))
-
-###*
-  Delete an element from the set
-  @param element The element to remove from the set
-###
-mugs.LLRBSet.prototype.remove = ( element ) ->
-  this.buildFromTree(this.tree.remove(element))
-
-###*
-  Tests if the set contains the element
-  @param element The element to check for
-###
-mugs.LLRBSet.prototype.contains = ( element ) ->
-  this.tree.containsKey( element )
+mugs.LLRBSet.prototype = new mugs.Extensible()
 
 ###*
   The elements of the set
@@ -62,14 +40,6 @@ mugs.LLRBSet.prototype.buildFromTree = (tree) ->
   set = new mugs.LLRBSet(this.comparator)
   set.tree = tree
   set
-
-###*
-  Checks if the collection is empty
-  
-  @return true if the collection is empty, otherwise false
-###
-mugs.LLRBSet.prototype.isEmpty = () ->
-  this.tree.isEmpty()
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -96,3 +66,42 @@ mugs.LLRBSet.prototype.forEach = ( f ) ->
     newValue = f(kv.key)
     { key: newValue, value: newValue }
   this.tree.inorderTraversal( q )
+
+###*
+  Tests if the set contains the element
+  @param element The element to check for
+###
+mugs.LLRBSet.prototype.contains = ( element ) ->
+  this.tree.containsKey( element )
+
+###*
+  Checks if the collection is empty
+
+  @return true if the collection is empty, otherwise false
+###
+mugs.LLRBSet.prototype.isEmpty = () ->
+  this.tree.isEmpty()
+
+###
+---------------------------------------------------------------------------------------------
+Extensible interface
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  Creates a new Set with the item inserted 
+  
+  @param item The Item to insert into the Set
+  @return       A new LLRBSet with the item inserted
+###
+mugs.LLRBSet.prototype.insert = ( item ) ->
+  this.buildFromTree(this.tree.insert(item,item))
+
+###*
+  Creates a new Set without the given item
+  
+  @param item   The item to remove from the set
+  @return       A new Set without the given item
+###
+mugs.LLRBSet.prototype.remove = ( item ) ->
+  this.buildFromTree(this.tree.remove(item))

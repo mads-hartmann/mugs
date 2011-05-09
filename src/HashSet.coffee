@@ -36,31 +36,7 @@ mugs.HashSet = (items, initialize) ->
   this.hashMap_ = new mugs.HashMap(kvs) if initialize != false
   this
 
-mugs.HashSet.prototype = new mugs.Collection()
-
-###*
-  Returns a new HashSet with the item inserted 
-  @param item The item to insert into the Set
-  @return A new HashSet with the item inserted
-###
-mugs.HashSet.prototype.insert = (item) -> 
-  this.buildFromHashMap(this.hashMap_.insert(item,item))
-
-###*
-  Returns a new HashSet with the item removed
-  @param item The item to remove from the set
-  @return A new HashSet with the item removed
-###
-mugs.HashSet.prototype.remove = (item) -> 
-  this.buildFromHashMap(this.hashMap_.remove(item,item))
-
-###*
-  Returns true if the item is in the Set, otherwise false
-  @param item The item to check for 
-  @return True if the item is in the set, otherwise false
-###
-mugs.HashSet.prototype.contains = (item) -> 
-  this.hashMap_.contains(item)
+mugs.HashSet.prototype = new mugs.Extensible()
 
 ###*
   Returns a mugs.List with all of the items in the Set
@@ -88,3 +64,36 @@ mugs.HashSet.prototype.buildFromArray = (arr) ->
 
 mugs.HashSet.prototype.forEach = ( f ) -> 
   this.values().forEach( f )
+
+###*
+  Returns true if the item is in the Set, otherwise false
+  
+  @param item The item to check for 
+  @return True if the item is in the set, otherwise false
+###
+mugs.HashSet.prototype.contains = (item) -> 
+  this.hashMap_.contains(item)
+  
+###
+---------------------------------------------------------------------------------------------
+Extensible interface
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  Returns a new HashSet with the item inserted 
+  
+  @param item The item to insert into the Set
+  @return     A new HashSet with the item inserted
+###
+mugs.HashSet.prototype.insert = (item) -> 
+  this.buildFromHashMap(this.hashMap_.insert(item,item))
+
+###*
+  Returns a new HashSet with the item removed
+  
+  @param item The item to remove from the set
+  @return     A new HashSet with the item removed
+###
+mugs.HashSet.prototype.remove = (item) -> 
+  this.buildFromHashMap(this.hashMap_.remove(item,item))

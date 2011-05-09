@@ -9,13 +9,13 @@ mugs.require('mugs.RedBlackLeaf')
 mugs.require('mugs.RedBlackNode')
 
 ###*
-  @augments mugs.Collection
+  @augments mugs.Extensible
   @class mugs.TreeSet provides the implementation of the abstract data type Set based on a Red Black Tree
   @public
 ###
 mugs.TreeSet = (elements,comparator) ->
+  treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
   if elements instanceof Array and elements.length > 0
-    treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
     for element in elements
       treeUnderConstruction = treeUnderConstruction.insert(element, element)
     this.tree = treeUnderConstruction
@@ -24,29 +24,7 @@ mugs.TreeSet = (elements,comparator) ->
   this.tree.comparator = comparator if comparator?
   this
 
-mugs.TreeSet.prototype = new mugs.Collection()
-
-###*
-  Insert an element in the set. If the set already contains an element equal to the given value,
-  it is replaced with the new value.
-  @param element The element to insert into the set
-###
-mugs.TreeSet.prototype.insert = ( element ) ->
-  this.buildFromTree(this.tree.insert(element,element))
-
-###*
-  Delete an element from the set
-  @param element The element to remove from the set
-###
-mugs.TreeSet.prototype.remove = ( element ) ->
-  this.buildFromTree(this.tree.remove(element))
-
-###*
-  Tests if the set contains the element
-  @param element The element to check for
-###
-mugs.TreeSet.prototype.contains = ( element ) ->
-  this.tree.containsKey( element )
+mugs.TreeSet.prototype = new mugs.Extensible()
 
 ###*
   The elements of the set
@@ -65,17 +43,9 @@ mugs.TreeSet.prototype.buildFromTree = (tree) ->
   set.tree = tree
   set
 
-###*
-  Checks if the collection is empty
-  
-  @return true if the collection is empty, otherwise false
-###
-mugs.TreeSet.prototype.isEmpty = () ->
-  this.tree.isEmpty()
-
 ###
 ---------------------------------------------------------------------------------------------
-Methods related to Collection prototype
+Collection prototype
 ---------------------------------------------------------------------------------------------
 ###
 
@@ -99,3 +69,41 @@ mugs.TreeSet.prototype.forEach = ( f ) ->
     newValue = f(kv.key)
     { key: newValue, value: newValue }
   this.tree.inorderTraversal( q )
+
+###*
+  Checks if the collection is empty
+
+  @return true if the collection is empty, otherwise false
+###
+mugs.TreeSet.prototype.isEmpty = () ->
+  this.tree.isEmpty()
+  
+###*
+  Tests if the set contains the element
+  @param element The element to check for
+###
+mugs.TreeSet.prototype.contains = ( element ) ->
+  this.tree.containsKey( element )
+
+###
+---------------------------------------------------------------------------------------------
+Extensible interface
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  Insert an element in the set. If the set already contains an element equal to the given value,
+  it is replaced with the new value.
+  
+  @param item The element to insert into the set
+###
+mugs.TreeSet.prototype.insert = ( item ) ->
+  this.buildFromTree(this.tree.insert(item,item))
+
+###*
+  Delete an element from the set
+  
+  @param item The element to remove from the set
+###
+mugs.TreeSet.prototype.remove = ( item ) ->
+  this.buildFromTree(this.tree.remove(item))

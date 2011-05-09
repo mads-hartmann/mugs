@@ -39,7 +39,7 @@ mugs.Queue = (items) ->
     this.rear__ = new mugs.List(r).reverse()
   this
 
-mugs.Queue.prototype = new mugs.Collection() 
+mugs.Queue.prototype = new mugs.Extensible() 
 
 ###*
   Removes the front element from the queue
@@ -131,10 +131,11 @@ Extensible interface
 ###
 
 ###*
-  Inserts a new item to the front of the Queue. This is simply calling enqueue. The method is needed
-  so a Queue can be treated as an Extensible collection. runs in O(mugs.Queue.enqueue)
+  Inserts the new item to the front of the Queue. This is equivalent to enqueue. The method 
+  is needed so a Queue can be treated as an Extensible collection. runs in O(mugs.Queue.enqueue)
   
   @param item The item to add to the front of the Queue
+  @return     A new queue with the item in front
 ###
 mugs.Queue.prototype.insert = (item) ->
   this.enqueue(item)

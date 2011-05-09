@@ -40,7 +40,7 @@ $(document).ready(function(){
         
         test("pushAll", function() {
             var stack = new Stack([1,2,3]).pushAll([4,5]);
-            ok( equalsArr( stack.asArray(), [4,5,1,2,3]));
+            ok( equalsArr( stack.asArray(), [5,4,1,2,3]));
             
         });
     };
