@@ -7,14 +7,9 @@ $(document).ready(function(){
     module(name);
 
     test("You can create a Stack using multiple arguments", function() {
-      var stack = new Stack([1,2,3,4,5]),
-      values = stack.values(),
-      shouldBe = new List([5,4,3,2,1]);
-
-      ok(values.get(0).get() === shouldBe.get(0).get());
-      ok(values.get(1).get() === shouldBe.get(1).get());
-      ok(values.get(2).get() === shouldBe.get(2).get());
-      ok(values.get(3).get() === shouldBe.get(3).get());
+      var stack = new Stack([1,2,3,4,5]);      
+      ok( equalsArr( stack.asArray(), [1,2,3,4,5]));
+      
     });
 
     test("You can pop a value from the stack" ,function() {
@@ -40,10 +35,10 @@ $(document).ready(function(){
 
     test("You can read the top value of the stack", function() {
       var stack = new Stack([1,2,3]);
-      ok(stack.top() === 3);
+      ok(stack.top() === 1);
     });
 
-  }
+  };
 
   generic_stack_test("Stack", mugs.Stack);
 

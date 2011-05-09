@@ -24,11 +24,11 @@ mugs.require("mugs.List")
 
   @class Stack provides the implementation of the abstract data type Stack based on a List
   @param items An array of the items to construct the stack from. The last element will be 
-               at the top of the stack.
+               at the bottom of the stack.
   @public
 ###
 mugs.Stack = (items) ->
-  this.list = new mugs.List(items).reverse()
+  this.list = new mugs.List(items)
   this
 
 mugs.Stack.prototype = new mugs.Collection() 

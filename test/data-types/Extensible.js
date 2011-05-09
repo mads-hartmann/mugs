@@ -17,8 +17,8 @@ $(document).ready(function() {
         test("remove", function() {
             var col = new Constructor([1,2,3,4,5]);
             
-            ok( equalsArr( col.remove(3).asArray(), support.remove.expected[0]));
-            ok( equalsArr( col.remove(2).asArray(), support.remove.expected[1]));
+            ok( equalsArr( col.remove(3).asArray(), [1,2,4,5]));
+            ok( equalsArr( col.remove(2).asArray(), [1,3,4,5]));
             
         });
     };
@@ -26,24 +26,12 @@ $(document).ready(function() {
     support = {
         'insert' : {
             'expected' : [1,2,3,4]
-        },
-        'remove' : {
-            'expected' : [
-                [1,2,4,5],
-                [1,3,4,5]
-            ]
         }
     };
     
     stack = {
         'insert' : {
-            'expected' : [4,3,2,1]
-        },
-        'remove' : {
-            'expected' : [
-                [5,4,2,1],
-                [5,4,3,1]
-            ]
+            'expected' : [4,1,2,3]
         }
     };
 
