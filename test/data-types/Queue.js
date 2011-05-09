@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   Queue = mugs.Queue;
 
-  var generic_queue_test = function(name, Queue){
+  var implements_Queue = function(name, Queue){
 
     module(name);
 
@@ -32,9 +32,15 @@ $(document).ready(function() {
       ok(list.get(0).get() === 2);
       ok(list.get(5).isEmpty());
     });
-  }
+    
+    test("enqueueAll", function() {
+       var queue = new Queue([1,2,3,4,5]).enqueueAll([6,7]);
+       ok( equalsArr( queue.asArray(), [1,2,3,4,5,6,7]));
+    });
+    
+  };
 
-  generic_queue_test("Queue", mugs.Queue);
+  implements_Queue("Queue", mugs.Queue);
 
 
 });
