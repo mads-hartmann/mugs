@@ -90,8 +90,33 @@ mugs.Stack.prototype.buildFromList = (list) ->
   stack
 
 ###
-# Methods that Collection requires
-### 
+---------------------------------------------------------------------------------------------
+Extensible interface
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  Inserts a new item to the top of the Stack. This is simply calling push. The method is needed
+  so a Stack can be treated as an Extensible collection. runs in O(mugs.Stack.push)
+  
+  @param item The item to add to the top of the Stack
+###
+mugs.Stack.prototype.insert = (item) ->
+  this.push(item)
+
+###
+  Removes an item from the Stack. Runs in O(n).
+  
+  @param item The item to remove from the Stack.
+###
+mugs.Stack.prototype.remove = (item) -> 
+  this.buildFromList(this.list.remove(item))
+
+###
+---------------------------------------------------------------------------------------------
+Collection interface
+---------------------------------------------------------------------------------------------
+###
 
 mugs.Stack.prototype.forEach = ( f ) -> 
   this.list.forEach(f)

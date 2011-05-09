@@ -57,6 +57,21 @@ mugs.RandomAccessList.prototype.prepend = (item) ->
   this.cons(item,this)
 
 ###*
+  append
+###
+mugs.RandomAccessList.prototype.append = (item) ->
+  if (this.isEmpty())
+    new mugs.RandomAccessList([item])
+  else
+    this.cons(this.head(), this.tail().append(item))
+  
+###
+  
+###
+mugs.RandomAccessList.prototype.insert = (item) -> 
+  this.append(item)
+
+###*
   Returns the first item in the list
   @return The first item in the list
 ###

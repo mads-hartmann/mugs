@@ -88,6 +88,7 @@ mugs.TreeSet.prototype.buildFromArray = (arr) ->
 ###*
   Applies function 'f' on each value in the set. This return nothing and is only invoked
   for the side-effects of f.
+  
   @param f The unary function to apply on each element in the set.
   @see mugs.Collection
 ###

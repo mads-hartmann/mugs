@@ -102,8 +102,39 @@ mugs.Queue.prototype.buildFromLists = (front, rear) ->
   queue
 
 ###
-# Methods that Collection requires
-### 
+---------------------------------------------------------------------------------------------
+Extensible interface
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  Inserts a new item to the front of the Queue. This is simply calling enqueue. The method is needed
+  so a Queue can be treated as an Extensible collection. runs in O(mugs.Queue.enqueue)
+  
+  @param item The item to add to the front of the Queue
+###
+mugs.Queue.prototype.insert = (item) ->
+  this.enqueue(item)
+
+###
+  Removes an item from the Queue. Runs in O(n).
+  
+  @param item The item to remove from the Stack.
+###
+mugs.Queue.prototype.remove = (item) -> 
+  if this.front__.contains(item)
+    this.buildFromLists(this.front__.remove(item), this.rear__)
+  else if this.rear__.contains(item)
+    this.buildFromLists(this.front__,this.rear__.remove(item))
+  else 
+    this
+  
+
+###
+---------------------------------------------------------------------------------------------
+Collection interface
+---------------------------------------------------------------------------------------------
+###
 
 mugs.Queue.prototype.forEach = ( f ) -> 
   this.front__.forEach(f)
