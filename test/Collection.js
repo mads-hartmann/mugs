@@ -1,5 +1,5 @@
 /*
-  Test the checks that a specific implementation conforms to the Collection interfaces 
+  Test the checks that a specific implementation conforms to the Collection interfaces
 */
 
 $(document).ready(function() {
@@ -58,7 +58,10 @@ $(document).ready(function() {
         });
 
         test("forEach", function() {
-
+            var positive = false;
+            var collection = new Constructor(support.size.input);
+            collection.forEach( function(item){ positive = true; });
+            ok(positive);
         });
     };
     
