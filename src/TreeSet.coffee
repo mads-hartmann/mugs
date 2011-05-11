@@ -148,3 +148,10 @@ mugs.TreeSet.prototype.last = () ->
   
 mugs.TreeSet.prototype.head = () -> 
   this.get(0).get()
+  
+mugs.TreeSet.prototype.foldLeft = (seed) -> (f) => 
+  this.tree.values().foldLeft(seed)(f)
+  
+mugs.TreeSet.prototype.foldRight = (seed) -> (f) => 
+  this.tree.values().foldRight(seed)(f)
+  

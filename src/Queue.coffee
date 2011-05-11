@@ -155,6 +155,39 @@ mugs.Queue.prototype.remove = (item) ->
 
 ###
 ---------------------------------------------------------------------------------------------
+Indexed interface
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  
+###
+mugs.Queue.prototype.get = (index) -> 
+  if index <= this.front__.size() - 1
+    this.front__.get(index)
+  else
+    this.rear__.get(index)
+
+###*
+  
+###
+mugs.Queue.prototype.update = (index, item) -> 
+  if index <= this.front__.size() - 1
+    this.buildFromLists(this.front__.update(index, item), this.rear__)
+  else
+    this.buildFromLists(this.front__,this.rear__.update(index, item))
+
+###*
+  
+###
+mugs.Queue.prototype.removeAt = (index) -> 
+  if index <= this.front__.size() - 1
+    this.buildFromLists(this.front__.removeAt(index), this.rear__)
+  else
+    this.buildFromLists(this.front__,this.rear__.removeAt(index))
+
+###
+---------------------------------------------------------------------------------------------
 Sequenced interface 
 ---------------------------------------------------------------------------------------------
 ###
@@ -185,7 +218,7 @@ mugs.Queue.prototype.first = () ->
 ###*
   Returns the first item in the collection. Throws an exception if the collection 
   is empty. 
-  
+
   @return The first item in the collection. Throws an exception if the collection 
           is empty.
 ###
@@ -194,11 +227,31 @@ mugs.Queue.prototype.head = () ->
 
 ###*
   Return the remainder of the queue after removing the front-most item
-  
+
   @return The remainder of the queue after removing the front-most item
 ###
 mugs.Queue.prototype.tail = () -> 
   this.dequeue()
+
+###*
+  
+###
+mugs.Queue.prototype.foldLeft = (seed) -> (f) =>
+  partialResult = this.front__.foldLeft(seed)(f)
+  this.rear__.reverse().foldLeft(partialResult)(f)
+
+###*
+  
+###
+mugs.Queue.prototype.foldRight = (seed) -> (f) =>
+  partialResult = this.front__.foldRight(seed)(f)
+  this.rear__.foldLeft(partialResult)(f)
+
+###
+---------------------------------------------------------------------------------------------
+Directed interface
+---------------------------------------------------------------------------------------------
+###
 
 ###*
   Appends an item to the end of the Queue. 
@@ -243,36 +296,3 @@ mugs.Queue.prototype.prependAll = (items) ->
 ###
 mugs.Queue.prototype.reverse = () ->
   this.buildFromLists(this.rear__ , this.front__)
-
-###
----------------------------------------------------------------------------------------------
-Indexed interface
----------------------------------------------------------------------------------------------
-###
-
-###*
-  
-###
-mugs.Queue.prototype.get = (index) -> 
-  if index <= this.front__.size() - 1
-    this.front__.get(index)
-  else
-    this.rear__.get(index)
-
-###*
-  
-###
-mugs.Queue.prototype.update = (index, item) -> 
-  if index <= this.front__.size() - 1
-    this.buildFromLists(this.front__.update(index, item), this.rear__)
-  else
-    this.buildFromLists(this.front__,this.rear__.update(index, item))
-
-###*
-  
-###
-mugs.Queue.prototype.removeAt = (index) -> 
-  if index <= this.front__.size() - 1
-    this.buildFromLists(this.front__.removeAt(index), this.rear__)
-  else
-    this.buildFromLists(this.front__,this.rear__.removeAt(index))

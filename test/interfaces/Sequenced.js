@@ -29,11 +29,15 @@ $(document).ready(function() {
         });
         
         test("foldLeft", function() {
-            
+            var col = new Constructor([1,2,3,4,5]);
+            var sum = col.foldLeft(0)(function(acc,item){ return acc+item; });
+            ok (sum == 15);
         });
         
         test("foldRight", function() {
-            
+            var col = new Constructor([1,2,3,4,5]);
+            var sum = col.foldRight(0)(function(acc,item){ return acc+item; });
+            ok (sum == 15);
         });
     }; 
     

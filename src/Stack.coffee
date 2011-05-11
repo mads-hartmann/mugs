@@ -136,6 +136,21 @@ mugs.Stack.prototype.remove = (item) ->
 
 ###
 ---------------------------------------------------------------------------------------------
+Indexed interface
+---------------------------------------------------------------------------------------------
+###
+
+mugs.Stack.prototype.get = (index) -> 
+  this.list.get(index)
+
+mugs.Stack.prototype.update = (index, item) -> 
+  this.buildFromList(this.list.update(index,item))
+
+mugs.Stack.prototype.removeAt = (index) -> 
+  this.buildFromList(this.list.removeAt(index))
+  
+###
+---------------------------------------------------------------------------------------------
 Sequenced interface 
 ---------------------------------------------------------------------------------------------
 ###
@@ -172,12 +187,26 @@ mugs.Stack.prototype.tail = () ->
 ###*
   Returns the first item in the collection. Throws an exception if the collection 
   is empty. 
-  
+
   @return The first item in the collection. Throws an exception if the collection 
           is empty.
 ###
 mugs.Stack.prototype.head = () ->
   this.list.head()
+
+###*
+  
+###
+mugs.Stack.prototype.foldLeft = (seed) -> (f) =>
+  this.list.foldLeft(seed)(f)  
+
+mugs.Stack.prototype.foldRight = (seed) -> (f) =>
+  this.list.foldRight(seed)(f)
+###
+---------------------------------------------------------------------------------------------
+Directed interface
+---------------------------------------------------------------------------------------------
+###
   
 ###*
   Appends an item to the end (bottom) of the Stack. 
@@ -222,18 +251,3 @@ mugs.Stack.prototype.prependAll = (items) ->
 ###
 mugs.Stack.prototype.reverse = () ->
   this.buildFromList(this.list.reverse())
-
-###
----------------------------------------------------------------------------------------------
-Indexed interface
----------------------------------------------------------------------------------------------
-###
-
-mugs.Stack.prototype.get = (index) -> 
-  this.list.get(index)
-
-mugs.Stack.prototype.update = (index, item) -> 
-  this.buildFromList(this.list.update(index,item))
-
-mugs.Stack.prototype.removeAt = (index) -> 
-  this.buildFromList(this.list.removeAt(index))

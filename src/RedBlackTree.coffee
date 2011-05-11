@@ -58,6 +58,7 @@ mugs.RedBlackLeaf.prototype.get = (key) -> new mugs.None()
 mugs.RedBlackLeaf.prototype.keys = () -> new mugs.List()
 mugs.RedBlackLeaf.prototype.values = () -> new mugs.List()
 mugs.RedBlackLeaf.prototype.inorderTraversal = (f) -> return # nothing
+mugs.RedBlackLeaf.prototype.foldLeft = (seed) ->  (f) => seed
 mugs.RedBlackLeaf.prototype.insert = (key,value) -> new mugs.RedBlackNode(mugs.RedBlack.RED, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK), key, value, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK))
 
 mugs.RedBlackNode = (color, left, key, value, right, comparator) ->
@@ -160,7 +161,7 @@ mugs.RedBlackNode.prototype.inorderTraversal = (f) ->
   if !this.left.isEmpty() then this.left.inorderTraversal(f)
   f({key: this.key, value: this.value})
   if !this.right.isEmpty() then this.right.inorderTraversal(f)
-
+  
 ###*
   Returns a new tree with the inserted element.  If the Tree already contains that key
   the old value is replaced with the new value
