@@ -24,7 +24,7 @@ mugs.TreeSet = (elements,comparator) ->
   this.tree.comparator = comparator if comparator?
   this
 
-mugs.TreeSet.prototype = new mugs.Extensible()
+mugs.TreeSet.prototype = new mugs.Indexed()
 
 ###*
   The elements of the set
@@ -107,3 +107,44 @@ mugs.TreeSet.prototype.insert = ( item ) ->
 ###
 mugs.TreeSet.prototype.remove = ( item ) ->
   this.buildFromTree(this.tree.remove(item))
+
+###
+---------------------------------------------------------------------------------------------
+Indexed interface
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  
+###
+mugs.TreeSet.prototype.get = ( index ) -> 
+  this.tree.atIndex(index)
+
+###*
+  
+###
+mugs.TreeSet.prototype.update = (index, item) -> 
+  itm = this.get(index)
+  this.buildFromTree(this.tree.insert(itm,item))
+
+###*
+  
+###
+mugs.TreeSet.prototype.removeAt = (index) ->
+  itm = this.get(index)
+  this.buildFromTree(this.tree.remove(itm))
+  
+###*
+  
+###
+mugs.TreeSet.prototype.first = () ->
+  this.get(0)
+
+mugs.TreeSet.prototype.tail = () -> 
+  this.removeAt(0)
+  
+mugs.TreeSet.prototype.last = () -> 
+  this.get(this.size()-1)
+  
+mugs.TreeSet.prototype.head = () -> 
+  this.get(0).get()

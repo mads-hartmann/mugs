@@ -90,7 +90,7 @@ mugs.HashMap.prototype.remove = (key) ->
   that        = this
   index       = that.compress_(that.getHash_(key))
   bucket      = that.getBucketFromKey_(key)
-  indexOfItem = bucket.findIndexOf( (item) -> that.getHash_(item.key) == that.getHash_(key) )
+  indexOfItem = bucket.findIndex( (item) -> that.getHash_(item.key) == that.getHash_(key) ).getOrElse(-1)
   if indexOfItem >= 0 
     newBucketArr = that.bucketArray_.update(index, bucket.removeAt(indexOfItem))
     newMap       = new mugs.HashMap([],false)

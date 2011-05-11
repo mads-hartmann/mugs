@@ -31,7 +31,7 @@ mugs.Stack = (items) ->
   this.list = new mugs.List(items)
   this
 
-mugs.Stack.prototype = new mugs.Extensible() 
+mugs.Stack.prototype = new mugs.Indexed()
 
 ###*
   Removes the top element from the stack.
@@ -222,3 +222,18 @@ mugs.Stack.prototype.prependAll = (items) ->
 ###
 mugs.Stack.prototype.reverse = () ->
   this.buildFromList(this.list.reverse())
+
+###
+---------------------------------------------------------------------------------------------
+Indexed interface
+---------------------------------------------------------------------------------------------
+###
+
+mugs.Stack.prototype.get = (index) -> 
+  this.list.get(index)
+
+mugs.Stack.prototype.update = (index, item) -> 
+  this.buildFromList(this.list.update(index,item))
+
+mugs.Stack.prototype.removeAt = (index) -> 
+  this.buildFromList(this.list.removeAt(index))

@@ -88,6 +88,26 @@ mugs.RedBlackNode.prototype.get = (key) ->
   else                    new mugs.Some(this.value)
 
 ###*
+  Returns the item at a given index. The item is found by doing 
+  an inorder traversal of the tree subtracting 1 from the index at each node 
+  until the index is 0. 
+  
+  @param  index The index of the item to retrieve 
+  @return       Some(item) if the index is within the bounds of 
+                size of the tree. otherwise None.
+###
+mugs.RedBlackNode.prototype.atIndex = (index) -> 
+  result = new mugs.None()
+  this.inorderTraversal( (kv) -> 
+    if index == 0 
+      result = new mugs.Some(kv.value)
+      index--
+    else
+      index--
+  )
+  return result
+
+###*
   Finds the smallest key in the tree
   Complexity of O ( log n )
 ###

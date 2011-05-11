@@ -93,15 +93,6 @@ $(document).ready(function(){
       ok(list.get(1).get() == shouldBe.get(1).get());
       ok(list.get(2).get() == shouldBe.get(2).get());
     });
-
-    test("findIndexOf", function() {
-      var list = new mugs.List([1,2,3,4,5]);
-      ok(list.findIndexOf(function(item){ return (item > 3); }) == 3);
-      ok(list.findIndexOf(function(item){ return (item > 1); }) == 1);
-      ok(list.findIndexOf(function(item){ return (item > 0); }) === 0);
-      ok(list.findIndexOf(function(item){ return (item > 10); }) == -1); 
-    });
-
   };
 
   generic_list_test("List" , mugs.List);

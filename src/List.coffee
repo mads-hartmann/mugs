@@ -55,7 +55,7 @@ mugs.List = (items) ->
     this.isEmpty = () -> false
   this
 
-mugs.List.prototype = new mugs.Extensible()
+mugs.List.prototype = new mugs.Indexed()
 
 ###*
   Helper method to construct a list from a value and another list
@@ -165,7 +165,7 @@ mugs.List.prototype.get = (index) ->
   else if (index == 0)
     new mugs.Some(this.head())
   else
-    this.tail().get(index-1)
+    this.tail().get(index-1)  
 
 ###*
   Removes the element at the given index. Runs in O(n) time.
@@ -183,19 +183,22 @@ mugs.List.prototype.removeAt = (index) ->
     this.cons(this.head(), this.tail().removeAt(index-1))
 
 ###*
-  Returns index of the first element satisfying a predicate, or -1
+  Returns mugs.Some(index) of the first element satisfying a predicate, or mugs.None
 
   @parem  p The predicate to apply to each object
-  @return   The index of the first element satisfying a predicate, or -1
+  @return   mugs.Some(index) of the first element satisfying a predicate, or mugs.None
 ###
-mugs.List.prototype.findIndexOf = ( p ) -> 
+mugs.List.prototype.findIndex = ( p ) -> 
   xs = this 
   index = 0
   while not xs.isEmpty() and not p(xs.head())
     index++
     xs = xs.tail()
     if xs.isEmpty() then index = -1
-  index
+  if index == -1
+    new mugs.None()
+  else 
+    new mugs.Some(index)
 
 ###
 ---------------------------------------------------------------------------------------------

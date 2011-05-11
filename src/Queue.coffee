@@ -39,7 +39,7 @@ mugs.Queue = (items) ->
     this.rear__ = new mugs.List(r).reverse()
   this
 
-mugs.Queue.prototype = new mugs.Extensible() 
+mugs.Queue.prototype = new mugs.Indexed()
 
 ###*
   Removes the front element from the queue
@@ -243,3 +243,36 @@ mugs.Queue.prototype.prependAll = (items) ->
 ###
 mugs.Queue.prototype.reverse = () ->
   this.buildFromLists(this.rear__ , this.front__)
+
+###
+---------------------------------------------------------------------------------------------
+Indexed interface
+---------------------------------------------------------------------------------------------
+###
+
+###*
+  
+###
+mugs.Queue.prototype.get = (index) -> 
+  if index <= this.front__.size() - 1
+    this.front__.get(index)
+  else
+    this.rear__.get(index)
+
+###*
+  
+###
+mugs.Queue.prototype.update = (index, item) -> 
+  if index <= this.front__.size() - 1
+    this.buildFromLists(this.front__.update(index, item), this.rear__)
+  else
+    this.buildFromLists(this.front__,this.rear__.update(index, item))
+
+###*
+  
+###
+mugs.Queue.prototype.removeAt = (index) -> 
+  if index <= this.front__.size() - 1
+    this.buildFromLists(this.front__.removeAt(index), this.rear__)
+  else
+    this.buildFromLists(this.front__,this.rear__.removeAt(index))
