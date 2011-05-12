@@ -5,7 +5,7 @@
 mugs.require("mugs.LLRBNode");
 mugs.require("mugs.LLRBLeaf");
 /**
-  @augments mugs.Traversable
+  @augments mugs.Collection
   @class mugs.LLRBSet Contains the implementation of the Set data structure based on a Left Leaning Red-Black Tree
   @public
 */
@@ -24,29 +24,7 @@ mugs.LLRBSet = function(items, comparator) {
   }
   return this;
 };
-mugs.LLRBSet.prototype = new mugs.Traversable();
-/**
-  Insert an element in the set. If the set already contains an element equal to the given value,
-  it is replaced with the new value.
-  @param element The element to insert into the set
-*/
-mugs.LLRBSet.prototype.insert = function(element) {
-  return this.buildFromTree(this.tree.insert(element, element));
-};
-/**
-  Delete an element from the set
-  @param element The element to remove from the set
-*/
-mugs.LLRBSet.prototype.remove = function(element) {
-  return this.buildFromTree(this.tree.remove(element));
-};
-/**
-  Tests if the set contains the element
-  @param element The element to check for
-*/
-mugs.LLRBSet.prototype.contains = function(element) {
-  return this.tree.containsKey(element);
-};
+mugs.LLRBSet.prototype = new mugs.Extensible();
 /**
   The elements of the set
   @return {List} A list containing all the element of the set
@@ -67,7 +45,7 @@ mugs.LLRBSet.prototype.buildFromTree = function(tree) {
 };
 /*
 ---------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
+Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 */
 /**
@@ -80,7 +58,7 @@ mugs.LLRBSet.prototype.buildFromArray = function(arr) {
   Applies function 'f' on each value in the map. This return nothing and is only invoked
   for the side-effects of f.
   @param f The unary function to apply on each element in the set.
-  @see mugs.Traversable
+  @see mugs.Collection
 */
 mugs.LLRBSet.prototype.forEach = function(f) {
   var q;
@@ -93,4 +71,42 @@ mugs.LLRBSet.prototype.forEach = function(f) {
     };
   };
   return this.tree.inorderTraversal(q);
+};
+/**
+  Tests if the set contains the element
+  @param element The element to check for
+*/
+mugs.LLRBSet.prototype.contains = function(element) {
+  return this.tree.containsKey(element);
+};
+/**
+  Checks if the collection is empty
+
+  @return true if the collection is empty, otherwise false
+*/
+mugs.LLRBSet.prototype.isEmpty = function() {
+  return this.tree.isEmpty();
+};
+/*
+---------------------------------------------------------------------------------------------
+Extensible interface
+---------------------------------------------------------------------------------------------
+*/
+/**
+  Creates a new Set with the item inserted
+
+  @param item The Item to insert into the Set
+  @return       A new LLRBSet with the item inserted
+*/
+mugs.LLRBSet.prototype.insert = function(item) {
+  return this.buildFromTree(this.tree.insert(item, item));
+};
+/**
+  Creates a new Set without the given item
+
+  @param item   The item to remove from the set
+  @return       A new Set without the given item
+*/
+mugs.LLRBSet.prototype.remove = function(item) {
+  return this.buildFromTree(this.tree.remove(item));
 };

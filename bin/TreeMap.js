@@ -47,7 +47,7 @@ mugs.require('mugs.RedBlackNode');
   @param {Function=} comparator A comparator function that can compare the keys (optional). Will use a
                                 default comparator for integers if no comparator is given
   @public
-  @augments mugs.Traversable
+  @augments mugs.Collection
 */
 mugs.TreeMap = function(keyValuePairs, comparator) {
   var kv, treeUnderConstruction, _i, _len;
@@ -64,7 +64,7 @@ mugs.TreeMap = function(keyValuePairs, comparator) {
   }
   return this;
 };
-mugs.TreeMap.prototype = new mugs.Traversable();
+mugs.TreeMap.prototype = new mugs.Collection();
 /*
 ---------------------------------------------------------------------------------------------
 Methods related to the MAP ADT
@@ -110,6 +110,14 @@ mugs.TreeMap.prototype.values = function() {
   return this.tree.values();
 };
 /**
+  Return true if the collection is empty, otherwise false
+
+  @return True if the collection is empty, otherwise false
+*/
+mugs.TreeMap.prototype.isEmpty = function() {
+  return this.tree.isEmpty();
+};
+/**
   Used to construct a mugs.TreeMap from mugs.RedBlackTree. This is intended
   for internal use only. Would've marked it private if I could.
   @private
@@ -122,7 +130,7 @@ mugs.TreeMap.prototype.buildFromTree = function(tree) {
 };
 /*
 ---------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
+Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 */
 /**
@@ -134,7 +142,8 @@ mugs.TreeMap.prototype.buildFromArray = function(arr) {
 /**
   Applies function 'f' on each value in the map. This return nothing and is only invoked
   for the side-effects of f.
-  @see mugs.Traversable
+
+  @see mugs.Collection
 */
 mugs.TreeMap.prototype.forEach = function(f) {
   return this.tree.inorderTraversal(f);

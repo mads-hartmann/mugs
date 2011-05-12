@@ -42,7 +42,7 @@ mugs.RandomAccessList = function(items) {
     return this;
   }
 };
-mugs.RandomAccessList.prototype = new mugs.Traversable();
+mugs.RandomAccessList.prototype = new mugs.Collection();
 /**
   Create a new list by prepending the item
 
@@ -51,6 +51,22 @@ mugs.RandomAccessList.prototype = new mugs.Traversable();
 */
 mugs.RandomAccessList.prototype.prepend = function(item) {
   return this.cons(item, this);
+};
+/**
+  append
+*/
+mugs.RandomAccessList.prototype.append = function(item) {
+  if (this.isEmpty()) {
+    return new mugs.RandomAccessList([item]);
+  } else {
+    return this.cons(this.head(), this.tail().append(item));
+  }
+};
+/*
+
+*/
+mugs.RandomAccessList.prototype.insert = function(item) {
+  return this.append(item);
 };
 /**
   Returns the first item in the list
@@ -134,6 +150,14 @@ mugs.RandomAccessList.prototype.update = function(index, item) {
   return this.buildFromList(recUpdate(this.__trees, index));
 };
 /**
+  Checks if the collection is empty
+
+  @return true if the collection is empty, otherwise false
+*/
+mugs.RandomAccessList.prototype.isEmpty = function() {
+  return this.__trees.isEmpty();
+};
+/**
   Creates a Random Access List from an item and another Random
   Access List Trees.
 
@@ -181,7 +205,7 @@ mugs.RandomAccessList.prototype.buildFromList = function(list) {
   return ral;
 };
 /*
-  Related to Traversable
+  Related to Collection
 */
 mugs.RandomAccessList.prototype.buildFromArray = function(items) {
   return new mugs.RandomAccessList(items);

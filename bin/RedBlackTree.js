@@ -79,6 +79,11 @@ mugs.RedBlackLeaf.prototype.values = function() {
   return new mugs.List();
 };
 mugs.RedBlackLeaf.prototype.inorderTraversal = function(f) {};
+mugs.RedBlackLeaf.prototype.foldLeft = function(seed) {
+  return __bind(function(f) {
+    return seed;
+  }, this);
+};
 mugs.RedBlackLeaf.prototype.insert = function(key, value) {
   return new mugs.RedBlackNode(mugs.RedBlack.RED, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK), key, value, new mugs.RedBlackLeaf(mugs.RedBlack.BLACK));
 };
@@ -117,6 +122,28 @@ mugs.RedBlackNode.prototype.get = function(key) {
   } else {
     return new mugs.Some(this.value);
   }
+};
+/**
+  Returns the item at a given index. The item is found by doing
+  an inorder traversal of the tree subtracting 1 from the index at each node
+  until the index is 0.
+
+  @param  index The index of the item to retrieve
+  @return       Some(item) if the index is within the bounds of
+                size of the tree. otherwise None.
+*/
+mugs.RedBlackNode.prototype.atIndex = function(index) {
+  var result;
+  result = new mugs.None();
+  this.inorderTraversal(function(kv) {
+    if (index === 0) {
+      result = new mugs.Some(kv.value);
+      return index--;
+    } else {
+      return index--;
+    }
+  });
+  return result;
 };
 /**
   Finds the smallest key in the tree
@@ -179,20 +206,24 @@ mugs.RedBlackNode.prototype.values = function() {
   return new mugs.List().buildFromArray(elements);
 };
 /**
-  This will do an inorderTraversal of the tree applying the function 'f'
+  This will do an inorder traversal of the tree applying the function 'f'
   on each key/value pair in the tree. This doesn't return anything and is only
   executed for the side-effects of f.
 
-  @param {Function} f A function taking one arguments with properties key and value
+  @param {Function} f A function taking one argument which is an object with
+                      the properties 'key' and 'value'
 */
 mugs.RedBlackNode.prototype.inorderTraversal = function(f) {
-  var bigger, smaller;
-  smaller = !this.left.isEmpty() ? this.left.inorderTraversal(f) : void 0;
+  if (!this.left.isEmpty()) {
+    this.left.inorderTraversal(f);
+  }
   f({
     key: this.key,
     value: this.value
   });
-  return bigger = !this.right.isEmpty() ? this.right.inorderTraversal(f) : void 0;
+  if (!this.right.isEmpty()) {
+    return this.right.inorderTraversal(f);
+  }
 };
 /**
   Returns a new tree with the inserted element.  If the Tree already contains that key

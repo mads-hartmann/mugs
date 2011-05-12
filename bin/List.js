@@ -19,7 +19,7 @@ mugs.require("mugs.None");
   get( index )                                        O(n)
   remove( index )                                     O(n)
   --------------------------------------------------------
-  Methods inherited from mugs.Traversable
+  Methods inherited from mugs.Collection
   --------------------------------------------------------
   map( f )                                            O(n)
   flatMap( f )                                        O(n)
@@ -27,14 +27,14 @@ mugs.require("mugs.None");
   forEach( f )                                        O(n)
   foldLeft(s)(f)                                      O(n)
   isEmpty()                                           O(1)
-  contains( element )                                 O(n)    TODO
+  contains( element )                                 O(n)
   forAll( f )                                         O(n)    TODO
   take( x )                                           O(n)    TODO
   takeWhile( f )                                      O(n)    TODO
   size()                                              O(n)    TODO
   --------------------------------------------------------
   </pre>
-  @augments mugs.Traversable
+  @augments mugs.Collection
   @class List provides the implementation of the abstract data type List based on a Singly-Linked list
   @public
   @argument items An array of items to construct the List from
@@ -65,175 +65,10 @@ mugs.List = function(items) {
   }
   return this;
 };
-mugs.List.prototype = new mugs.Traversable();
-/*
----------------------------------------------------------------------------------------------
-Methods related to the List ADT
----------------------------------------------------------------------------------------------
-*/
-/**
-  Create a new list by appending this value
-  @param {*} element The element to append to the List
-  @return {List} A new list containing all the elements of the old with followed by the element
-*/
-mugs.List.prototype.append = function(element) {
-  if (this.isEmpty()) {
-    return new mugs.List([element]);
-  } else {
-    return this.cons(this.head(), this.tail().append(element));
-  }
-};
-/**
-  Create a new list by prepending this value
-  @param {*} element The element to prepend to the List
-  @return {List} A new list containing all the elements of the old list prepended with the element
-*/
-mugs.List.prototype.prepend = function(element) {
-  return this.cons(element, this);
-};
-/**
-  Update the value with the given index.
-  @param {number} index The index of the element to update
-  @param {*} element The element to replace with the current element
-  @return {List} A new list with the updated value.
-*/
-mugs.List.prototype.update = function(index, element) {
-  if (index < 0) {
-    throw new Error("Index out of bounds by " + index);
-  } else if (index === 0) {
-    return this.cons(element, this.tail());
-  } else {
-    return this.cons(this.head(), this.tail().update(index - 1, element));
-  }
-};
-/**
-  Return an Option containing the nth element in the list.
-  @param {number} index The index of the element to get
-  @return {mugs.Some|mugs.None} mugs.Some(element) is it exists, otherwise mugs.None
-*/
-mugs.List.prototype.get = function(index) {
-  if (index < 0 || this.isEmpty()) {
-    new mugs.None();
-    return new mugs.None();
-  } else if (index === 0) {
-    return new mugs.Some(this.head());
-  } else {
-    return this.tail().get(index - 1);
-  }
-};
-/**
-  Removes the element at the given index. Runs in O(n) time.
-  @param {number} index The index of the element to remove
-  @return {List} A new list without the element at the given index
-*/
-mugs.List.prototype.remove = function(index) {
-  if (index === 0) {
-    if (!this.tail().isEmpty()) {
-      return this.cons(this.tail().first().get(), this.tail().tail);
-    } else {
-      return new mugs.List();
-    }
-  } else {
-    return this.cons(this.head(), this.tail().remove(index - 1));
-  }
-};
-/**
-  The last element in the list
-  @return {mugs.Some|mugs.None} mugs.Some(last) if it exists, otherwise mugs.None
-*/
-mugs.List.prototype.last = function() {
-  if (this.tail().isEmpty()) {
-    return new mugs.Some(this.head());
-  } else {
-    return this.tail().last();
-  }
-};
-/**
-  The first element in the list
-  @return {mugs.Some|mugs.None} mugs.Some(first) if it exists, otherwise mugs.None
-*/
-mugs.List.prototype.first = function() {
-  return new mugs.Some(this.head());
-};
-/**
-  Creates a list by appending the argument list to 'this' list.
-
-  @example
-  new mugs.List([1,2,3]).appendList(new mugs.List([4,5,6]));
-  // returns a list with the element 1,2,3,4,5,6
-  @param {List} list The list to append to this list.
-  @return {List} A new list containing the elements of the appended List and the elements of the original List.
-*/
-mugs.List.prototype.appendList = function(list) {
-  if (this.isEmpty()) {
-    return list;
-  } else {
-    return this.cons(this.head(), this.tail().appendList(list));
-  }
-};
-/**
-  Creates a new list by copying all of the items in the argument 'list'
-  before of 'this' list
-
-  @example
-  new mugs.List([4,5,6]).prependList(new mugs.List([1,2,3]));
-  // returns a list with the element 1,2,3,4,5,6
-  @param {List} list The list to prepend to this list.
-  @return {List} A new list containing the elements of the prepended List and the elements of the original List.
-*/
-mugs.List.prototype.prependList = function(list) {
-  if (this.isEmpty()) {
-    return list;
-  } else {
-    if (list.isEmpty()) {
-      return this;
-    } else {
-      return this.cons(list.head(), this.prependList(list.tail()));
-    }
-  }
-};
-/*
----------------------------------------------------------------------------------------------
-Methods related to Traversable prototype
----------------------------------------------------------------------------------------------
-*/
-/**
-  @private
-*/
-mugs.List.prototype.buildFromArray = function(arr) {
-  return new mugs.List(arr);
-};
-/**
-  Applies function 'f' on each element in the list. This return nothing and is only invoked
-  for the side-effects of f.
-  @see mugs.Traversable
-*/
-mugs.List.prototype.forEach = function(f) {
-  if (!this.isEmpty()) {
-    f(this.head());
-    return this.tail().forEach(f);
-  }
-};
-/*
----------------------------------------------------------------------------------------------
-Miscellaneous Methods
----------------------------------------------------------------------------------------------
-*/
-/**
-   Returns the number of elements in the list
-*/
-mugs.List.prototype.size = function() {
-  var count, xs;
-  xs = this;
-  count = 0;
-  while (!xs.isEmpty()) {
-    count += 1;
-    xs = xs.tail();
-  }
-  return count;
-};
+mugs.List.prototype = new mugs.Indexed();
 /**
   Helper method to construct a list from a value and another list
+
   @private
 */
 mugs.List.prototype.cons = function(head, tail) {
@@ -294,8 +129,204 @@ mugs.List.prototype.foldRight = function(seed) {
     return __foldRight(this);
   }, this);
 };
+/*
+---------------------------------------------------------------------------------------------
+Collection interface
+head(), tail(), and isEmpty() are defined in the constructor
+---------------------------------------------------------------------------------------------
+*/
+/**
+  @private
+*/
+mugs.List.prototype.buildFromArray = function(arr) {
+  return new mugs.List(arr);
+};
+/**
+  Applies function 'f' on each element in the list. This return nothing and is only invoked
+  for the side-effects of f.
+  @see mugs.Collection
+*/
+mugs.List.prototype.forEach = function(f) {
+  if (!this.isEmpty()) {
+    f(this.head());
+    return this.tail().forEach(f);
+  }
+};
+/*
+---------------------------------------------------------------------------------------------
+Indexed interface
+---------------------------------------------------------------------------------------------
+*/
+/**
+  Update the value with the given index.
+
+  @param  {number}  index   The index of the element to update
+  @param  {*}       element The element to replace with the current element
+  @return {List}            A new list with the updated value.
+*/
+mugs.List.prototype.update = function(index, element) {
+  if (index < 0) {
+    throw new Error("Index out of bounds by " + index);
+  } else if (index === 0) {
+    return this.cons(element, this.tail());
+  } else {
+    return this.cons(this.head(), this.tail().update(index - 1, element));
+  }
+};
+/**
+  Return an Option containing the nth element in the list.
+
+  @param  {number}              index The index of the element to get
+  @return {mugs.Some|mugs.None}       mugs.Some(element) is it exists, otherwise mugs.None
+*/
+mugs.List.prototype.get = function(index) {
+  if (index < 0 || this.isEmpty()) {
+    new mugs.None();
+    return new mugs.None();
+  } else if (index === 0) {
+    return new mugs.Some(this.head());
+  } else {
+    return this.tail().get(index - 1);
+  }
+};
+/**
+  Removes the element at the given index. Runs in O(n) time.
+
+  @param  {number} index  The index of the element to remove
+  @return {List}          A new list without the element at the given index
+*/
+mugs.List.prototype.removeAt = function(index) {
+  if (index === 0) {
+    if (!this.tail().isEmpty()) {
+      return this.cons(this.tail().head(), this.tail().tail());
+    } else {
+      return new mugs.List();
+    }
+  } else {
+    return this.cons(this.head(), this.tail().removeAt(index - 1));
+  }
+};
+/**
+  Returns mugs.Some(index) of the first element satisfying a predicate, or mugs.None
+
+  @parem  p The predicate to apply to each object
+  @return   mugs.Some(index) of the first element satisfying a predicate, or mugs.None
+*/
+mugs.List.prototype.findIndex = function(p) {
+  var index, xs;
+  xs = this;
+  index = 0;
+  while (!xs.isEmpty() && !p(xs.head())) {
+    index++;
+    xs = xs.tail();
+    if (xs.isEmpty()) {
+      index = -1;
+    }
+  }
+  if (index === -1) {
+    return new mugs.None();
+  } else {
+    return new mugs.Some(index);
+  }
+};
+/*
+---------------------------------------------------------------------------------------------
+Extensible interface
+---------------------------------------------------------------------------------------------
+*/
+/**
+  Inserts a new item to the end of the List. Equivalent to append. This is needed so a List can be treated
+  as an Extensible collection. runs in O(mugs.List.append)
+
+  @param item The item to add to the end of the List
+  @return     A new list with the item appended to the end
+*/
+mugs.List.prototype.insert = function(item) {
+  return this.append(item);
+};
+/*
+  Removes an item from the List. Runs in O(n).
+
+  @param item The item to remove from the List.
+*/
+mugs.List.prototype.remove = function(item) {
+  if (this.isEmpty()) {
+    return this;
+  } else if (this.head() === item) {
+    if (this.tail().isEmpty()) {
+      return new mugs.List([]);
+    } else {
+      return this.cons(this.tail().head(), this.tail().tail());
+    }
+  } else {
+    return this.cons(this.head(), this.tail().remove(item));
+  }
+};
+/*
+---------------------------------------------------------------------------------------------
+Sequenced interface
+---------------------------------------------------------------------------------------------
+*/
+/**
+  Returns a mugs.Some with the last item in the collection if it's non-empty.
+  otherwise, mugs.None
+
+  @return a mugs.Some with the last item in the collection if it's non-empty.
+          otherwise, mugs.None
+*/
+mugs.List.prototype.last = function() {
+  var current, item;
+  current = this;
+  if (current.isEmpty()) {
+    return new mugs.None;
+  }
+  while (!current.isEmpty()) {
+    item = current.head();
+    current = current.tail();
+  }
+  return new mugs.Some(item);
+};
+/**
+  Returns a mugs.Some with the first item in the collection if it's non-empty.
+  otherwise, mugs.None
+
+  @return a mugs.Some with the first item in the collection if it's non-empty.
+          otherwise, mugs.None
+*/
+mugs.List.prototype.first = function() {
+  if (this.isEmpty()) {
+    return new mugs.None();
+  } else {
+    return new mugs.Some(this.head());
+  }
+};
+/**
+  Create a new list by appending this value
+
+  @param  {*}     element   The element to append to the List
+  @return {List}            A new list containing all the elements of the old with
+                            followed by the element
+*/
+mugs.List.prototype.append = function(element) {
+  if (this.isEmpty()) {
+    return new mugs.List([element]);
+  } else {
+    return this.cons(this.head(), this.tail().append(element));
+  }
+};
+/**
+  Create a new list by prepending this value
+
+  @param  {*}     element   The element to prepend to the List
+  @return {List}            A new list containing all the elements of the old list
+                            prepended with the element
+*/
+mugs.List.prototype.prepend = function(element) {
+  return this.cons(element, this);
+};
 /**
   Returns a new list with the elements in reversed order.
+
   @return A new list with the elements in reversed order
 */
 mugs.List.prototype.reverse = function() {
@@ -307,4 +338,44 @@ mugs.List.prototype.reverse = function() {
     rest = rest.tail();
   }
   return result;
+};
+/**
+  Creates a new list with the items appended
+
+  @example
+  new mugs.List([1,2,3]).appendAll([4,5,6]);
+  // returns a list with the element 1,2,3,4,5,6
+  @param  items An array with the items to append to this list.
+  @return       A new list with the items appended
+*/
+mugs.List.prototype.appendAll = function(items) {
+  if (this.isEmpty()) {
+    return new mugs.List(items);
+  } else {
+    return this.cons(this.head(), this.tail().appendAll(items));
+  }
+};
+/**
+  Creates a new list by copying all of the items in the argument 'list'
+  before of 'this' list
+
+  @example
+  new mugs.List([4,5,6]).prependAll(new mugs.List([1,2,3]));
+  // returns a list with the element 1,2,3,4,5,6
+  @param  {List} list The list to prepend to this list.
+  @return {List}      A new list containing the elements of the prepended List
+                      and the elements of the original List.
+*/
+mugs.List.prototype.prependAll = function(items) {
+  var head;
+  if (this.isEmpty()) {
+    return new mugs.List(items);
+  } else {
+    if (items.length === 0) {
+      return this;
+    } else {
+      head = items.shift();
+      return this.cons(head, this.prependAll(items));
+    }
+  }
 };

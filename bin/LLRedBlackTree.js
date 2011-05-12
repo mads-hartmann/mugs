@@ -8,9 +8,9 @@ mugs.LLRBNode = (function() {
       Immutable implementation of Left Leaning Red Black Tree as
       described in this paper: http://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
 
-      Invartiant 1: No red node has a red child
-      Invartiant 2: Every leaf path has the same number of black nodes
-      Invartiant 3: Only the left child can be red (left leaning)
+      Invariant 1: No red node has a red child
+      Invariant 2: Every leaf path has the same number of black nodes
+      Invariant 3: Only the left child can be red (left leaning)
     */
   /*
       Public interface
@@ -44,6 +44,9 @@ mugs.LLRBNode = (function() {
   };
   F.prototype.count = function() {
     return count(new mugs.Some(this));
+  };
+  F.prototype.isEmpty = function() {
+    return false;
   };
   F.prototype.containsKey = function(key) {
     return containsKey(new mugs.Some(this), key);
@@ -347,9 +350,13 @@ mugs.LLRBLeaf.prototype.get = function(key) {
 mugs.LLRBLeaf.prototype.count = function() {
   return 0;
 };
+mugs.LLRBLeaf.prototype.isEmpty = function() {
+  return true;
+};
 mugs.LLRBLeaf.prototype.containsKey = function(key) {
   return false;
 };
 mugs.LLRBLeaf.prototype.values = function() {
   return new mugs.List();
 };
+mugs.LLRBLeaf.prototype.inorderTraversal = function(f) {};
