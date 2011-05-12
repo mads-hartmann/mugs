@@ -101,6 +101,7 @@ td {
   background: #F5F5F5;
   border-bottom: 10px solid #666;
   border-top: 10px solid #666;
+  clear: both;
 }
 
 #footer {
