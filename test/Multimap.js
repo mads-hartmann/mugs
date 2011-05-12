@@ -48,7 +48,7 @@ $(document).ready(function(){
     
   };
     
-  generic_multimap_test("Multimap (List)", mugs.Multimap, mugs.List);
+  generic_multimap_test("Multimap (List)",    mugs.Multimap, mugs.List);
   generic_multimap_test("Multimap (TreeSet)", mugs.Multimap, mugs.TreeSet);
   generic_multimap_test("Multimap (LLRBSet)", mugs.Multimap, mugs.LLRBSet);
   

@@ -49,7 +49,7 @@ mugs.Multimap.prototype.insert = (key, value) ->
   this.buildFromTree(new_tree)
   
 ###
-  Returns a List of all values associated with a key.
+  Returns a collection of all values associated with a key.
   
   @param key key to search for in multimap
   @return A mugs.List of all the values associated with the given key.  
