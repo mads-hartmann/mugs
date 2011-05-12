@@ -21,6 +21,41 @@ table { font: normal normal normal 13px/1.231 arial, helvetica, clean, sans-seri
 pre { margin: 0px;}
 
 
+#header {
+    padding-top: 50px;
+}
+
+#header h1 { display: none;}
+#header h2 { display: none;}
+
+p {
+    line-height: 18px;
+}
+li {
+    padding: 2px 0px;
+}
+
+img#collections_img {
+    float: right;
+    padding-top: 15px;
+    padding-left: 10px;
+}
+
+img#maps_img {
+    float: right;
+    clear: right;
+    padding-top:20px;
+    padding-left: 10px;
+}
+
+#mug {
+    float: right;
+}
+
+#logo {
+    margin-top: 60px;
+}
+
 button#evaluate {
   float: right;
   padding: 10px;
@@ -55,6 +90,7 @@ td {
 #container {
   text-align: left;
   width: 75%;
+  min-width: 675px;
   margin: 0px auto;
   color: #333;
 }
