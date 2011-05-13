@@ -20,7 +20,7 @@ $(document).ready(function(){
         e2 = 4,
         e3 = 3;
 
-    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e2).insert(e3);
+    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e2,e2).insert(e3,e3);
 
     ok(tree.containsKey(e1) && tree.containsKey(e2) && tree.containsKey(e3),
       "Contains all the right keys");
@@ -37,7 +37,7 @@ $(document).ready(function(){
         e2 = 4,
         e3 = 3;
 
-    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e3).insert(e2);
+    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e3,e3).insert(e2,e2);
 
     ok(tree.containsKey(e1) && tree.containsKey(e2) && tree.containsKey(e3),
       "Contains all the right keys");
@@ -53,7 +53,7 @@ $(document).ready(function(){
         e2 = 6,
         e3 = 7;
 
-    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e3).insert(e2);
+    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e3,e3).insert(e2,e2);
 
     ok(tree.containsKey(e1) && tree.containsKey(e2) && tree.containsKey(e3),
       "Contains all the right keys");
@@ -69,7 +69,7 @@ $(document).ready(function(){
         e2 = 7,
         e3 = 6;
 
-    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e3).insert(e2);
+    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e3,e3).insert(e2,e2);
 
     ok(tree.containsKey(e1) && tree.containsKey(e2) && tree.containsKey(e3),
       "Contains all the right keys");
@@ -85,7 +85,7 @@ $(document).ready(function(){
         e2 = 7,
         e3 = 5;
 
-    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e3).insert(e2);
+    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), e1, e1, new RedBlackLeaf(BLACK)).insert(e3,e3).insert(e2,e2);
 
     ok(tree.containsKey(e1) && tree.containsKey(e2) && tree.containsKey(e3),
       "Contains all the right keys");
@@ -105,13 +105,17 @@ $(document).ready(function(){
   });
   
   test("Test that it's possible to remove a key-value pair.", function() {
-    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 5,5, new RedBlackLeaf(BLACK)).insert(6);
+    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 5,5, new RedBlackLeaf(BLACK)).insert(6,6);
     ok(tree.containsKey(6));
     ok(!tree.remove(6).containsKey(6));
   });
   
   test("Test removal of internal node", function() {
-    var tree  = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 7,7, new RedBlackLeaf(BLACK)).insert(5).insert(8).insert(3).insert(6);
+    var tree  = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 7,7, new RedBlackLeaf(BLACK))
+        .insert(5,5)
+        .insert(8,8)
+        .insert(3,3)
+        .insert(6,6);
     
     ok(tree.containsKey(8));
     ok(tree.containsKey(7));
@@ -133,7 +137,13 @@ $(document).ready(function(){
   });
   
   test("Test removal of external node", function() {
-    var tree  = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 7,7, new RedBlackLeaf(BLACK)).insert(5).insert(8).insert(3).insert(6).remove(5).remove(8);
+    var tree  = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 7,7, new RedBlackLeaf(BLACK))
+        .insert(5,5)
+        .insert(8,8)
+        .insert(3,3)
+        .insert(6,6)
+        .remove(5)
+        .remove(8);
     ok(!tree.containsKey(8));
     ok(tree.containsKey(7));
     ok(tree.containsKey(6));
@@ -147,7 +157,11 @@ $(document).ready(function(){
   });
   
   test("Removal of node with one left child", function() {
-    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 7, 7, new RedBlackLeaf(BLACK)).insert(4).insert(3).insert(2).remove(3);
+    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 7, 7, new RedBlackLeaf(BLACK))
+        .insert(4,4)
+        .insert(3,3)
+        .insert(2,2)
+        .remove(3);
 
     ok(tree.containsKey(7));
     ok(tree.containsKey(4));
@@ -161,7 +175,11 @@ $(document).ready(function(){
   });
   
   test("Removal of node with one right child", function() {
-    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 7,7, new RedBlackLeaf(BLACK)).insert(4).insert(3).insert(8).remove(8);
+    var tree = new RedBlackNode(RED, new RedBlackLeaf(BLACK), 7,7, new RedBlackLeaf(BLACK))
+        .insert(4,4)
+        .insert(3,3)
+        .insert(8,8)
+        .remove(8);
 
     ok(tree.containsKey(7));
     ok(tree.containsKey(4));
@@ -175,10 +193,22 @@ $(document).ready(function(){
   
   test("Balance a left negative black node", function() {
     
+        
+    // remove 2
+    // remove 4
   });
   
-  test("Balance a right negative black node", function() {
-    
+    test("Balance a right negative black node", function() {
+        var tree = new RedBlackNode(BLACK, 
+            new RedBlackNode(BLACK,new RedBlackLeaf(BLACK), 1, 1, new RedBlackLeaf(BLACK)),
+            2,2,
+            new RedBlackNode(RED,
+                new RedBlackNode(BLACK,new RedBlackLeaf(BLACK),3,3,new RedBlackLeaf(BLACK)),
+                4,4,
+                new RedBlackNode(BLACK,new RedBlackLeaf(BLACK),5,5,new RedBlackLeaf(BLACK))));
+        var tree2 = tree.remove(2);
+        ok(tree2.check_() > 0);
+        // TODO: Add a check metod to the tree
   });
   
 });

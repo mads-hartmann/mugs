@@ -53,7 +53,7 @@ mugs.RedBlackLeaf = (color) ->
   this
 
 mugs.RedBlackLeaf.prototype.copy = (properties) ->
-  new mugs.RedBlackLeaf(properties.color | this.color)
+  new mugs.RedBlackLeaf(properties.color || this.color)
 
 mugs.RedBlackLeaf.prototype.isEmpty = () -> true
 mugs.RedBlackLeaf.prototype.containsKey = (key) -> false
@@ -171,7 +171,6 @@ mugs.RedBlackNode.prototype.values = () ->
 ###
 mugs.RedBlackNode.prototype.inorderTraversal = (f) ->
   if !this.left.isEmpty() then this.left.inorderTraversal(f)
-  console.log("inorder on: " + this.value)
   f({key: this.key, value: this.value})
   if !this.right.isEmpty() then this.right.inorderTraversal(f)
   
@@ -205,10 +204,8 @@ mugs.RedBlackNode.prototype.remove = (key) ->
   __rm = (tree) =>
     isExternalNode          = () -> tree.left.isEmpty() && tree.right.isEmpty()
     isInternalNode          = () -> !tree.left.isEmpty() && !tree.right.isEmpty()
-    isNodeWithOneChildLeft  = () -> (tree.color == mugs.RedBlack.BLACK) &&
-                                    (tree.left.color == mugs.RedBlack.RED && tree.right.isEmpty() )
-    isNodeWithOneChildRight = () -> (tree.color == mugs.RedBlack.BLACK) &&
-                                    (tree.right.color == mugs.RedBlack.RED && tree.left.isEmpty())
+    isNodeWithOneChildLeft  = () -> tree.right.isEmpty()
+    isNodeWithOneChildRight = () -> tree.left.isEmpty()
     # The __rm call traversed all the way to the bottom of the tree. This happens
     # when the item to remove wasn't in the tree.
     if ( tree.isEmpty() )
@@ -377,7 +374,7 @@ mugs.RedBlackNode.prototype.balance = (color, left, key, value, right) ->
        right.left.key,
        right.left.value,
       #x
-      new mugs.RedBlackNode(mugs.RedBlack.Black,
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,
         right.left.right, #3
         right.key,
         right.value,
@@ -397,3 +394,30 @@ mugs.RedBlackNode.prototype.balance = (color, left, key, value, right) ->
   A node is never empty
 ###
 mugs.RedBlackNode.prototype.isEmpty = () -> false
+
+###
+  RELATED TO TESTING
+###
+
+mugs.RedBlackLeaf.prototype.count_ = () -> 0
+mugs.RedBlackLeaf.prototype.check_ = () -> 
+  return 1 if this.color == mugs.RedBlack.BLACK
+  return 2 if this.color == mugs.RedBlack.DOUBLE_BLACK
+
+mugs.RedBlackNode.prototype.count_ = () -> 
+  this.left.count_() + 1 + this.right.count_()
+
+# returns the black-depth if three is well-formed, else throws an exception
+mugs.RedBlackNode.prototype.check_ = () ->
+  if this.color == RED && this.left.color == RED
+    throw new Error("Red node has red child(" + node.key+","+node.value+")")
+  blackDepth = this.left.check_()
+  if blackDepth != this.right.check_()
+    throw new Error("Black depths differ")
+  else
+    return blackDepth + 1 if this.color == mugs.RedBlack.BLACK
+    return blackDepth + 2 if this.color == mugs.RedBlack.DOUBLE_BLACK
+    return blackDepth     if this.color == mugs.RedBlack.RED
+    return blackDepth - 1 if this.color == mugs.RedBlack.NEGATIVE_BLACK
+
+

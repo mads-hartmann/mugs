@@ -131,7 +131,7 @@ mugs.TreeSet.prototype.update = (index, item) ->
   
 ###
 mugs.TreeSet.prototype.removeAt = (index) ->
-  itm = this.get(index)
+  itm = this.get(index).get()
   this.buildFromTree(this.tree.remove(itm))
   
 ###*
