@@ -52,6 +52,9 @@ mugs.RedBlackLeaf = (color) ->
   this.value   = new mugs.None()
   this
 
+mugs.RedBlackLeaf.prototype.copy = (properties) ->
+  new mugs.RedBlackLeaf(properties.color | this.color)
+
 mugs.RedBlackLeaf.prototype.isEmpty = () -> true
 mugs.RedBlackLeaf.prototype.containsKey = (key) -> false
 mugs.RedBlackLeaf.prototype.get = (key) -> new mugs.None()
@@ -69,6 +72,15 @@ mugs.RedBlackNode = (color, left, key, value, right, comparator) ->
   this.right      = right
   this.comparator = if (comparator) then  else mugs.RedBlackNode.prototype.standard_comparator
   this
+
+mugs.RedBlackNode.prototype.copy = (properties) ->
+  new mugs.RedBlackNode(
+    properties.color || this.color,
+    properties.left || this.left,
+    properties.key || this.key,
+    properties.value || this.value, 
+    properties.right || this.right,
+    properties.comparator || this.comparator)
 
 ###*
   The standard compare function. It's used if the user doesn't
@@ -159,6 +171,7 @@ mugs.RedBlackNode.prototype.values = () ->
 ###
 mugs.RedBlackNode.prototype.inorderTraversal = (f) ->
   if !this.left.isEmpty() then this.left.inorderTraversal(f)
+  console.log("inorder on: " + this.value)
   f({key: this.key, value: this.value})
   if !this.right.isEmpty() then this.right.inorderTraversal(f)
   
@@ -219,7 +232,7 @@ mugs.RedBlackNode.prototype.remove = (key) ->
       # Find the largest element in the left subtree, use that value for the new tree
       # and remove the other node
       max         = tree.left.maxKey()
-      value       = tree.get(max).get
+      value       = tree.left.get(max).get()
       newLeftTree = tree.left.remove(max)
       this.bubble( tree.color, newLeftTree, max, value, tree.right)
     else
@@ -243,13 +256,13 @@ mugs.RedBlackNode.prototype.remove = (key) ->
   A black is subtracted from the children, and added to the parent:
 ###
 mugs.RedBlackNode.prototype.bubble = (color, left, key, value, right) ->
-  if ( left.color == mugs.RedBlack.DOUBLE_BLACK || right.color == mugs.RedBlack.DOUBLE_BLACK)
+  if ( left.color == mugs.RedBlack.DOUBLE_BLACK || right.color == mugs.RedBlack.DOUBLE_BLACK)    
     this.balance(
       color.add(),
-      new mugs.RedBlackNode(left.color.subtract(), left.left, left.key, left.value, left.right),
+      left.copy( { color: left.color.subtract() } ),
       key,
       value,
-      new mugs.RedBlackNode(right.color.subtract(), right.left, right.key, right.value, right.right))
+      right.copy( { color: right.color.subtract() }))
   else
     new mugs.RedBlackNode(color, left, key, value, right)
 
@@ -267,7 +280,7 @@ mugs.RedBlackNode.prototype.bubble = (color, left, key, value, right) ->
   The solution is always the same: Rewrite the black-red-red path as a red node with
   two black children.
 
-  However to support removal two additional colors have been addded to the mix:
+  However to support removal two additional colors have been added to the mix:
   Negative-black and double black.
 
   The double black can occur instead of black in the four configurations above.
@@ -281,7 +294,7 @@ mugs.RedBlackNode.prototype.bubble = (color, left, key, value, right) ->
 
   The negative black node can occur in the following two configurations:
 
-  1. Double black followed by left negative black whith two black children
+  1. Double black followed by left negative black with two black children
   2. Double black followed by right negative black with two black children
 
   The solution is to transform it into a node with two black children and a left (or right
@@ -345,23 +358,36 @@ mugs.RedBlackNode.prototype.balance = (color, left, key, value, right) ->
       new mugs.RedBlackNode(mugs.RedBlack.BLACK,right.left.right, key,value, right)
     )
   else if (rightIsNegativeBlack())
-    new mugs.RedBlackNode(
-      mugs.RedBlack.BLACK,
-      new mugs.RedBlackNode(
-        mugs.RedBlack.BLACK,
-        left,
-        right.key,
-        right.value,
-        right.left.left
-      ),
-      right.right.key,
-      right.right.value,
-      new mugs.RedBlackNode(
-        mugs.RedBlack.BLACK,
-        right.left.right,
+    ###
+      BEFORE        AFTER
+        z             w
+      1   x         z   x
+        w   y      1 2 3  y
+       2 3 4 5           4 5
+    ###
+    #w 
+    new mugs.RedBlackNode(mugs.RedBlack.BLACK,
+      #z 
+      new mugs.RedBlackNode(mugs.RedBlack.BLACK,
+        left, #1
         key,
         value,
-        this.balance( mugs.RedBlack.RED, right.right.left, right.left.key, right.left.value, right.right.right )
+        right.left.left #2
+      ),
+       right.left.key,
+       right.left.value,
+      #x
+      new mugs.RedBlackNode(mugs.RedBlack.Black,
+        right.left.right, #3
+        right.key,
+        right.value,
+        #y
+        this.balance( mugs.RedBlack.RED, 
+          right.right.left, #4
+          right.right.key, 
+          right.right.value, 
+          right.right.right #5
+        )
       )
     )
   else
