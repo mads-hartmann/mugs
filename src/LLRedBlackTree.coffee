@@ -40,8 +40,8 @@ mugs.LLRBNode = (() ->
       if right? && right  != _ then right else this.right)
 
   F.prototype.insert            = (key,item)  -> insert(new mugs.Some(this),key,item).copy(_,_,BLACK,_,_)
-  F.prototype.remove            = (key)       -> remove(new mugs.Some(this),key).get().copy(_,_,BLACK,_,_)
-  F.prototype.removeMinKey      = ()          -> removeMin(new mugs.Some(this)).get().copy(_,_,BLACK,_,_)
+  F.prototype.remove            = (key)       -> remove(new mugs.Some(this),key).getOrElse(new mugs.LLRBLeaf()).copy(_,_,BLACK,_,_)
+  F.prototype.removeMinKey      = ()          -> removeMin(new mugs.Some(this)).getOrElse(new mugs.LLRBLeaf()).copy(_,_,BLACK,_,_)
   F.prototype.minKey            = ()          -> min(new mugs.Some(this)).get().key
   F.prototype.get               = (key)       -> get(new mugs.Some(this),key)
   F.prototype.count             = ()          -> count(new mugs.Some(this))
@@ -274,6 +274,7 @@ mugs.LLRBNode = (() ->
    and LLRBMap.   
 ###
 mugs.LLRBLeaf = () -> 
+mugs.LLRBLeaf.prototype.copy = () -> this 
 mugs.LLRBLeaf.prototype.insert            = (key,item) -> new mugs.LLRBNode(key,item) 
 mugs.LLRBLeaf.prototype.remove            = (key)      -> throw new Error("Can't remove an item from a leaf") 
 mugs.LLRBLeaf.prototype.removeMinKey      = ()         -> this 
