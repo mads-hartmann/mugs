@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <!-- This requires that you compile the coffeescript first. You can do that by 
+       typing 
+       
+       > cake build 
+       
+       In the root of the project. -->
+  <head>
+    <meta charset="utf-8" />
+    <title>HTML 5 complete</title>
+    <script src="../../bin/Mugs.js" charset="utf-8"></script>
+      <script>
+        mugs.basePath = "../../bin/";
+        mugs.require("mugs.range");
+        mugs.require("mugs.List");
+      </script>
+      <script>
+
+        var isMultipleOf = function(x,y){
+          return x % y === 0; 
+        };
+
+        isMultipleOfThreeOrFive = function(x) {
+          return isMultipleOf(x,3) || isMultipleOf(x,5);
+        };
+
+        var add = function(x,y) {
+          return x+y;
+        };
+
+        var sum = new mugs.List(mugs.range.until(0,1000)).filter(isMultipleOfThreeOrFive).foldLeft(0)(add);
+
+        document.write("<h2>Answer: " + sum + "</h2>");
+
+      </script>
+  </head>
+  <body>
+    
+        <h1>Question: By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms. Originates from the <a href="http://projecteuler.net/index.php?section=problems&id=2">Project Euler site</a></h1>
+    
+  </body>
+</html>
