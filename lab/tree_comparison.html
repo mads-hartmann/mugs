@@ -8,38 +8,52 @@
 	<meta name="author" content="Mads Hartmann Jensen">
 
 	<!-- JSLitmus -->
-  <script src="../../lib/jslitmus/JSLitmus.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../lib/jslitmus/JSLitmus.js" type="text/javascript" charset="utf-8"></script>
 
 
 	<!-- Library classes -->
-	<script src="../../bin/Mugs.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../../bin/Option.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../bin/Collection.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../bin/List.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../bin/RedBlackTree.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../../bin/TreeMap.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../bin/TreeSet.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../bin/LLRedBlackTree.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../../bin/LLRBSet.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../../bin/LLRBMap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../bin/Mugs.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../bin/Option.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../bin/Collection.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../bin/List.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../bin/RedBlackTree.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../bin/TreeMap.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../bin/TreeSet.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../bin/LLRedBlackTree.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../bin/LLRBSet.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../bin/LLRBMap.js" type="text/javascript" charset="utf-8"></script>
 
 
 	<script type="text/javascript">
 
-    var llrbmapInsert, treemapInsert;
+    var llrbmapInsert, treemapInsert, i;
 
     JSLitmus.test('Creating a LLRBMap and inserting 1000 items', function() {
       llrbmapInsert = new mugs.LLRBMap();
-      for ( var i = 0 ; i < 1000 ; i++ ) {
+      for ( i = 0 ; i < 1000 ; i++ ) {
         llrbmapInsert = llrbmapInsert.insert(i,i);
       }
     });
 
 	  JSLitmus.test('Creating a TreeMap and inserting 1000 items', function() {
       treemapInsert = new mugs.TreeMap();
-      for ( var i = 0 ; i < 1000 ; i++ ) {
+      for ( i = 0 ; i < 1000 ; i++ ) {
         treemapInsert = treemapInsert.insert(i,i);
       }
+	  });
+	  
+	  JSLitmus.test("Removing 1000 items from a TreeMap", function() {
+	    currentTreeMap = treemapInsert;
+	    for ( i = 0 ; i < 1000 ; i++) {
+	      currentTreeMap = currentTreeMap.remove(i);
+	    }
+	  });
+	  
+	  JSLitmus.test("Removing 1000 items from a LLRBMap", function() {
+	    currentLLRBMap = llrbmapInsert;
+	    for ( i = 0 ; i < 1000 ; i++) {
+	      currentLLRBMap = currentLLRBMap.remove(i);
+	    }
 	  });
 
 	</script>

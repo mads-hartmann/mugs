@@ -8,7 +8,7 @@
 	<meta name="author" content="Mads Hartmann Jensen">
 
 	<!-- JSLitmus -->
-	<script src="../../lib/jslitmus/JSLitmus.js" charset="utf-8"></script>
+	<script src="../lib/jslitmus/JSLitmus.js" charset="utf-8"></script>
 
 	<!--
 		Performance test showing the difference between adding methods directly to objects instead of
@@ -17,17 +17,17 @@
 
 	<script type="text/javascript" charset="utf-8">
 		var PersonFunctional = function(firstName, lastName){
-			this.firstName = firstName;
-			this.lastName  = lastName;
-			this.fullName = function(){ return this.firstName + " " + this.lastName; };
-			return this;
+		  var that = {};
+			that.firstName = firstName;
+			that.lastName  = lastName;
+			that.fullName = function(){ return that.firstName + " " + that.lastName; };
+			return that;
 		};
 
 
 		var PersonClassical = function(firstName, lastName){
 			this.firstName = firstName;
 			this.lastName  = lastName;
-			return this;
 		};
 
 		PersonClassical.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
@@ -40,7 +40,6 @@
 		  var F = function(firstName, lastName) {
 		    this.firstName = firstName;
 		    this.lastName = lastName;
-        return this;
 		  };
 		  F.prototype.fullName = function(){ return this.firstName + " " + this.lastName; };
 		  return F;
@@ -51,16 +50,19 @@
 
 	<script type="text/javascript">
 
+  var person = null;
   JSLitmus.test('Creating object - Factory Function', function() {
-   new PersonFunctional("Mads","Hartmann");
+   person = new PersonFunctional("Mads","Hartmann");
   });
-
+  
+  person = null;
   JSLitmus.test('Creating object - Classical', function() {
-   new PersonClassical("Mads","Hartmann");
+   person = new PersonClassical("Mads","Hartmann");
   });
-
+  
+  person = null;  
   JSLitmus.test('Creating objects - Object.create',function() {
-   Object.create(PersonPrototypal, {
+   person = Object.create(PersonPrototypal, {
      firstName: {
        value: "Mads"
      },
@@ -70,8 +72,9 @@
    });
   });
 
+  person = null;
 	JSLitmus.test('Creating object - Hybrid', function() {
-		new HybridPerson("Mads","Hartmann");
+		person = new HybridPerson("Mads","Hartmann");
 	});
 
 	</script>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <!-- This requires that you compile the coffeescript first. You can do that by 
+       typing 
+       
+       > cake build 
+       
+       In the root of the project. -->
+  <head>
+    <meta charset="utf-8" />
+    <title>HTML 5 complete</title>
+  </head>
+  <script src="../../bin/Mugs.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    mugs.basePath = "../../bin/";
+    mugs.require("mugs.List")
+  </script>
+  <script>
+    var add  = function(x,y){ return x+y; },
+        list = new mugs.List([1,2,3,4,5,6,7,8,9,10]),
+        sum  = list.foldLeft(0)(add);
+    alert(sum);
+  </script>
+  <body></body>
+</html>

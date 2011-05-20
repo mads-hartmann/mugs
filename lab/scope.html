@@ -8,14 +8,14 @@
     <meta name="author" content="Mads Hartmann Jensen">
 
     <!-- JSLitmus -->
-    <script src="../../lib/jslitmus/JSLitmus.js" charset="utf-8"></script>
+    <script src="../lib/jslitmus/JSLitmus.js" charset="utf-8"></script>
 
     <!--
         This performance tests shows the difference between have functions
-    	in inner scope or outer scope when:
+        in inner scope or outer scope when:
 
-	    	- creating objects
-		    - calling the functions
+        - creating objects
+        - calling the functions
     -->
 
     <script type="text/javascript" charset="utf-8">
@@ -34,7 +34,6 @@
         this.firstName = firstName;
         this.lastName  = lastName;
         this.fullName = function(){ return this.firstName + " " + this.lastName; };
-        return this;
     };
 
     // The function is declared in the outer scope and referenced in the
@@ -44,7 +43,6 @@
         this.firstName = firstName;
         this.lastName  = lastName;
         this.fullName = fullNameFunc;
-        return this;
     };
 
     var objectWithOuterScope = new ObjectOuterScope("Mads","Hartmann");
@@ -54,20 +52,24 @@
 
     <script type="text/javascript">
 
+    var person = null;
     JSLitmus.test('Creating object with inner scope', function() {
-        new ObjectInnerScope("Mads","Hartmann");
+        person = new ObjectInnerScope("Mads","Hartmann");
     });
 
+    person = null;
     JSLitmus.test('Creating object with outer scope', function() {
-        new ObjectOuterScope("Mads","Hartmann");
+        person = new ObjectOuterScope("Mads","Hartmann");
     });
 
+    var n = null;
     JSLitmus.test('Invoking a function with inner scope', function() {
-        objectWithInnerScope.fullName();
+        n = objectWithInnerScope.fullName();
     });
 
+    n = null;
     JSLitmus.test('Invoking a function with outer scope', function() {
-        objectWithOuterScope.fullName();
+        n = objectWithOuterScope.fullName();
     });
 
     </script>

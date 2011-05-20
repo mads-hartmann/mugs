@@ -7,7 +7,7 @@
         <meta name="author" content="Mads Hartmann Jensen">
 
 
-        <script src="../../lib/jslitmus/JSLitmus.js" charset="utf-8"></script>
+        <script src="../lib/jslitmus/JSLitmus.js" charset="utf-8"></script>
 
         <!--
             This performance measures how much time is used when invoking a method
@@ -18,22 +18,18 @@
 
             var A = function(){
                 this.a = function(){ return 2+42; };
-                return this;
             };
 
             var B = function(){
-                this.b = function(){ return "a"+"a"+"a"+"a"; };
-                return this;
+                this.b = function(){ return 2+42; };
             };
 
             var C = function(){
-                this.c = function(){ return "a"+"a"+"a"+"a"; };
-                return this;
+                this.c = function(){ return 2+42; };
             };
 
             var D = function(){
                 this.d = function(){ return 2+42; };
-                return this;
             };
 
             C.prototype = new D();
@@ -48,7 +44,7 @@
                 result += a.a();
             });
 
-
+            result = 0; 
             JSLitmus.test('Invoking d on instance of A', function() {
                 result += a.d();
             });
