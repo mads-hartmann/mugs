@@ -316,9 +316,9 @@ mugs.addDependency("Collection.js", ["mugs.Collection"], [])
 mugs.addDependency("Extensible.js", ["mugs.Extensible"], ["mugs.Collection"])
 mugs.addDependency("Indexed.js", ["mugs.Indexed"], ["mugs.Extensible"])
 
-mugs.addDependency("Option.js", 
-                   ["mugs.Some", "mugs.None"],
-                   [])
+mugs.addDependency("Range.js", ["mugs.range"],[])
+
+mugs.addDependency("Option.js", ["mugs.Some", "mugs.None"], [])
 
 mugs.addDependency("List.js", 
                    ["mugs.List"],
