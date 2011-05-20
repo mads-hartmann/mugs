@@ -199,5 +199,23 @@ $(document).ready(function(){
         var node = new LLRBNode(10,10).insert(10,8);
         ok(node.get(10).get() == 8);
     });
+    
+    test("removing the last element returns an empty tree",function() {
+       var node = new LLRBNode(10,10).remove(10);
+       ok(node.isEmpty());
+    });
+    
+    test("insertion and removal of 1000 items", function() {
+        var map = new mugs.LLRBMap(), i;
+        for ( i = 0 ; i < 1000 ; i++ ) {
+            map = map.insert(i,i);
+        } 
+        ok(map.size() === 1000);
+        
+        for ( i = 0 ; i < 1000 ; i++ ) {
+            map = map.remove(i,i);
+        } 
+        ok(map.size() === 0);
+    });
 
 });
