@@ -322,7 +322,7 @@ mugs.addDependency("Option.js",
 
 mugs.addDependency("List.js", 
                    ["mugs.List"],
-                   ["mugs.Collection"])
+                   ["mugs.Indexed"])
 
 mugs.addDependency("Queue.js", 
                    ["mugs.Queue"], 
