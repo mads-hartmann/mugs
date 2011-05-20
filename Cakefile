@@ -17,7 +17,7 @@ task 'build', 'build source', () ->
     console.log stdout + stderr)
 	  
 task 'jscoverage', 'instruments the source code for JSCoverage and start the JSCoverage server', () ->
-  console.log """Started JSCoverage server at: http://127.0.0.1:8080/jscoverage.html?test/index.html
+  console.log """Started JSCoverage server at: http://127.0.0.1:8080/jscoverage.html?test/suite.html
                  Hit CTRL+C to stop"""
   exec('jscoverage-server --no-instrument=/test/ --verbose --ip-address=0.0.0.0 --port=8080')
   
