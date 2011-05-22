@@ -338,7 +338,7 @@ mugs.addDependency("RedBlackTree.js",
                    
 mugs.addDependency("TreeSet.js", 
                    ["mugs.TreeSet"], 
-                   ["mugs.RedBlackLeaf", "mugs.RedBlackNode"])
+                   ["mugs.RedBlackLeaf", "mugs.RedBlackNode", "mugs.Indexed"])
                    
 mugs.addDependency("TreeMap.js", 
                    ["mugs.TreeMap"], 
@@ -362,7 +362,7 @@ mugs.addDependency("LLRBMap.js",
                    
 mugs.addDependency("LLRBSet.js", 
                    ["mugs.LLRBSet"], 
-                   ["mugs.LLRBNode", "mugs.LLRBLeaf"])
+                   ["mugs.LLRBNode", "mugs.LLRBLeaf", "mugs.Indexed"])
 
 mugs.addDependency("CompleteBinaryTree.js", 
                    ["mugs.CompleteBinaryTree", "mugs.CompleteBinaryTreeNode", "mugs.CompleteBinaryTreeLeaf"], 

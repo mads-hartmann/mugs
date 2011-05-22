@@ -14,28 +14,14 @@ mugs.require('mugs.RedBlackNode')
   map contains the following operations
 
   <pre>
-  --------------------------------------------------------
-  Core operations of the Map ADT
-  --------------------------------------------------------
-  insert( key,value )                               O(logn)
-  get( index )                                      O(logn)
-  remove( index )                                   O(logn)
-  contains( key )                                   O(logn)
-  --------------------------------------------------------
-  Methods that all containers have to implement
-  --------------------------------------------------------
-  map( f )                                            O(n)
-  flatMap( f )                                        O(n)
-  filter( f )                                         O(n)
-  forEach( f )                                        O(n)
-  foldLeft(s)(f)                                      O(n)    TODO
-  isEmpty()                                           O(1)    TODO
-  contains( element )                                 O(n)    TODO
-  forAll( f )                                         O(n)    TODO
-  take( x )                                           O(n)    TODO
-  takeWhile( f )                                      O(n)    TODO
-  size()                                              O(n)    TODO
-  --------------------------------------------------------
+  insert( key,value )                               O(log n)
+  get( index )                                      O(log n)
+  remove( index )                                   O(log n)
+  containsKey(key)                                  O(log n)
+  keys()                                            O(n)
+  values()                                          O(n)
+  isEmpty()                                         O(1)
+  forEach(f)                                        O(n*O(f))
   </pre>
 
   @class mugs.TreeMap provides the implementation of the abstract data type 'Map' based on a Red Black Tree.
@@ -72,6 +58,7 @@ Methods related to the MAP ADT
 
 ###*
   Return a new mugs.TreeMap containing the given (key,value) pair.
+  
   @param {*} key The key to store the value by
   @param {*} value The value to store in the map
   @return {mugs.TreeMap} A new mugs.TreeMap that also contains the new key-value pair
@@ -80,6 +67,7 @@ mugs.TreeMap.prototype.insert = (key, value) -> this.buildFromTree(this.tree.ins
 
 ###*
   If a (key,value) pair exists return mugs.Some(value), otherwise mugs.None()
+  
   @param {*} key The key of the value you want to read.
   @return {mugs.Some|mugs.None} mugs.Some(value) if it exists in the map. Otherwise mugs.None
 ###
@@ -87,19 +75,31 @@ mugs.TreeMap.prototype.get = (key) -> this.tree.get(key)
 
 ###*
   Returns a new mugs.TreeMap without the given key-value pair.
+  
   @param {*} key The key of the value you want to remove
   @return {mugs.TreeMap} A new mugs.TreeMap that doesn't contain the key-value pair
 ###
 mugs.TreeMap.prototype.remove = (key) -> this.buildFromTree(this.tree.remove(key))
 
 ###*
+  True if the given key is contained in the TreeMap, otherwise false. 
+  
+  @param  key The key to search for 
+  @return True if the given key is contained in the TreeMap, otherwise false. 
+###
+mugs.TreeMap.prototype.containsKey = (key) -> 
+  this.tree.containsKey(key)
+
+###*
   Returns a sorted list containing all of the keys in the mugs.TreeMap
+  
   @return {List} A sorted list containing all of the keys in the mugs.TreeMap
 ###
 mugs.TreeMap.prototype.keys = () -> this.tree.keys()
 
 ###*
   Returns a sorted list containing all of the values in the mugs.TreeMap
+  
   @return {List} sorted list containing all of the values in the mugs.TreeMap
 ###
 mugs.TreeMap.prototype.values = () -> this.tree.values()
@@ -116,6 +116,7 @@ mugs.TreeMap.prototype.isEmpty = () ->
 ###*
   Used to construct a mugs.TreeMap from mugs.RedBlackTree. This is intended
   for internal use only. Would've marked it private if I could.
+  
   @private
 ###
 mugs.TreeMap.prototype.buildFromTree = (tree) ->

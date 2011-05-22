@@ -1,7 +1,7 @@
 mugs.provide("mugs.Collection")
 
 ###*
-  This is base prototype for all collections. It implements a set of methods for all collections 
+  (INTERFACE) This is base prototype for all collections. It implements a set of methods for all collections 
   in terms of the forEach method. 
   
   This is to be considered a partial prototype. Prototypes which inherit from mugs.Collection will have
@@ -10,6 +10,8 @@ mugs.provide("mugs.Collection")
   The forEach method should be implemented as efficiently as possible as this is used to implement
   all the methods in the mugs.Collection prototype. The buildFromArray method should simply be a constructor 
   for the prototype which takes a plain old javascript array. 
+  
+  @class (INTERFACE) Collection is the base interface that all collections implements.
 ###
 mugs.Collection = () -> this
 
@@ -17,12 +19,19 @@ mugs.Collection = () -> this
   @private
 ###
 mugs.Collection.prototype.buildFromArray = () -> throw new Error("Should be implemented in subclass")  
-  
+
+###*
+  @private
+###  
 mugs.Collection.prototype.forEach = () -> throw new Error("Should be implemented in subclass")  
   
 ###*
   Returns a new collection with the values of applying the function 'f' on each element in 'this'
   collection. 
+  
+  @param  f The unary function to apply on each item in the collection
+  @return   A new collection with the values of applying the function 'f' on each element in 'this'
+            collection.
 ###
 mugs.Collection.prototype.map = ( f ) -> 
   elements = []
@@ -33,6 +42,11 @@ mugs.Collection.prototype.map = ( f ) ->
   Returns a new collection with the concatenated values of applying the function 'f' on each element
   in 'this' collection. The function 'f' is expected to return an object that implements the forEach
   method itself. 
+  
+  @param  f The unary function to apply on each item in the collection. It is expected to return an 
+            object that implements the forEach method itself.
+  @return   A new collection with the concatenated values of applying the function 'f' on each element
+            in 'this' collection
 ###
 mugs.Collection.prototype.flatMap = ( f ) -> 
   elements = []
@@ -40,7 +54,11 @@ mugs.Collection.prototype.flatMap = ( f ) ->
   new this.buildFromArray(elements)
   
 ###*
+  Selects all elements of the collection which satisfy a predicate
 
+  @param  f An unary function that should return true if the item is wanted 
+            in the resulting collection
+  @return   A new collection with all of the items that satisfy the predicate 
 ###
 mugs.Collection.prototype.filter = ( f ) -> 
   elements = []
@@ -48,7 +66,10 @@ mugs.Collection.prototype.filter = ( f ) ->
   new this.buildFromArray(elements)
 
 ###*
-  contains
+  True of the item is contained in the collection, otherwise false
+  
+  @param  item  The item to search for 
+  @return       True of the item is contained in the collection, otherwise false
 ###
 mugs.Collection.prototype.contains = (item) -> 
   containsItem = false
@@ -68,6 +89,11 @@ mugs.Collection.prototype.size = () ->
   this.forEach( (i) -> count++ )
   return count
 
+###*
+  Returns an array with all of the items in the collection 
+  
+  @return An array with all of the items in the collection 
+###
 mugs.Collection.prototype.asArray = () ->
   arr = []
   this.forEach( (e) -> arr.push(e) )

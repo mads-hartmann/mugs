@@ -14,13 +14,27 @@ mugs.require("mugs.List")
   the following operations:
 
   <pre>
-  --------------------------------------------------------
-  Core operations of the Queue ADT
-  --------------------------------------------------------
-  enqueue()                               (amortized) O(1)
-  dequeue(elem)                                       O(1)
+  enqueue(item)                                       O(1)
+  enqueueAll(items)                               O(items)
+  front()                                             O(1)
+  dequeue(elem)                           (amortized) O(1)
   top()                                               O(1)
-  --------------------------------------------------------
+  isEmpty()                                           O(1)
+  forEach(f)                                     O(n*O(f))
+  insert(item)                                        O(1)
+  remove(item)                                        O(n)
+  get(index)                                          O(n)
+  update(index,item)                                  O(n)
+  removeAt(index)                                     O(n)
+  last()                                              O(n)
+  first()                                             O(1)
+  head()                                              O(1)
+  tail()                                 (amortized) O(1)
+  append(item)                                        O(1)
+  appendAll(items)                                O(items)
+  prepend(item)                                       O(1)
+  prependAll(items)                               O(items)
+  reverse()                                           O(n)
   </pre>
 
   @class Queue provides an implementation of the Queue ADT based on two Lists.
@@ -117,10 +131,19 @@ Collection interface
 ---------------------------------------------------------------------------------------------
 ###
 
+###*
+  Applies function 'f' on each value in the collection. This return nothing and is only invoked
+  for the side-effects of f.
+
+  @param f The unary function to apply on each item in the collection.
+###
 mugs.Queue.prototype.forEach = ( f ) -> 
   this.front__.forEach(f)
   this.rear__.reverse().forEach(f)
 
+###*
+  @private
+###
 mugs.Queue.prototype.buildFromArray = ( arr ) ->
   new mugs.Queue(arr)
 
@@ -143,7 +166,7 @@ mugs.Queue.prototype.insert = (item) ->
 ###
   Removes an item from the Queue. Runs in O(n).
   
-  @param item The item to remove from the Stack.
+  @param item The item to remove from the Queue.
 ###
 mugs.Queue.prototype.remove = (item) -> 
   if this.front__.contains(item)
@@ -160,7 +183,10 @@ Indexed interface
 ###
 
 ###*
+  Return an Option containing the nth item in the collection.
   
+  @param  index The index of the item to get
+  @return       mugs.Some(item) is it exists, otherwise mugs.None
 ###
 mugs.Queue.prototype.get = (index) -> 
   if index <= this.front__.size() - 1
@@ -169,7 +195,11 @@ mugs.Queue.prototype.get = (index) ->
     this.rear__.get(index)
 
 ###*
-  
+  Update the value with the given index.
+
+  @param  index   The index of the item to update
+  @param  item    The item to replace with the current item
+  @return         A new collection with the updated value.
 ###
 mugs.Queue.prototype.update = (index, item) -> 
   if index <= this.front__.size() - 1
@@ -178,7 +208,10 @@ mugs.Queue.prototype.update = (index, item) ->
     this.buildFromLists(this.front__,this.rear__.update(index, item))
 
 ###*
-  
+  Removes the item at the given index.
+
+  @param  index  The index of the item to remove
+  @return        A new collection without the item at the given index
 ###
 mugs.Queue.prototype.removeAt = (index) -> 
   if index <= this.front__.size() - 1
@@ -234,14 +267,26 @@ mugs.Queue.prototype.tail = () ->
   this.dequeue()
 
 ###*
-  
+  Applies a binary operator on all items of the collection going left to right and ending with the
+  seed value. This is a curried function that takes a seed value which returns a function that
+  takes a function which will then be applied to the items. The function is binary where 
+  the first parameter is the value of the fold so far and the second is the current item. 
+
+  @param seed The value to use when the collection is empty
+  @return     A function which takes a binary function
 ###
 mugs.Queue.prototype.foldLeft = (seed) -> (f) =>
   partialResult = this.front__.foldLeft(seed)(f)
   this.rear__.reverse().foldLeft(partialResult)(f)
 
 ###*
-  
+  Applies a binary operator on all items of the collection going right to left and ending with the
+  seed value. This is a curried function that takes a seed value which returns a function that
+  takes a function which will then be applied to the items. The function is binary where 
+  the first parameter is the value of the fold so far and the second is the current item. 
+
+  @param seed The value to use when the collection is empty
+  @return     A function which takes a binary function
 ###
 mugs.Queue.prototype.foldRight = (seed) -> (f) =>
   partialResult = this.front__.foldRight(seed)(f)
@@ -262,13 +307,10 @@ mugs.Queue.prototype.append = (item) ->
   this.enqueue(item)
 
 ###*
-  Creates a new Stack with the items appended
+  Creates a new Queue with the items appended
 
-  @example
-  new mugs.Stack([1,2,3]).appendAll([4,5,6]);
-  // returns a Stack with the element 1,2,3,4,5,6
-  @param  items An array with the items to append to this Stack.
-  @return       A new Stack with the items appended
+  @param  items An array with the items to append to this queue.
+  @return       A new queue with the items appended
 ###
 mugs.Queue.prototype.appendAll = (items) ->
   this.enqueueAll(items)

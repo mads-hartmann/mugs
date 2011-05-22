@@ -7,13 +7,18 @@ $(document).ready(function(){
     var mm = new Constructor([ { key: 1, value: [1,2,3] }, { key: 2, value: 4 } ], Collection);
     
     test("Constructor", function() {
-      ok( mm.contains(1) && mm.contains(2) );
+      ok( mm.containsKey(1) && mm.containsKey(2) );
       ok( equalsArr(mm.values().asArray(), [1,2,3,4]) );
     });
 
     test("insert", function() {
       var mm2 = mm.insert(1,10);
       ok ( equalsArr(mm2.get(1).asArray(), [1,2,3,10]) );
+    });
+    
+    test("insertALl", function(){
+       var mm2 = mm.insertAll(1,[10,11]);
+       ok ( equalsArr(mm2.get(1).asArray(), [1,2,3,10,11]));
     });
     
     test("get", function() {

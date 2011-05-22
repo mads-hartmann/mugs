@@ -20,6 +20,9 @@ mugs.provide('mugs.CompleteBinaryTree')
 mugs.provide('mugs.CompleteBinaryTreeNode')
 mugs.provide('mugs.CompleteBinaryTreeLeaf')
 
+###*
+  @private
+###
 mugs.CompleteBinaryTree = () -> this
 
 mugs.CompleteBinaryTree.prototype.get = (index) ->
@@ -55,6 +58,7 @@ mugs.CompleteBinaryTree.prototype.preorderTraversal = (f) ->
     f(this.item)
 
 ###*
+  @private
   @class A leaf in a complete binary tree.
   @param item The item to store at the leaf
 ###
@@ -67,7 +71,9 @@ mugs.CompleteBinaryTreeLeaf = (item) ->
 mugs.CompleteBinaryTreeLeaf.prototype = new mugs.CompleteBinaryTree()
 
 ###*
+  @private
   @class A node in a complete binary tree
+  
   @param item   The item to store at the node
   @param left   The left subtree
   @param right  The right subtree

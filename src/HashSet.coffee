@@ -8,15 +8,11 @@ mugs.provide("mugs.HashSet")
 mugs.require("mugs.HashMap")
 
 ###*
-  HashSet
-
   The HashSet is using a HashMap as the underlying data structure so 
   the asymptotic running time of the operations are bound by the HashMap
   implementation. 
 
   <pre>
-  -----------------------------------------------------------
-  Core operations of the Set ADT
   -----------------------------------------------------------
   B is the number of items in the bucket array (101 by default)
   b is the number of items in the current bucket
@@ -29,11 +25,13 @@ mugs.require("mugs.HashMap")
   </pre>
   
   @class HashSet
-  @augments mugs.Collection
+  @augments mugs.Extensible
+  @param items        An array of items to construct the LLRBSet from
+  @param initialize_  used internally. Do not pass anything 
 ###
-mugs.HashSet = (items, initialize) ->  
+mugs.HashSet = (items, initialize_) ->  
   kvs = ( {key: i, value: i} for i in items )
-  this.hashMap_ = new mugs.HashMap(kvs) if initialize != false
+  this.hashMap_ = new mugs.HashMap(kvs) if initialize_ != false
   this
 
 mugs.HashSet.prototype = new mugs.Extensible()
@@ -45,7 +43,7 @@ mugs.HashSet.prototype = new mugs.Extensible()
 mugs.HashSet.prototype.values = () -> 
   this.hashMap_.values()
 
-###
+###*
   @private
 ###
 mugs.HashSet.prototype.buildFromHashMap = (hashMap) -> 
@@ -59,9 +57,19 @@ Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 ###
 
+###*
+  @private
+###
 mugs.HashSet.prototype.buildFromArray = (arr) -> 
   new mugs.HashSet(arr)
 
+###*
+  Applies function 'f' on each value in the set. This return nothing and is only invoked
+  for the side-effects of f.
+
+  @param f The unary function to apply on each element in the set.
+  @see mugs.Collection
+###
 mugs.HashSet.prototype.forEach = ( f ) -> 
   this.values().forEach( f )
 
@@ -72,7 +80,7 @@ mugs.HashSet.prototype.forEach = ( f ) ->
   @return True if the item is in the set, otherwise false
 ###
 mugs.HashSet.prototype.contains = (item) -> 
-  this.hashMap_.contains(item)
+  this.hashMap_.containsKey(item)
   
 ###
 ---------------------------------------------------------------------------------------------

@@ -47,6 +47,19 @@ $(document).ready(function(){
       ok(values.get(1).get() == "two");
       ok(values.get(2).get() == "three");
     });
+    
+    test("containsKey", function() {
+        var map = new Map([
+            { key: 1, value: "one"},
+            { key: 2, value: "two"},
+            { key: 3, value: "three"}
+        ]);  
+        ok(map.containsKey(1));
+        ok(map.containsKey(2));
+        ok(map.containsKey(3));
+        ok(!map.containsKey(4));
+        
+    });
 
     test("You can get a list containing all of the keys",function() {
       var map = new Map([

@@ -4,14 +4,11 @@
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ### 
 
-### Extremely annoying hack to force the vars of the compiled
-    code to appear before the documentation of Some ### 
-
 mugs.provide('mugs.Some')
 mugs.provide('mugs.None') 
 
 ###*
-  Don't use the Option prototype directly, use the {@link Some} or {@link mugs.None}. An option represents
+  Don't use the Option prototype directly, use the {@link mugs.Some} or {@link mugs.None}. An option represents
   an optional value. It consists of either Some or mugs.None.
 
   @see mugs.Some
@@ -22,6 +19,7 @@ mugs.Option = () -> this
 
 ###*
   Checks if the Option is empty.
+  
   @return {boolean} True if the Option is empty, i.e. of type mugs.None. Otherwise false.
 ###
 mugs.Option.prototype.isEmpty = () -> throw new Error("Not implemented in Option")
@@ -29,6 +27,7 @@ mugs.Option.prototype.isEmpty = () -> throw new Error("Not implemented in Option
 ###*
   Returns the option's value if the option is mugs.Nonempty. This will throw an exception if
   invoked on an instance of mugs.None.
+  
   @return {*} The value stored in the Option.
 ###
 mugs.Option.prototype.get = () -> throw new Error("Not implemented in Option")
@@ -36,6 +35,7 @@ mugs.Option.prototype.get = () -> throw new Error("Not implemented in Option")
 ###*
   Returns the option's value if the option is mugs.Nonempty, otherwise return the value
   'otherwise'.
+  
   @param {*} otherwise The value to return if the Option is mugs.None.
   @return The option's value if Some otherwise the value passed to the function
 ###
@@ -98,34 +98,24 @@ mugs.Option.prototype.asArray = () ->
   @constructor
   @augments mugs.Option
 ###
-mugs.Some = (() ->
+mugs.Some = (value)  ->
+  if (value == undefined)
+    return new mugs.None()
+  else
+    this.__value  = value
+  this
 
-  #TODO: Why does it break so many tests if I create local variable here 
-  #      instead of this.__value 
+mugs.Some.prototype = new mugs.Option()
 
-  F = (value)  ->
-    if (value == undefined)
-      return new mugs.None()
-    else
-      this.__value  = value
-    this
+###*
+  See documentation in {@link mugs.Option}
+###
+mugs.Some.prototype.isEmpty = () -> false
 
-  F.prototype = new mugs.Option()
-
-  F.prototype.constructor = F
-
-  ###*
-    See documentation in {@link mugs.Option}
-  ###
-  F.prototype.isEmpty = () -> false
-
-  ###*
-    See documentation in {@link mugs.Option}
-  ###
-  F.prototype.get = () -> this.__value
-
-  return F
-)()
+###*
+  See documentation in {@link mugs.Option}
+###
+mugs.Some.prototype.get = () -> this.__value
 
 ###*
   mugs.None represents the non-existing of a value. It's part of the {@link mugs.Option} monad.

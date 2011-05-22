@@ -4,20 +4,20 @@ mugs.require("mugs.CompleteBinaryTreeNode")
 mugs.require("mugs.List")
 
 ###*
-  Random Access List
-
   Implementation of a Random Access List as described in the
   paper Purely Functional Random Access List by Chris Okasaki.
 
   <pre>
-  --------------------------------------------------------
-  Core operations of the Random Access List ADT
-  --------------------------------------------------------
   prepend(item)                                   O(1)
+  append(item)                                    O(n)
+  insert(item)                                    O(n)
   head()                                          O(1)
   tail()                                          O(1)
-  get(item)                                       O(log n)
+  size()                                          O(n)
+  get(index)                                      O(log n)
   update(index,item)                              O(log n)
+  isEmpty()                                       O(1)
+  forEach(f)                                      O(n*O(f))
   </pre>
 
   @author Mads Hartmann Jensen
@@ -50,14 +50,17 @@ mugs.RandomAccessList.prototype = new mugs.Collection()
 ###*
   Create a new list by prepending the item
 
-  @param  item The item to be the new head
-  @return A new list with the item as the head
+  @param  item  The item to be the new head
+  @return       A new list with the item as the head
 ###
 mugs.RandomAccessList.prototype.prepend = (item) ->
   this.cons(item,this)
 
 ###*
-  append
+  Create a new list by appending this value
+
+  @param  item  The item to append to the List
+  @return       A new list containing all the items of the old with followed by the item
 ###
 mugs.RandomAccessList.prototype.append = (item) ->
   if (this.isEmpty())
@@ -65,14 +68,19 @@ mugs.RandomAccessList.prototype.append = (item) ->
   else
     this.cons(this.head(), this.tail().append(item))
   
-###
-  
+###*
+  Inserts a new item to the end of the List. Equivalent to append. This is needed so a List can be treated 
+  as an Extensible collection. runs in O(mugs.List.append)
+
+  @param item The item to add to the end of the List
+  @return     A new list with the item appended to the end
 ###
 mugs.RandomAccessList.prototype.insert = (item) -> 
   this.append(item)
 
 ###*
   Returns the first item in the list
+  
   @return The first item in the list
 ###
 mugs.RandomAccessList.prototype.head = () ->
@@ -80,6 +88,7 @@ mugs.RandomAccessList.prototype.head = () ->
 
 ###*
   Returns the rest of the list
+  
   @return The rest of the list
 ###
 mugs.RandomAccessList.prototype.tail = () ->
@@ -218,12 +227,18 @@ mugs.RandomAccessList.prototype.buildFromList = (list) ->
   ral.__trees = list
   ral
 
-### 
-  Related to Collection 
+###*
+  @private 
 ###
-
 mugs.RandomAccessList.prototype.buildFromArray = (items) -> 
   new mugs.RandomAccessList(items) 
+  
+###*
+  Applies function 'f' on each value in the collection. This return nothing and is only invoked
+  for the side-effects of f.
 
+  @param f The unary function to apply on each element in the collection.
+  @see mugs.Collection
+###
 mugs.RandomAccessList.prototype.forEach = (f) ->
   this.__trees.forEach( (tree) -> tree.preorderTraversal(f) )

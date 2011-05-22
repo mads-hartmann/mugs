@@ -76,4 +76,5 @@ $(document).ready(function() {
     implements_Indexed("Stack",   mugs.Stack,   support);
     implements_Indexed("Queue",   mugs.Queue,   support);
     implements_Indexed("TreeSet", mugs.TreeSet, setSupport);
+    implements_Indexed("LLRBSet", mugs.LLRBSet, setSupport);
 });

@@ -13,33 +13,28 @@ mugs.require("mugs.None")
   list contains the following operations:
 
   <pre>
-  --------------------------------------------------------
-  Core operations of the List ADT
-  --------------------------------------------------------
-  append( element )                                   O(n)
-  prepend( element )                                  O(1)
-  update( index, element )                            O(n)
-  get( index )                                        O(n)
-  remove( index )                                     O(n)
-  --------------------------------------------------------
-  Methods inherited from mugs.Collection
-  --------------------------------------------------------
-  map( f )                                            O(n)
-  flatMap( f )                                        O(n)
-  filter( f )                                         O(n)
-  forEach( f )                                        O(n)
-  foldLeft(s)(f)                                      O(n)
-  isEmpty()                                           O(1)
-  contains( element )                                 O(n)    
-  forAll( f )                                         O(n)    TODO
-  take( x )                                           O(n)    TODO
-  takeWhile( f )                                      O(n)    TODO
-  size()                                              O(n)    TODO
-  --------------------------------------------------------
+  append(item)                                  O(n)
+  prepend(item)                                 O(1)
+  update(index, item )                          O(n)
+  get(index )                                   O(n)
+  remove(index)                                 O(n)
+  foldLeft(seed)(f)                             O(n*O(f))
+  foldRight(seed)(f)                            O(n*O(f))
+  forEach(f)                                    O(n*O(f))
+  insert(item)                                  O(n)
+  last()                                        O(n)
+  first()                                       O(1)
+  reverse()                                     O(n)
+  appendAll(items)                              O(n)*items
+  prependAll(items)                             O(items)
   </pre>
-  @augments mugs.Collection
-  @class List provides the implementation of the abstract data type List based on a Singly-Linked list
   @public
+  @class List provides the implementation of the abstract data type List based on a Singly-Linked list
+  @augments mugs.Indexed
+  
+  @example
+  var list = new mugs.List([1,2,3,4,5,6,7,8,9,10]);
+  
   @argument items An array of items to construct the List from
 ### 
 mugs.List = (items) ->
@@ -69,13 +64,14 @@ mugs.List.prototype.cons = (head, tail) ->
   return l
 
 ###*
-  Applies a binary operator on all elements of this list going left to right and ending with the
+  Applies a binary operator on all items of this list going left to right and ending with the
   seed value. This is a curried function that takes a seed value which returns a function that
-  takes a function which will then be applied to the elements
+  takes a function which will then be applied to the items. The function is binary where 
+  the first parameter is the value of the fold so far and the second is the current item. 
 
   @example
-  new mugs.List([1,2,3,4,5]).foldLeft(0)(function(acc,current){ acc+current })
-  // returns 15 (the sum of the elements in the list)
+  new mugs.List([1,2,3,4,5]).foldLeft(0)(function(acc,current){ return acc+current })
+  // returns 15 (the sum of the items in the list)
 
   @param {*} seed The value to use when the list is empty
   @return {function(function(*, *):*):*} A function which takes a binary function
@@ -89,13 +85,14 @@ mugs.List.prototype.foldLeft = (seed) -> (f) =>
   __foldLeft(seed,this)
 
 ###*
-  Applies a binary operator on all elements of this list going right to left and ending with the
+  Applies a binary operator on all items of this list going right to left and ending with the
   seed value. This is a curried function that takes a seed value which returns a function that
-  takes a function which will then be applied to the elements.
+  takes a function which will then be applied to the items. The function is binary where 
+  the first parameter is the value of the fold so far and the second is the current item.
 
   @example
-  new mugs.List([1,2,3,4,5]).foldRight(0)(function(acc,current){ acc+current })
-  // returns 15 (the sum of the elements in the list)
+  new mugs.List([1,2,3,4,5]).foldRight(0)(function(acc,current){ return acc+current })
+  // returns 15 (the sum of the items in the list)
 
   @param {*} seed The value to use when the list is empty
   @return {function(function(*, *):*):*} A function which takes a binary function
@@ -122,8 +119,10 @@ mugs.List.prototype.buildFromArray = (arr) ->
   new mugs.List(arr)
 
 ###*
-  Applies function 'f' on each element in the list. This return nothing and is only invoked
+  Applies function 'f' on each value in the collection. This return nothing and is only invoked
   for the side-effects of f.
+
+  @param f The unary function to apply on each element in the collection.
   @see mugs.Collection
 ###
 mugs.List.prototype.forEach = ( f ) ->
@@ -140,23 +139,23 @@ Indexed interface
 ###*
   Update the value with the given index.
   
-  @param  {number}  index   The index of the element to update
-  @param  {*}       element The element to replace with the current element
+  @param  {number}  index   The index of the item to update
+  @param  {*}       item The item to replace with the current item
   @return {List}            A new list with the updated value.
 ###
-mugs.List.prototype.update = (index, element) ->
+mugs.List.prototype.update = (index, item) ->
   if index < 0
     throw new Error("Index out of bounds by #{index}")
   else if (index == 0)
-    this.cons(element, this.tail())
+    this.cons(item, this.tail())
   else
-    this.cons(this.head(), this.tail().update(index-1,element))
+    this.cons(this.head(), this.tail().update(index-1,item))
 
 ###*
-  Return an Option containing the nth element in the list.
+  Return an Option containing the nth item in the list.
   
-  @param  {number}              index The index of the element to get
-  @return {mugs.Some|mugs.None}       mugs.Some(element) is it exists, otherwise mugs.None
+  @param  {number}              index The index of the item to get
+  @return {mugs.Some|mugs.None}       mugs.Some(item) is it exists, otherwise mugs.None
 ###
 mugs.List.prototype.get = (index) ->
   if index < 0 || this.isEmpty()
@@ -168,10 +167,10 @@ mugs.List.prototype.get = (index) ->
     this.tail().get(index-1)  
 
 ###*
-  Removes the element at the given index. Runs in O(n) time.
+  Removes the item at the given index. Runs in O(n) time.
 
-  @param  {number} index  The index of the element to remove
-  @return {List}          A new list without the element at the given index
+  @param  {number} index  The index of the item to remove
+  @return {List}          A new list without the item at the given index
 ###
 mugs.List.prototype.removeAt = (index) ->
   if index == 0
@@ -181,24 +180,6 @@ mugs.List.prototype.removeAt = (index) ->
       new mugs.List()
   else
     this.cons(this.head(), this.tail().removeAt(index-1))
-
-###*
-  Returns mugs.Some(index) of the first element satisfying a predicate, or mugs.None
-
-  @parem  p The predicate to apply to each object
-  @return   mugs.Some(index) of the first element satisfying a predicate, or mugs.None
-###
-mugs.List.prototype.findIndex = ( p ) -> 
-  xs = this 
-  index = 0
-  while not xs.isEmpty() and not p(xs.head())
-    index++
-    xs = xs.tail()
-    if xs.isEmpty() then index = -1
-  if index == -1
-    new mugs.None()
-  else 
-    new mugs.Some(index)
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -270,30 +251,29 @@ mugs.List.prototype.first = () ->
 ###*
   Create a new list by appending this value
   
-  @param  {*}     element   The element to append to the List
-  @return {List}            A new list containing all the elements of the old with 
-                            followed by the element
+  @param  item      The item to append to the List
+  @return           A new list containing all the items of the old with followed by the item
 ###
-mugs.List.prototype.append = (element) ->
+mugs.List.prototype.append = (item) ->
   if (this.isEmpty())
-    new mugs.List([element])
+    new mugs.List([item])
   else
-    this.cons(this.head(), this.tail().append(element))
+    this.cons(this.head(), this.tail().append(item))
 
 ###*
   Create a new list by prepending this value
   
-  @param  {*}     element   The element to prepend to the List
-  @return {List}            A new list containing all the elements of the old list 
-                            prepended with the element
+  @param  {*}     item      The item to prepend to the List
+  @return {List}            A new list containing all the items of the old list 
+                            prepended with the item
 ###
-mugs.List.prototype.prepend = (element) ->
-  this.cons(element,this)
+mugs.List.prototype.prepend = (item) ->
+  this.cons(item,this)
 
 ###*
-  Returns a new list with the elements in reversed order.
+  Returns a new list with the items in reversed order.
   
-  @return A new list with the elements in reversed order
+  @return A new list with the items in reversed order
 ###
 mugs.List.prototype.reverse = () ->
   result = new mugs.List()
@@ -308,7 +288,7 @@ mugs.List.prototype.reverse = () ->
 
   @example
   new mugs.List([1,2,3]).appendAll([4,5,6]);
-  // returns a list with the element 1,2,3,4,5,6
+  // returns a list with the item 1,2,3,4,5,6
   @param  items An array with the items to append to this list.
   @return       A new list with the items appended
 ###
@@ -324,10 +304,10 @@ mugs.List.prototype.appendAll = (items) ->
 
   @example
   new mugs.List([4,5,6]).prependAll(new mugs.List([1,2,3]));
-  // returns a list with the element 1,2,3,4,5,6
+  // returns a list with the items 1,2,3,4,5,6
   @param  {List} list The list to prepend to this list.
-  @return {List}      A new list containing the elements of the prepended List 
-                      and the elements of the original List.
+  @return {List}      A new list containing the items of the prepended List 
+                      and the items of the original List.
 ###
 mugs.List.prototype.prependAll = (items) ->
   if this.isEmpty()

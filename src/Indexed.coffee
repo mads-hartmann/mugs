@@ -2,6 +2,9 @@ mugs.provide("mugs.Indexed")
 mugs.require("mugs.Extensible")
 
 ###*
+  (INTERFACE) Indexed are for collections where the items can be accessed with an index
+  
+  @class (INTERFACE) are for collections where the items can be accessed with an index
   @augments mugs.Extensible
 ###
 mugs.Indexed = () -> this

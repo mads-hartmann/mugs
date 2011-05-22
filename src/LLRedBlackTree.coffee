@@ -44,6 +44,7 @@ mugs.LLRBNode = (() ->
   F.prototype.removeMinKey      = ()          -> removeMin(new mugs.Some(this)).getOrElse(new mugs.LLRBLeaf()).copy(_,_,BLACK,_,_)
   F.prototype.minKey            = ()          -> min(new mugs.Some(this)).get().key
   F.prototype.get               = (key)       -> get(new mugs.Some(this),key)
+  F.prototype.getAt             = (index)     -> getAt(new mugs.Some(this), index)
   F.prototype.count             = ()          -> count(new mugs.Some(this))
   F.prototype.isEmpty           = ()          -> false
   F.prototype.containsKey       = (key)       -> containsKey(new mugs.Some(this),key)
@@ -63,6 +64,24 @@ mugs.LLRBNode = (() ->
       else if cmp <  0 then optionNode = optionNode.get().left;
       else if cmp >  0 then optionNode = optionNode.get().right;
     return new mugs.None()    
+
+  ###*
+    Returns the item at a given index. The item is found by doing 
+    an inorder traversal of the tree subtracting 1 from the index at each node 
+    until the index is 0. 
+    
+    TODO: Can be greatly improved
+  ###
+  getAt = (optionNode, index) -> 
+    result = new mugs.None()
+    inorderTraversal(optionNode, (kv) -> 
+      if index == 0 
+        result = new mugs.Some(kv.value)
+        index--
+      else
+        index--
+    )
+    return result
 
   # checks if 
   containsKey = (optionNode, key) ->

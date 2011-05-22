@@ -1,6 +1,5 @@
 ###*
-  @fileoverview Contains the implementation of the Stack data structure based on a List <br />
-
+  @fileoverview Contains the implementation of the Stack data structure based on a List
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ### 
 
@@ -13,13 +12,26 @@ mugs.require("mugs.List")
   Stack contains the following operations:
 
   <pre>
-  --------------------------------------------------------
-  Core operations of the Stack ADT
-  --------------------------------------------------------
   pop()                                               O(1)
   push( elem )                                        O(1)
+  pushAll(items)                                  O(items)
   top()                                               O(1)
-  --------------------------------------------------------
+  isEmpty()                                           O(1)
+  forEach(f)                                     O(n*O(f))
+  insert(item)                                        O(1)
+  remove(item)                                        O(n)
+  get(index)                                          O(n)
+  update(index,item)                                  O(n)
+  removeAt(index)                                     O(n)
+  last()                                              O(n)
+  first()                                             O(1)
+  head()                                              O(1)
+  tail()                                              O(1)
+  append(item)                                        O(n)
+  appendAll(items)                              O(n)*items
+  prepend(item)                                       O(1)
+  prependAll(items)                               O(items)
+  reverse()                                           O(n)  
   </pre>
 
   @class Stack provides the implementation of the abstract data type Stack based on a List
@@ -37,7 +49,6 @@ mugs.Stack.prototype = new mugs.Indexed()
   Removes the top element from the stack.
 
   @return A new stack without the former top element
-  @complexity O(1)
 ###
 mugs.Stack.prototype.pop = () ->
   this.buildFromList(this.list.tail())
@@ -47,13 +58,17 @@ mugs.Stack.prototype.pop = () ->
 
   @param elem the element to push on the stack
   @return A new stack with the new element on top
-  @complexity O(1)
 ###
 mugs.Stack.prototype.push = (elem) ->
   this.buildFromList(this.list.prepend(elem))
   
 ###*
+  Returns a new stack with all of the items pushed on top. The last item of 
+  'items' will be on the top of the stack
   
+  @param items An array with items to push upon the stack
+  @return A new stack with all of the items pushed on top. The last item of 
+          'items' will be on the top of the stack 
 ###
 mugs.Stack.prototype.pushAll = (items) -> 
   newStack = this
@@ -65,7 +80,6 @@ mugs.Stack.prototype.pushAll = (items) ->
   Returns the top element of the stack.
 
   @return the top element.
-  @complexity O(1)
 ###
 mugs.Stack.prototype.top = () ->
   this.list.head()
@@ -74,7 +88,6 @@ mugs.Stack.prototype.top = () ->
   Returns a List with all of the elements in the stack
 
   @return A list with all of the elements in the Stack
-  @complexity O(1)
 ###
 mugs.Stack.prototype.values = () ->
   this.list
@@ -82,7 +95,6 @@ mugs.Stack.prototype.values = () ->
 ###*
   This will build a new Stack from a List. This is used internally.
 
-  @complexity O(1)
   @private
 ###
 mugs.Stack.prototype.buildFromList = (list) ->
@@ -140,12 +152,31 @@ Indexed interface
 ---------------------------------------------------------------------------------------------
 ###
 
+###*
+  Return an Option containing the nth item in the collection.
+  
+  @param  index The index of the item to get
+  @return       mugs.Some(item) is it exists, otherwise mugs.None
+###
 mugs.Stack.prototype.get = (index) -> 
   this.list.get(index)
 
+###*
+  Update the value with the given index.
+
+  @param  index   The index of the item to update
+  @param  item    The item to replace with the current item
+  @return         A new collection with the updated value.
+###
 mugs.Stack.prototype.update = (index, item) -> 
   this.buildFromList(this.list.update(index,item))
 
+###*
+  Removes the item at the given index.
+
+  @param  index  The index of the item to remove
+  @return        A new collection without the item at the given index
+###
 mugs.Stack.prototype.removeAt = (index) -> 
   this.buildFromList(this.list.removeAt(index))
   
@@ -179,7 +210,6 @@ mugs.Stack.prototype.first = () ->
   Returns the remainder of the list after removing the top item
 
   @return The remainder of the list after removing the top item
-  @complexity O(1)
 ###
 mugs.Stack.prototype.tail = () ->
   this.buildFromList(this.list.tail())
@@ -195,11 +225,26 @@ mugs.Stack.prototype.head = () ->
   this.list.head()
 
 ###*
-  
+  Applies a binary operator on all items of the collection going left to right and ending with the
+  seed value. This is a curried function that takes a seed value which returns a function that
+  takes a function which will then be applied to the items. The function is binary where 
+  the first parameter is the value of the fold so far and the second is the current item. 
+
+  @param seed The value to use when the collection is empty
+  @return     A function which takes a binary function
 ###
 mugs.Stack.prototype.foldLeft = (seed) -> (f) =>
   this.list.foldLeft(seed)(f)  
 
+###*
+  Applies a binary operator on all items of the collection going right to left and ending with the
+  seed value. This is a curried function that takes a seed value which returns a function that
+  takes a function which will then be applied to the items. The function is binary where 
+  the first parameter is the value of the fold so far and the second is the current item. 
+
+  @param seed The value to use when the collection is empty
+  @return     A function which takes a binary function
+###
 mugs.Stack.prototype.foldRight = (seed) -> (f) =>
   this.list.foldRight(seed)(f)
 ###

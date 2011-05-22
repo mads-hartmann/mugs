@@ -1,4 +1,4 @@
-###
+###*
   @fileoverview Contains a hash based implementation of the Map ADT
   @author Mads Hartmann Jensen (mads379@gmail.com)
 ###
@@ -10,33 +10,29 @@ mugs.require("mugs.None")
 mugs.require("mugs.Collection")
 mugs.require("mugs.List")
 
-###
+###*
   HashMap
   
-  Implementation of an immutable Map based on a hash table. 
-  The bucket array approach is used and the underlying 
-  data-structure is a Random Access List. Separate Chaining 
-  is used to deal with collisions where the chain is based 
+  Implementation of an immutable Map based on a hash table. The bucket array approach is used and the underlying 
+  data-structure is a Random Access List. Separate Chaining is used to deal with collisions where the chain is based 
   on a List.  
   
-  A property named something like "mugs_uid_2kczq5" will be added 
-  to the key objects. This approach has been copied from 
+  A property named something like "mugs_uid_2kczq5" will be added to the key objects. This approach has been copied from 
   JS_Cols (http://jscols.com/).
   
   <pre>
   -----------------------------------------------------------
-  Core operations of the Map ADT
-  -----------------------------------------------------------
   B is the number of items in the bucket array (101 by default)
   b is the number of items in the current bucket
   -----------------------------------------------------------
-  get(key)          O(log B + b) 
-  insert(key,item)  O(log B + b)
-  remove(key)       O(log B + b)
-  contains(key)     O(log B + b)
-  forEach( f )      O(B * b * O(f))
-  values()          O(B * b)
-  keys()            O(B * b)
+  
+  get(key)                                     O(log B + b) 
+  insert(key,item)                             O(log B + b)
+  remove(key)                                  O(log B + b)
+  containsKey(key)                             O(log B + b)
+  forEach( f )                                 O(B * b * O(f))
+  values()                                     O(B * b)
+  keys()                                       O(B * b)
   </pre>
 
   @class HashMap
@@ -56,7 +52,9 @@ mugs.HashMap = (keyValuePairs, initialize) ->
 
 mugs.HashMap.prototype = new mugs.Collection()
 
-###
+###*
+  If a (key,value) pair exists return mugs.Some(value), otherwise mugs.None()
+  
   @param key The key of the item to retrieve
   @return Some(item) if an item was associated with the key. Otherwise None
 ###
@@ -68,10 +66,12 @@ mugs.HashMap.prototype.get = (key) ->
   bucket.forEach( (item) -> if hash == that.getHash_(item.key) then result = new Some(item.value))
   result
 
-###
-  @param key The key to associate with the item
+###*
+  Return a new mugs.HashMap containing the given (key,value) pair.
+  
+  @param key  The key to associate with the item
   @param item The item to insert into the HashMap
-  @return A new HashMap with the with the new key/item inserted
+  @return     A new HashMap with the with the new key/item inserted
 ###
 mugs.HashMap.prototype.insert = (key, item) -> 
   index        = this.compress_(this.getHash_(key))
@@ -81,8 +81,9 @@ mugs.HashMap.prototype.insert = (key, item) ->
   newMap.bucketArray_ = newBucketArr
   newMap
 
-###
+###*
   Return a new HashMap without the given key. 
+  
   @param key The key of the item to remove
   @return A new HashMap without the given key. 
 ###
@@ -99,10 +100,13 @@ mugs.HashMap.prototype.remove = (key) ->
   else 
     that
 
+###*
+  True if the given key is contained in the TreeMap, otherwise false. 
+
+  @param  key The key to search for 
+  @return True if the given key is contained in the HashMap, otherwise false. 
 ###
-  @param key The to check the presence of 
-###
-mugs.HashMap.prototype.contains = (key) -> 
+mugs.HashMap.prototype.containsKey = (key) -> 
   that    = this
   hash    = this.getHash_(key)
   bucket  = this.getBucketFromKey_(key)
@@ -110,31 +114,33 @@ mugs.HashMap.prototype.contains = (key) ->
   bucket.forEach( (item) -> if hash == that.getHash_(item.key) then isThere = true )
   isThere 
   
-###
+###*
   Returns a List with all of the values in the Map
+  
   @return {mugs.List} List with all of the values in the Map
 ###  
 mugs.HashMap.prototype.values = () -> 
   this.bucketArray_.flatMap( (bucket) -> bucket.map( (item) -> item.value ))
   
-###
+###*
   Returns a List with all of the keys in the Map
+  
   @return {mugs.List} List with all of the keys in the Map
 ###
 mugs.HashMap.prototype.keys = () -> 
   this.bucketArray_.flatMap( (bucket) -> bucket.map( (item) -> item.key ))
   
-###
+###*
   @private
 ###
 mugs.HashMap.prototype.N_ = 101
 
-###
+###*
   @private
 ###
 mugs.HashMap.prototype.bucketArray_ = new mugs.List() # TODO: Use Random Access List 
 
-###
+###*
   @private
 ###
 mugs.HashMap.prototype.initializeBucketArray_ = () -> 
@@ -144,7 +150,7 @@ mugs.HashMap.prototype.initializeBucketArray_ = () ->
     i++
   return
 
-###
+###*
   @private
 ###
 mugs.HashMap.prototype.getBucketFromKey_ = (key) -> 
@@ -152,7 +158,7 @@ mugs.HashMap.prototype.getBucketFromKey_ = (key) ->
   index = this.compress_(hash)
   this.bucketArray_.get(index).get()
 
-###
+###*
   Generates a hash code for an object. 
   @private
 ###
@@ -163,9 +169,10 @@ mugs.HashMap.prototype.getHash_ = (key) ->
   else
     type.substr(0,1) + key
 
-###
+###*
   Converts the hash-code to an integer and then compresses the result hash-code 
   so it fits in the bucket array
+  
   @private
 ###  
 mugs.HashMap.prototype.compress_ = (key) -> 
@@ -178,8 +185,17 @@ Methods related to Collection prototype
 ---------------------------------------------------------------------------------------------
 ###
 
+###*
+  @private
+###
 mugs.HashMap.prototype.buildFromArray = (arr) -> 
   new mugs.HashMap(arr)
 
+###*
+  Applies function 'f' on each value in the map. This return nothing and is only invoked
+  for the side-effects of f.
+
+  @see mugs.Collection
+###
 mugs.HashMap.prototype.forEach = ( f ) -> 
   this.bucketArray_.forEach( (bucket) -> bucket.forEach(f))

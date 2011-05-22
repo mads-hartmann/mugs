@@ -2,6 +2,9 @@ mugs.provide("mugs.Extensible")
 mugs.require("mugs.Collection")
 
 ###*
+  (INTERFACE) Extensible are for collections with support for insertion and removal of items.
+
+  @class (INTERFACE) are for collections with support for insertion and removal of items.
   @augments mugs.Collection
 ###
 mugs.Extensible = () -> this
