@@ -7,11 +7,12 @@ body {
 #container {
   text-align: left;
   width: 75%;
-  margin: 0px auto;
+  margin: 40px auto 0px auto;
   background: #F5F5F5;
   color: #333;
   padding: 20px 40px 20px 40px;
   border-bottom: 10px solid #666;
+  border-top: 10px solid #666;
 }
 
 #menu {
@@ -84,7 +85,7 @@ pre.code
 #index
 {
 	float: left;
-	width: 160px;
+	width: 215px;
 	left: 8px;
 	padding: 0px 8px 8px 0px;
 }
@@ -95,8 +96,8 @@ pre.code
 
 #content
 {
-	margin-left: 190px;
-	width: 600px;
+	margin-left: 245px;
+	width: 620px;
 }
 
 #sidebar h3 {
