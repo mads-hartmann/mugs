@@ -17,24 +17,21 @@
       </script>
       <script>
 
-        var add = function(x,y) {
-            return x+y;
+        var add    = function(x,y) { return x+y; };
+        var isEven = function(x)   { return x % 2 === 0; };
+        
+        var constructSequence = function(list) {
+            var next = add(list.head(), list.tail().head());
+            if (next < 4000000) {
+                return constructSequence(list.prepend(next)) ;
+            } else {
+                return list;
+            }
         };
         
-        var isEven = function(x) {
-            return x % 2 === 0;
-        };
+        var fibs = new mugs.List([2,1]);
         
-        
-        var list = new mugs.List([2,1]),
-            next = add(list.head(), list.tail().head());
-        
-        while (next < 4000000) {
-            next = add(list.head(), list.tail().head());
-            list = list.prepend(add(list.head(), list.tail().head()));
-        }
-        
-        var sum = list.filter(isEven).foldLeft(0)(add);
+        var sum = constructSequence(fibs).filter(isEven).foldLeft(0)(add);
         
         document.write("<h2>Answer: " + sum + "</h2>");
         
