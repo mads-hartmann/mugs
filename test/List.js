@@ -93,6 +93,61 @@ $(document).ready(function(){
       ok(list.get(1).get() == shouldBe.get(1).get());
       ok(list.get(2).get() == shouldBe.get(2).get());
     });
+    
+    test("Nil.head",function() {
+        var rslt = false;
+        try{
+            new mugs.List([]).head();
+        }catch(e){
+            rslt = true;
+        }
+        ok(rslt);
+        
+    });
+    
+    test("Nil.tail",function() {
+        var rslt = false;
+        try{
+            new mugs.List([]).tail();
+        }catch(e){
+            rslt = true;
+        }
+        ok(rslt);
+    });
+    
+    test("Nil.update (1)",function() {
+        var rslt = false;
+        try{
+            new mugs.List([]).update(10,10);
+        }catch(e){
+            rslt = true;
+        }
+        ok(rslt);
+    });
+    
+    test("Nil.update (2)",function() {
+        var rslt = false;
+        try{
+            new mugs.List([]).update(-1,10);
+        }catch(e){
+            rslt = true;
+        }
+        ok(rslt);
+    });
+    
+    test("Nil.last",function() {
+        var rslt = false;
+        ok(new mugs.List([]).last().isEmpty());
+    });
+    
+    test("Nil.first",function() {
+        var rslt = false;
+        ok(new mugs.List([]).first().isEmpty());
+    });
+    
+    test("nil.prependAll",function() {
+       ok( equalsArr(new mugs.List([]).prependAll([1,2,3]).asArray(), [1,2,3])); 
+    });
   };
 
   generic_list_test("List" , mugs.List);

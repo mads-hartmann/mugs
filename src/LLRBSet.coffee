@@ -42,7 +42,7 @@ mugs.require("mugs.Indexed")
                                 < and > operators.
 ###
 mugs.LLRBSet = (items,comparator) ->
-  treeUnderConstruction = new mugs.LLRBLeaf() 
+  treeUnderConstruction = new mugs.LLRBLeaf(comparator) 
   if items instanceof Array and items.length > 0
     for item in items
       treeUnderConstruction = treeUnderConstruction.insert(item, item)

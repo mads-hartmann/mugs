@@ -14,16 +14,6 @@ mugs.provide("mugs.Collection")
   @class (INTERFACE) Collection is the base interface that all collections implements.
 ###
 mugs.Collection = () -> this
-
-###*
-  @private
-###
-mugs.Collection.prototype.buildFromArray = () -> throw new Error("Should be implemented in subclass")  
-
-###*
-  @private
-###  
-mugs.Collection.prototype.forEach = () -> throw new Error("Should be implemented in subclass")  
   
 ###*
   Returns a new collection with the values of applying the function 'f' on each element in 'this'

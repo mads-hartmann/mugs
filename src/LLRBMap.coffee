@@ -40,12 +40,11 @@ mugs.require("mugs.LLRBLeaf")
                                 < and > operators.
 ###
 mugs.LLRBMap = (keyValuePairs, comparator) ->
-  treeUnderConstruction = new mugs.LLRBLeaf() 
+  treeUnderConstruction = new mugs.LLRBLeaf(comparator) 
   if keyValuePairs instanceof Array and keyValuePairs.length > 0
     for kv in keyValuePairs
       treeUnderConstruction = treeUnderConstruction.insert(kv.key, kv.value)
   this.tree = treeUnderConstruction  
-  this.tree.comparator = comparator if comparator?
   this
 
 mugs.LLRBMap.prototype = new mugs.Collection()

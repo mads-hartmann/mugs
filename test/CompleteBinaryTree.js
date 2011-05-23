@@ -26,6 +26,39 @@ $(document).ready(function(){
     ok(node.get(2) == 3);
   });
   
+  test("get (too large index)", function() {
+     var node = new CompleteBinaryTreeNode(1, new CompleteBinaryTreeLeaf(2), new CompleteBinaryTreeLeaf(3));
+     rslt = false;
+    try{
+        node.get(10);
+    }catch(e){
+        rslt = true;
+    }
+    ok(rslt);
+  });
+  
+  test("update (too large index)", function() {
+      var node = new CompleteBinaryTreeNode(1, new CompleteBinaryTreeLeaf(2), new CompleteBinaryTreeLeaf(3));
+      rslt = false;
+      try{
+          node.update(10,10);
+      } catch(e) {
+          rslt = true;
+      }
+      ok(rslt);
+});
+  
+  test("get (negative index)", function() {
+       var node = new CompleteBinaryTreeNode(1, new CompleteBinaryTreeLeaf(2), new CompleteBinaryTreeLeaf(3));
+       rslt = false;
+       try{
+           node.get(-1);
+       }catch(e){
+           rslt = true;
+       }
+       ok(rslt);
+    });
+  
   test("It is possible to get an element (7)", function() {
     var node = new CompleteBinaryTreeNode(1, 
       new CompleteBinaryTreeNode(2,

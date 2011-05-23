@@ -18,21 +18,6 @@ mugs.provide('mugs.None')
 mugs.Option = () -> this
 
 ###*
-  Checks if the Option is empty.
-  
-  @return {boolean} True if the Option is empty, i.e. of type mugs.None. Otherwise false.
-###
-mugs.Option.prototype.isEmpty = () -> throw new Error("Not implemented in Option")
-
-###*
-  Returns the option's value if the option is mugs.Nonempty. This will throw an exception if
-  invoked on an instance of mugs.None.
-  
-  @return {*} The value stored in the Option.
-###
-mugs.Option.prototype.get = () -> throw new Error("Not implemented in Option")
-
-###*
   Returns the option's value if the option is mugs.Nonempty, otherwise return the value
   'otherwise'.
   

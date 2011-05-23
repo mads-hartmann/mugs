@@ -11,6 +11,13 @@ $(document).ready(function() {
         test("get",function() {
             var col = new Constructor(support.dflt.input);
             ok( col.get(0).get() == 1 );
+            ok( col.get(1).get() == 2 );
+            ok( col.get(2).get() == 3 );
+        });
+        
+        test("get, negative index", function() {
+            var col = new Constructor(support.dflt.input);
+            ok(col.get(-1).isEmpty());
         });
 
         test("indexOf", function() {
@@ -36,13 +43,16 @@ $(document).ready(function() {
         });
         
         test("update",function() {
-           var col = new Constructor(support.dflt.input).update(1,10);
-           ok( col.get(1).get(), 10);
+           var col = new Constructor(support.dflt.input);
+           ok( col.update(0,10).get(0).get(), 10);
+           ok( col.update(1,10).get(1).get(), 10);
+           ok( col.update(2,10).get(2).get(), 10);
         });
         
         test("removeAt", function() {
-            var col = new Constructor(support.dflt.input).removeAt(0);
-            ok( equalsArr( col.asArray(), [2,3] ));
+            var col = new Constructor(support.dflt.input);
+            ok( equalsArr( col.removeAt(0).asArray(), [2,3] ));
+            ok( equalsArr( col.removeAt(2).asArray(), [1,2]));
         });
     };
     

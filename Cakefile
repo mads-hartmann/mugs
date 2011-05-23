@@ -19,7 +19,7 @@ task 'build', 'build source', () ->
 task 'jscoverage', 'instruments the source code for JSCoverage and start the JSCoverage server', () ->
   console.log """Started JSCoverage server at: http://127.0.0.1:8080/jscoverage.html?test/suite.html
                  Hit CTRL+C to stop"""
-  exec('jscoverage-server --no-instrument=/test/ --verbose --ip-address=0.0.0.0 --port=8080')
+  exec('jscoverage-server --no-instrument=/test/ --no-instrument=/lib/ --no-instrument=/bin/Mugs.js --verbose --ip-address=0.0.0.0 --port=8080')
   
 task 'api-doc', 'Create API documentation', () -> 
   exec("""java -jar /Users/Mads/dev/tools/jsdoc-toolkit/jsrun.jar /Users/Mads/dev/tools/jsdoc-toolkit/app/run.js -a -t=jsdoc-templates -d=api/ bin""", (err, stdout, stderr) ->

@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
-  Some = mugs.Some
-  None = mugs.None
+  Some = mugs.Some;
+  None = mugs.None;
   
   module('Some');
   
@@ -71,5 +71,28 @@ $(document).ready(function(){
   test("Test that getOrElse on None returns the fallback value", function() {
     ok( new None().getOrElse(42) == 42);
   });
+  
+  test("Some with null is empty",function() {
+     ok( new Some(undefined).isEmpty());
+  });
+  
+  test("None, get", function() {
+      var rslt = false;
+      try{
+        new mugs.None().get();
+      }catch(e){
+          rslt = true;
+      }
+      
+     ok(rslt) ;
+  });
+  
+  test("Some.asArray()",function() {
+     ok( equalsArr(new mugs.Some(3).asArray(),[3])); 
+  });
+  
+  test("None.asArray()",function() {
+      ok( equalsArr(new mugs.None().asArray(),[])); 
+   });
   
 });

@@ -93,6 +93,11 @@ $(document).ready(function(){
     ok(ral.size() == 5);
     ok(ral.get(0) == 2);
   });
+  
+  test("insert",function() {
+     ral = new RandomAccessList([1,2]);
+     ok( equalsArr(ral.insert(3).asArray(),[1,2,3]));
+  });
 
   // test("It is possible to remove a element from the list", function() {
   //     var ral = new RandomAccessList(1,2,3,4,5,6,7,8,9,10);

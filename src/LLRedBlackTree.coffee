@@ -22,13 +22,13 @@ mugs.LLRBNode = (() ->
     Public interface
   ### 
 
-  F = (key,value,color,left,right) ->
+  F = (key,value,color,left,right, comparator) ->
     this.key   = key
     this.value = value
     this.color = if color? then color else RED
     this.left  = if left?  then left  else new mugs.None()
     this.right = if right? then right else new mugs.None()
-    this.comparator = standard_comparator
+    this.comparator = if comparator then comparator else standard_comparator
     return this
 
   F.prototype.copy = (key,value,color,left,right) ->
@@ -37,11 +37,12 @@ mugs.LLRBNode = (() ->
       if value? && value  != _ then value else this.value,
       if color? && color  != _ then color else this.color,
       if left?  && left   != _ then left  else this.left,
-      if right? && right  != _ then right else this.right)
+      if right? && right  != _ then right else this.right,
+      this.comparator)
 
   F.prototype.insert            = (key,item)  -> insert(new mugs.Some(this),key,item).copy(_,_,BLACK,_,_)
-  F.prototype.remove            = (key)       -> remove(new mugs.Some(this),key).getOrElse(new mugs.LLRBLeaf()).copy(_,_,BLACK,_,_)
-  F.prototype.removeMinKey      = ()          -> removeMin(new mugs.Some(this)).getOrElse(new mugs.LLRBLeaf()).copy(_,_,BLACK,_,_)
+  F.prototype.remove            = (key)       -> remove(new mugs.Some(this),key).getOrElse(new mugs.LLRBLeaf(this.comparator)).copy(_,_,BLACK,_,_)
+  F.prototype.removeMinKey      = ()          -> removeMin(new mugs.Some(this)).getOrElse(new mugs.LLRBLeaf(this.comparator)).copy(_,_,BLACK,_,_)
   F.prototype.minKey            = ()          -> min(new mugs.Some(this)).get().key
   F.prototype.get               = (key)       -> get(new mugs.Some(this),key)
   F.prototype.getAt             = (index)     -> getAt(new mugs.Some(this), index)
@@ -95,8 +96,6 @@ mugs.LLRBNode = (() ->
 
   # returns the node with the minimum key is tree rooted at optionNode
   min = (optionNode) ->
-    if (optionNode.isEmpty())
-      return new mugs.None();
     n = optionNode.get() # it's okay. just checked that it wasn't empty
     if n.left.isEmpty()
       return new mugs.Some(n)
@@ -105,7 +104,7 @@ mugs.LLRBNode = (() ->
 
   # Returns a plain node
   insert = (optionNode,key,item) ->
-    if optionNode.isEmpty() then return new mugs.LLRBNode(key,item)
+    if optionNode.isEmpty() then return new mugs.LLRBNode(key,item, undefined, undefined, undefined, this.comparator)
 
     n   = optionNode.get()
     cmp = n.comparator(key,n.key)
@@ -270,7 +269,7 @@ mugs.LLRBNode = (() ->
       0
     else
       node = optionNode.get()
-      if isRed(optionNode) && isRed(optionNode.get().left)
+      if isRed(optionNode) && isRed(optionNode.get().left) 
         throw new Error("Red node has red child(" + node.key+","+node.value+")")
       if isRed(node.right)
         throw new Error("Right child of (" + node.key+","+node.value+") is red")
@@ -292,10 +291,13 @@ mugs.LLRBNode = (() ->
    but is only meant as a convenience prototype for handling the empty case of LLRBSet
    and LLRBMap.   
 ###
-mugs.LLRBLeaf = () -> 
+mugs.LLRBLeaf = (comparator) -> 
+  this.comparator = comparator
+  this
+
 mugs.LLRBLeaf.prototype.copy = () -> this 
-mugs.LLRBLeaf.prototype.insert            = (key,item) -> new mugs.LLRBNode(key,item) 
-mugs.LLRBLeaf.prototype.remove            = (key)      -> throw new Error("Can't remove an item from a leaf") 
+mugs.LLRBLeaf.prototype.insert            = (key,item) -> new mugs.LLRBNode(key,item, undefined, undefined, undefined, this.comparator) 
+mugs.LLRBLeaf.prototype.remove            = (key)      -> this
 mugs.LLRBLeaf.prototype.removeMinKey      = ()         -> this 
 mugs.LLRBLeaf.prototype.minKey            = ()         -> throw new Error("Can't get the minimum key of a leaf")
 mugs.LLRBLeaf.prototype.get               = (key)      -> new mugs.None()

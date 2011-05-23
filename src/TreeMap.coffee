@@ -40,12 +40,11 @@ mugs.require('mugs.RedBlackNode')
   @augments mugs.Collection
 ###
 mugs.TreeMap = (keyValuePairs, comparator) ->
-  treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
+  treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK,comparator)
   if keyValuePairs instanceof Array and keyValuePairs.length > 0
     for kv in keyValuePairs
       treeUnderConstruction = treeUnderConstruction.insert(kv.key, kv.value)
   this.tree = treeUnderConstruction  
-  this.tree.comparator = comparator if comparator?
   this
 
 mugs.TreeMap.prototype = new mugs.Collection()

@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
     LLRBNode = mugs.LLRBNode;
+    LLRBLeaf = mugs.LLRBLeaf;
 
     module("LLRedBlackTree");
 
@@ -203,6 +204,48 @@ $(document).ready(function(){
     test("removing the last element returns an empty tree",function() {
        var node = new LLRBNode(10,10).remove(10);
        ok(node.isEmpty());
+    });
+    
+    test("leaf.removeMinKey",function() {
+        var leaf = new LLRBLeaf();
+        ok(leaf.removeMinKey() === leaf);
+    });
+    
+    test("leaf.get()",function() {
+       var leaf = new LLRBLeaf();
+       ok(leaf.get("something").isEmpty());
+    });
+    
+    test("leaf.values()",function() {
+        var leaf = new LLRBLeaf();
+        ok(leaf.values().isEmpty());
+    });
+    
+    test("leaf.values()",function() {
+        var leaf = new LLRBLeaf();
+        ok(!leaf.containsKey("abc"));
+    });
+    
+    test("leaf.count()",function() {
+        var leaf = new LLRBLeaf();
+        ok(leaf.count() === 0);
+    });
+    
+    test("leaf.remove()",function() {
+        var leaf = new LLRBLeaf();
+        ok(leaf.remove("something") === leaf);
+    });
+    
+    test("leaf.minKey()",function() {
+        var leaf = new LLRBLeaf();
+        var rslt = false;
+        try{
+            leaf.minKey();
+        }catch(e){
+            rslt = true;
+        }
+        
+        ok(rslt);
     });
     
     test("insertion and removal of 1000 items", function() {

@@ -191,24 +191,27 @@ $(document).ready(function(){
     ok(tree.right.key == 7);
   });
   
-  test("Balance a left negative black node", function() {
+  
+  test("Balance a right negative black node", function() {
+    var tree = new RedBlackNode(BLACK, 
+        new RedBlackNode(BLACK,new RedBlackLeaf(BLACK), 1, 1, new RedBlackLeaf(BLACK)),
+        2,2,
+        new RedBlackNode(RED,
+            new RedBlackNode(BLACK,new RedBlackLeaf(BLACK),3,3,new RedBlackLeaf(BLACK)),
+            4,4,
+            new RedBlackNode(BLACK,new RedBlackLeaf(BLACK),5,5,new RedBlackLeaf(BLACK))));
+    var tree2 = tree.remove(2);
+    ok(tree2.check_() > 0);
+  });
+  
+  test("leaf.keys",function() {
+      var leaf = new RedBlackLeaf(BLACK);
+      ok(leaf.keys().isEmpty());
+  });
+  
+  test("leaf.values",function() {
+      var leaf = new RedBlackLeaf(BLACK);
+      ok(leaf.values().isEmpty());
+  });
     
-        
-    // remove 2
-    // remove 4
-  });
-  
-    test("Balance a right negative black node", function() {
-        var tree = new RedBlackNode(BLACK, 
-            new RedBlackNode(BLACK,new RedBlackLeaf(BLACK), 1, 1, new RedBlackLeaf(BLACK)),
-            2,2,
-            new RedBlackNode(RED,
-                new RedBlackNode(BLACK,new RedBlackLeaf(BLACK),3,3,new RedBlackLeaf(BLACK)),
-                4,4,
-                new RedBlackNode(BLACK,new RedBlackLeaf(BLACK),5,5,new RedBlackLeaf(BLACK))));
-        var tree2 = tree.remove(2);
-        ok(tree2.check_() > 0);
-        // TODO: Add a check metod to the tree
-  });
-  
 });

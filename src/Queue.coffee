@@ -192,7 +192,7 @@ mugs.Queue.prototype.get = (index) ->
   if index <= this.front__.size() - 1
     this.front__.get(index)
   else
-    this.rear__.get(index)
+    this.rear__.get(index - this.front__.size())
 
 ###*
   Update the value with the given index.
@@ -205,7 +205,7 @@ mugs.Queue.prototype.update = (index, item) ->
   if index <= this.front__.size() - 1
     this.buildFromLists(this.front__.update(index, item), this.rear__)
   else
-    this.buildFromLists(this.front__,this.rear__.update(index, item))
+    this.buildFromLists(this.front__,this.rear__.update(index - this.front__.size(), item))
 
 ###*
   Removes the item at the given index.
@@ -217,7 +217,7 @@ mugs.Queue.prototype.removeAt = (index) ->
   if index <= this.front__.size() - 1
     this.buildFromLists(this.front__.removeAt(index), this.rear__)
   else
-    this.buildFromLists(this.front__,this.rear__.removeAt(index))
+    this.buildFromLists(this.front__,this.rear__.removeAt(index - this.front__.size()))
 
 ###
 ---------------------------------------------------------------------------------------------
@@ -236,7 +236,7 @@ mugs.Queue.prototype.last = () ->
   if this.rear__.isEmpty() 
     this.front__.last()
   else
-    this.rear__.last()
+    this.rear__.first()
 
 ###*
   Returns a mugs.Some with the first item in the collection if it's non-empty. 

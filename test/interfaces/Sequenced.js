@@ -14,8 +14,10 @@ $(document).ready(function() {
         });
 
         test("last",function() {
-            var col = new Constructor([1,2,3]);
-            ok(col.last().get() == 3);
+            var col = new Constructor([1,2,3,4,5,6,7,8,9]);
+            ok(col.last().get() == 9);
+            var col2 = new Constructor([1]);
+            ok(col2.last().get() === 1);
         });
 
         test("head",function() {
@@ -45,4 +47,5 @@ $(document).ready(function() {
     implements_Sequenced("Stack", mugs.Stack);
     implements_Sequenced("Queue", mugs.Queue);
     implements_Sequenced("TreeSet", mugs.TreeSet);
+    implements_Sequenced("TreeSet", mugs.LLRBSet);
 });

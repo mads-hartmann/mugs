@@ -24,6 +24,14 @@ $(document).ready(function() {
             
             ok( equalsArr( col.remove(3).asArray(), [1,2,4,5]));
             ok( equalsArr( col.remove(2).asArray(), [1,3,4,5]));            
+            
+            ok( equalsArr( col.remove(5).asArray(), [1,2,3,4]));
+        });
+        
+        test("remove, non existent item",function() {
+            var col = new Constructor([1,2,3]);
+            var col2 = col.remove(4);
+            ok(col.size() === 3);
         });
         
         test("removeAll", function() {

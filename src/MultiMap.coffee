@@ -41,7 +41,7 @@ var multimap = new mugs.Multimap([ { key: 1, value: [1,2,3] },
                       
 ###
 mugs.Multimap = (keyValuePairs, collectionConstructor, comparator) -> 
-  treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
+  treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK, comparator)
   if keyValuePairs instanceof Array and keyValuePairs.length > 0
     for kv in keyValuePairs
       val = (if kv.value instanceof Array then new collectionConstructor(kv.value) else new collectionConstructor([kv.value]))
@@ -49,7 +49,6 @@ mugs.Multimap = (keyValuePairs, collectionConstructor, comparator) ->
 
   this.collectionConstructor_ = collectionConstructor
   this.tree_ = treeUnderConstruction  
-  this.tree_.comparator = comparator if comparator?
   this
 
 mugs.Multimap.prototype = new mugs.Collection()

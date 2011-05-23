@@ -42,7 +42,7 @@ mugs.require("mugs.Indexed")
                                 < and > operators.
 ###
 mugs.TreeSet = (items,comparator) ->
-  treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK)
+  treeUnderConstruction = new mugs.RedBlackLeaf(mugs.RedBlack.BLACK,comparator)
   if items instanceof Array and items.length > 0
     for item in items
       treeUnderConstruction = treeUnderConstruction.insert(item, item)
