@@ -95,7 +95,6 @@ mugs.RedBlackNode.prototype.copy = (properties) ->
   supply one when creating the tree
 ###
 mugs.RedBlackNode.prototype.standard_comparator = (elem1, elem2) ->
-  console.log("using std comparator")
   if      (elem1 < elem2) then -1
   else if (elem1 > elem2) then  1
   else                          0
