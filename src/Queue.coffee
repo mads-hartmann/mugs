@@ -45,12 +45,8 @@ mugs.Queue = (items) ->
     this.front__ = new mugs.List()
     this.rear__ = new mugs.List()
   else 
-    size = items.length
-    half = Math.ceil(size / 2)
-    f = items.slice(0,half)
-    r = items.slice(half,size)
-    this.front__ = new mugs.List(f)
-    this.rear__ = new mugs.List(r).reverse()
+    this.front__ = new mugs.List(items)
+    this.rear__ = new mugs.List()
   this
 
 mugs.Queue.prototype = new mugs.Indexed()
