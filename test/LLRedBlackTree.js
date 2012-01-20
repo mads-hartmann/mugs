@@ -55,6 +55,13 @@ $(document).ready(function(){
         var n3 = node.remove(1);
     });
 
+    test("Removal values", function(){
+      var node = new LLRBNode(2,2).insert(1,1).insert(3,3);
+      var n2 = node.remove(2);
+      ok(n2.get(1).get() === 1);
+      ok(n2.get(3).get() === 3);
+    });
+
 
     test("Test increasing", function(){
       var total = 100;
