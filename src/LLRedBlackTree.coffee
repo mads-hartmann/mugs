@@ -150,7 +150,7 @@ mugs.LLRBNode = (() ->
           return new mugs.None()
         else
           smallest = min(n.right).get()
-          n  = n.copy(smallest.key,smallest.val,_,_,removeMin(n.right))
+          n  = n.copy(smallest.key,smallest.value,_,_,removeMin(n.right))
       n = n.copy(_,_,_,_,remove(n.right, key))
     return new mugs.Some(fixUp(n))
 
