@@ -1,9 +1,18 @@
 Mugs
 ================
 
-**THIS PROJECT IS STILL UNDER HEAVY DEVELOPMENT AND NOTHING IS STABLE**
-
 Mugs is a immutable collections library for JavaScript written in Coffeescript. It is the product of the Bachelors project by Mads Hartmann Jensen. 
+
+Building it
+-----------
+
+You need to have [coffeescript](http://coffeescript.org) and [cake](http://coffeescript.org/#cake) installed
+
+Simple run
+
+    cake build 
+
+Now you should be able to run the files in `examples/client-side/`.
 
 Running the tests
 -----------------

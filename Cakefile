@@ -14,7 +14,7 @@ CoffeeScript  = require './lib/coffee-script'
 task 'build', 'build source', () -> 
 	exec("coffee -c -b -o bin/ src/", (err, stdout, stderr) ->
     throw Error(err) if err
-    console.log stdout + stderr)
+    console.log stdout + stderr + "\Finished build.")
 	  
 task 'jscoverage', 'instruments the source code for JSCoverage and start the JSCoverage server', () ->
   console.log """Started JSCoverage server at: http://127.0.0.1:8080/jscoverage.html?test/suite.html
